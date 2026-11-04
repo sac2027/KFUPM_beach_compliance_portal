@@ -73,12 +73,12 @@ test('errors are announced with the field description', async ({ page }) => {
   expect(await page.getByLabel('Passport number').getAttribute('aria-describedby')).toContain('passport-error');
 });
 
-test('there is no language switch yet: the portal is English only', async ({ page }) => {
+test('the portal opens in English by default, and ?lang=ar opens the Arabic form', async ({ page }) => {
   await open(page);
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await expect(page.locator('html')).toHaveAttribute('dir', 'ltr');
-  await expect(page.getByRole('button', { name: 'العربية' })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'العربية' })).toBeVisible();
   await page.goto('/?lang=ar');
-  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-  await expect(page.getByLabel('Email address')).toBeVisible();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'ar');
+  await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
 });

@@ -72,9 +72,9 @@ test('keyboard only: the whole flow can be completed, in a sensible order, with 
     stops.push(f.what);
   };
 
-  // Login: skip link, then the two fields (email, passport) and the button, in reading order.
-  for (let i = 0; i < 4; i++) await tab();
-  expect(stops.map((s) => s.split('.')[0])).toEqual(['A', 'INPUT', 'INPUT', 'BUTTON']);
+  // Login: skip link, the language switch, then the two fields (email, passport) and the button, in reading order.
+  for (let i = 0; i < 5; i++) await tab();
+  expect(stops.map((s) => s.split('.')[0])).toEqual(['A', 'BUTTON', 'INPUT', 'INPUT', 'BUTTON']);
   const me = STUDENTS.mai;
   await page.keyboard.press('Shift+Tab'); // Passport
   await page.keyboard.type(me.passport);

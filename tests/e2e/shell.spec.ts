@@ -40,24 +40,15 @@ test('the masthead has the lockup on the left and headings use KFUPM Display', a
   expect(await page.locator('h1').evaluate((e) => getComputedStyle(e).fontFamily)).toMatch(/^KFUPM/);
 });
 
-test('the masthead carries the portal title beside the lockup on wider screens, and only the lockup on phones', async ({ page }) => {
+test('the masthead carries the language switch at the opposite end from the lockup', async ({ page }) => {
   await open(page);
-  const title = page.locator('.masthead__title');
-  await expect(title).toHaveText('Pre-Arrival Compliance Portal');
-  const vw = page.viewportSize()!.width;
-  if (vw > 640) {
-    await expect(title).toBeVisible();
-    const [t, logo] = await Promise.all([title.boundingBox(), page.locator('.masthead__logo').boundingBox()]);
-    expect(t!.x).toBeGreaterThan(logo!.x + logo!.width); // beside it, not under it
-    expect(Math.abs(t!.y + t!.height / 2 - (logo!.y + logo!.height / 2))).toBeLessThan(8); // on the same line
-  } else {
-    await expect(title).toBeHidden();
-  }
+  const [toggle, logo] = await Promise.all([page.locator('.lang-toggle').boundingBox(), page.locator('.masthead__logo').boundingBox()]);
+  expect(toggle!.x).toBeGreaterThan(logo!.x + logo!.width);
+  expect(await page.locator('.masthead__title').count()).toBe(0);
 });
 
-test('there is no language switch and the footer names the Deanship only', async ({ page }) => {
+test('the footer names the Deanship only', async ({ page }) => {
   await open(page);
-  await expect(page.locator('.masthead button')).toHaveCount(0);
   await expect(page.locator('.page__footer')).toHaveText('Deanship of Student Affairs');
   await expect(page.locator('body')).not.toContainText('International Students Office');
 });

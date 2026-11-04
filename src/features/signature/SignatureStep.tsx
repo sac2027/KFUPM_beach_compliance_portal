@@ -21,7 +21,7 @@ export function SignatureStep({
   onSubmit: (signature: Signature) => Promise<void>;
   processImage?: (file: File) => Promise<string>;
 }) {
-  const { t, locale } = useI18n();
+  const { t, locale, dir } = useI18n();
   const [method, setMethod] = useState<SignatureMethod>('draw');
   const [drawn, setDrawn] = useState<string | null>(null);
   const [uploaded, setUploaded] = useState<string | null>(null);
@@ -61,7 +61,7 @@ export function SignatureStep({
       </h2>
       <p className="sign__closing">{CLOSING[locale]}</p>
 
-      <Tabs.Root className="tabs" value={method} onValueChange={(v) => setMethod(v as SignatureMethod)} dir="ltr">
+      <Tabs.Root className="tabs" value={method} onValueChange={(v) => setMethod(v as SignatureMethod)} dir={dir}>
         <Tabs.List className="tabs__list" aria-label={t('sign.tabs.label')}>
           <Tabs.Trigger className="tabs__tab" value="draw">
             {t('sign.tab.draw')}

@@ -2,43 +2,51 @@
   "meta": {
     "source": "WORSTCASE-FIXTURE-MARKER dev-only stress data for break-ui (never shipped)",
     "reviewStatus": {
-      "en": "needs-review"
+      "en": "needs-review",
+      "ar": "needs-review"
     }
   },
   "document": {
     "ref": "KFUPM-INTL-PACF",
     "stage": {
-      "en": "Pre-Arrival State (Awaiting Visa Issuance and Medical Clearance)"
+      "en": "Pre-Arrival State (Awaiting Visa Issuance and Medical Clearance)",
+      "ar": "مرحلة ما قبل الوصول (بانتظار إصدار التأشيرة والتصريح الطبي)"
     },
     "title": {
-      "en": "Pre-Arrival Compliance and Conduct Declaration Form for International Undergraduate, Graduate and Exchange Students (Academic Year 1448 AH / 2026–2027)"
+      "en": "Pre-Arrival Compliance and Conduct Declaration Form for International Undergraduate, Graduate and Exchange Students (Academic Year 1448 AH / 2026–2027)",
+      "ar": "نموذج الالتزام والسلوك قبل الوصول للطلاب الدوليين في مرحلتي البكالوريوس والدراسات العليا وطلاب التبادل (العام الدراسي 1448 هـ / 2026–2027)"
     },
     "intro": {
-      "en": "I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel. I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel. I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel."
+      "en": "I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel. I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel. I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel.",
+      "ar": "أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري. أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري. أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري."
     },
     "closing": {
-      "en": "By signing below, I affirm that I have read, understood, and agree to comply with every responsibility listed above for the whole of my time as a student in the Kingdom of Saudi Arabia. By signing below, I affirm that I have read, understood, and agree to comply with every responsibility listed above for the whole of my time as a student in the Kingdom of Saudi Arabia."
+      "en": "By signing below, I affirm that I have read, understood, and agree to comply with every responsibility listed above for the whole of my time as a student in the Kingdom of Saudi Arabia. By signing below, I affirm that I have read, understood, and agree to comply with every responsibility listed above for the whole of my time as a student in the Kingdom of Saudi Arabia.",
+      "ar": "بتوقيعي أدناه، أؤكد أنني قرأتُ جميع المسؤوليات المذكورة أعلاه وفهمتُها وأوافق على الالتزام بها طوال مدة دراستي في المملكة العربية السعودية. بتوقيعي أدناه، أؤكد أنني قرأتُ جميع المسؤوليات المذكورة أعلاه وفهمتُها وأوافق على الالتزام بها طوال مدة دراستي في المملكة العربية السعودية."
     }
   },
   "links": {
     "pdr-pdf": {
       "url": "https://example.com/regulations/public-decency/official-text.pdf?utm_param0=value0longvalue&utm_param1=value1longvalue&utm_param2=value2longvalue&utm_param3=value3longvalue&utm_param4=value4longvalue&utm_param5=value5longvalue&utm_param6=value6longvalue&utm_param7=value7longvalue&utm_param8=value8longvalue&utm_param9=value9longvalue&utm_param10=value10longvalue&utm_param11=value11longvalue&utm_param12=value12longvalue&utm_param13=value13longvalue&utm_param14=value14longvalue&utm_param15=value15longvalue&utm_param16=value16longvalue&utm_param17=value17longvalue",
       "label": {
-        "en": "Official Public Decency Regulations PDF (Royal Decree No. M/12 dated 1443/03/27 AH, Ministry of Interior, Bureau of Experts at the Council of Ministers)"
+        "en": "Official Public Decency Regulations PDF (Royal Decree No. M/12 dated 1443/03/27 AH, Ministry of Interior, Bureau of Experts at the Council of Ministers)",
+        "ar": "النص الرسمي للائحة الذوق العام (المرسوم الملكي رقم م/12 وتاريخ 27/03/1443هـ، وزارة الداخلية، هيئة الخبراء بمجلس الوزراء)"
       },
       "status": "unverified"
     },
     "pdr-overview": {
       "url": "https://example.com/overview",
       "label": {
-        "en": "Overview"
+        "en": "Overview",
+        "ar": "نظرة عامة"
       },
       "status": "unverified"
     },
     "visit-saudi-culture": {
       "url": "https://example.com/regulations/public-decency/official-text.pdf?utm_param0=value0longvalue&utm_param1=value1longvalue&utm_param2=value2longvalue&utm_param3=value3longvalue&utm_param4=value4longvalue&utm_param5=value5longvalue&utm_param6=value6longvalue&utm_param7=value7longvalue&utm_param8=value8longvalue&utm_param9=value9longvalue&utm_param10=value10longvalue&utm_param11=value11longvalue&utm_param12=value12longvalue&utm_param13=value13longvalue&utm_param14=value14longvalue&utm_param15=value15longvalue&utm_param16=value16longvalue&utm_param17=value17longvalue",
       "label": {
-        "en": "Saudi Culture and Customs Guide for Visitors, Residents and International Students (2026 edition)"
+        "en": "Saudi Culture and Customs Guide for Visitors, Residents and International Students (2026 edition)",
+        "ar": "دليل الثقافة والعادات السعودية للزوار والمقيمين والطلاب الدوليين (طبعة 2026)"
       },
       "status": "unverified"
     }
@@ -47,7 +55,8 @@
     {
       "id": "saudi-laws",
       "title": {
-        "en": "Compliance with All Applicable Laws, Regulations, Royal Decrees and Ministerial Resolutions of the Kingdom of Saudi Arabia, Including the Public Decency Regulations"
+        "en": "Compliance with All Applicable Laws, Regulations, Royal Decrees and Ministerial Resolutions of the Kingdom of Saudi Arabia, Including the Public Decency Regulations",
+        "ar": "الالتزام بجميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية، ومنها لائحة الذوق العام"
       },
       "body": {
         "en": [
@@ -72,18 +81,53 @@
           {
             "text": ") and the full text at https://laws.boe.gov.sa/BoeLaws/Laws/LawDetails/9f8e7d6c-5b4a-4c3d-8e2f-1a0b9c8d7e6f/1?tab=text&version=2026&lang=ar . I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel. I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel."
           }
+        ],
+        "ar": [
+          {
+            "text": "أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري. أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري. وقد اطّلعتُ على "
+          },
+          {
+            "strong": "لائحة الذوق العام الصادرة عن وزارة الداخلية"
+          },
+          {
+            "text": " ("
+          },
+          {
+            "linkId": "pdr-pdf"
+          },
+          {
+            "text": " • "
+          },
+          {
+            "linkId": "pdr-overview"
+          },
+          {
+            "text": ") وعلى النص الكامل في https://laws.boe.gov.sa/BoeLaws/Laws/LawDetails/9f8e7d6c-5b4a-4c3d-8e2f-1a0b9c8d7e6f/1?tab=text&version=2026&lang=ar . أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري. أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري."
+          }
         ]
       }
     },
     {
       "id": "cultural-norms",
       "title": {
-        "en": "Respect for Saudi Cultural Norms"
+        "en": "Respect for Saudi Cultural Norms",
+        "ar": "احترام الأعراف الثقافية السعودية"
       },
       "body": {
         "en": [
           {
             "text": "Literal markup must stay literal: <script>alert(1)</script> &amp; **not bold** <b>not bold either</b> {n} of {total}. I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel. See "
+          },
+          {
+            "linkId": "visit-saudi-culture"
+          },
+          {
+            "text": "."
+          }
+        ],
+        "ar": [
+          {
+            "text": "يجب أن تبقى الرموز حرفية: <script>alert(1)</script> &amp; **ليس غامقًا** {n} of {total}. أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري. انظر "
           },
           {
             "linkId": "visit-saudi-culture"
@@ -97,12 +141,18 @@
     {
       "id": "university-policies",
       "title": {
-        "en": "Adherence to University Policies KFUPMDSACODEOFCONDUCTSECTION4SUBSECTION2PARAGRAPH7AREVISION20261101VERSIONFINAL"
+        "en": "Adherence to University Policies KFUPMDSACODEOFCONDUCTSECTION4SUBSECTION2PARAGRAPH7AREVISION20261101VERSIONFINAL",
+        "ar": "الالتزام بسياسات الجامعة KFUPMDSACODEOFCONDUCTSECTION4SUBSECTION2PARAGRAPH7AREVISION20261101VERSIONFINAL"
       },
       "body": {
         "en": [
           {
             "text": "Reference KFUPMDSACODEOFCONDUCTSECTION4SUBSECTION2PARAGRAPH7AREVISION20261101VERSIONFINAL KFUPMDSACODEOFCONDUCTSECTION4SUBSECTION2PARAGRAPH7AREVISION20261101VERSIONFINAL — I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel. I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel."
+          }
+        ],
+        "ar": [
+          {
+            "text": "المرجع KFUPMDSACODEOFCONDUCTSECTION4SUBSECTION2PARAGRAPH7AREVISION20261101VERSIONFINAL KFUPMDSACODEOFCONDUCTSECTION4SUBSECTION2PARAGRAPH7AREVISION20261101VERSIONFINAL — أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري. أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري."
           }
         ]
       }
@@ -110,12 +160,18 @@
     {
       "id": "representation",
       "title": {
-        "en": "Conduct"
+        "en": "Conduct",
+        "ar": "السلوك"
       },
       "body": {
         "en": [
           {
             "text": "I will follow the rules."
+          }
+        ],
+        "ar": [
+          {
+            "text": "سألتزم بالقواعد."
           }
         ]
       }
@@ -123,12 +179,18 @@
     {
       "id": "reporting",
       "title": {
-        "en": "Reporting and Understanding Consequences of Non-Compliance with Saudi Law, Cultural Norms or University Policy"
+        "en": "Reporting and Understanding Consequences of Non-Compliance with Saudi Law, Cultural Norms or University Policy",
+        "ar": "الإبلاغ وفهم عواقب عدم الالتزام بالأنظمة السعودية أو الأعراف الثقافية أو سياسات الجامعة"
       },
       "body": {
         "en": [
           {
             "text": "I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel. I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel. I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel. I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel."
+          }
+        ],
+        "ar": [
+          {
+            "text": "أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري. أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري. أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري. أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري."
           }
         ]
       }

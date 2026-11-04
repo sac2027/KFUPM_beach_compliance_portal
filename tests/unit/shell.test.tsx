@@ -30,14 +30,13 @@ describe('Stepper', () => {
 });
 
 describe('Masthead', () => {
-  it('shows the unaltered Full Stacked negative lockup with an accessible name, and the portal title', () => {
+  it('shows the unaltered Full Stacked negative lockup with an accessible name, and the language switch', () => {
     ui(<Masthead />);
     const logo = screen.getByRole('img', { name: /KFUPM/ });
     expect(logo).toHaveAttribute('src', '/brand/full-stacked-negative.png');
     expect(logo).toHaveAttribute('width');
     expect(logo).toHaveAttribute('height');
-    expect(screen.getByText('Pre-Arrival Compliance Portal')).toBeInTheDocument();
-    expect(screen.queryByRole('button')).toBeNull(); // no language switch: the portal is English only
+    expect(screen.getByRole('button', { name: 'العربية' })).toHaveAttribute('lang', 'ar');
     expect(screen.queryByText(/Dhahran|Onboarding Portal/)).toBeNull(); // the location line is gone
   });
 });
@@ -64,7 +63,6 @@ describe('stylesheets', () => {
     const shell = css.find(([n]) => n === 'shell.css')![1];
     expect(shell).toContain("url('/brand/matrix/matrix-beige-sand.svg')");
     expect(shell).toMatch(/background-size:\s*cover/);
-    expect(shell).not.toMatch(/\[dir=['"]?rtl/); // English only: no right-to-left rules remain
     expect(shell).not.toContain('masthead__matrix'); // the Matrix left the heading
   });
 

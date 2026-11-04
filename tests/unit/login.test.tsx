@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { LoginScreen } from '../../src/features/login/LoginScreen';
+import ar from '../../src/i18n/ar.json';
 import { I18nProvider } from '../../src/i18n/I18nProvider';
 import { ServiceError } from '../../src/services/types';
 import type { AuthService, Session } from '../../src/services/types';
@@ -115,5 +116,22 @@ describe('LoginScreen', () => {
     expect(e).toHaveAttribute('dir', 'ltr');
     expect(e).toHaveAttribute('autocomplete', 'email');
     expect(e).toHaveAttribute('type', 'email');
+  });
+});
+
+describe('LoginScreen in Arabic (RTL)', () => {
+  it('shows Arabic labels and errors, and keeps the email and passport fields left-to-right', async () => {
+    render(
+      <I18nProvider initialLocale="ar">
+        <LoginScreen auth={makeAuth(async () => session)} onLoggedIn={vi.fn()} />
+      </I18nProvider>,
+    );
+    expect(document.documentElement.dir).toBe('rtl');
+    const email = screen.getByLabelText(ar['login.email']);
+    const passport = screen.getByLabelText(ar['login.passport']);
+    expect(email).toHaveAttribute('dir', 'ltr');
+    expect(passport).toHaveAttribute('dir', 'ltr');
+    await userEvent.setup().click(screen.getByRole('button', { name: ar['login.submit'] }));
+    expect(await screen.findAllByText(ar['error.required'])).toHaveLength(2);
   });
 });

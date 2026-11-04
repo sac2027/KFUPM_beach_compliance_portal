@@ -21,12 +21,12 @@ describe('compliance-terms.json', () => {
 
   it('has non-empty English for every user-visible string', () => {
     for (const t of terms.terms) {
-      for (const loc of ['en'] as const) {
+      for (const loc of ['en', 'ar'] as const) {
         expect(t.title[loc].trim(), `${t.id} title ${loc}`).not.toBe('');
         expect(termText(t, loc, terms.links).trim().length, `${t.id} body ${loc}`).toBeGreaterThan(40);
       }
     }
-    for (const loc of ['en'] as const) {
+    for (const loc of ['en', 'ar'] as const) {
       expect(terms.document.title[loc]).toBeTruthy();
       expect(terms.document.intro[loc]).toBeTruthy();
       expect(terms.document.closing[loc]).toBeTruthy();
@@ -35,7 +35,7 @@ describe('compliance-terms.json', () => {
 
   it('resolves every linkId and uses https URLs only', () => {
     for (const t of terms.terms) {
-      for (const loc of ['en'] as const) {
+      for (const loc of ['en', 'ar'] as const) {
         for (const seg of t.body[loc]) {
           if ('linkId' in seg) expect(terms.links[seg.linkId], seg.linkId).toBeDefined();
         }
@@ -45,11 +45,6 @@ describe('compliance-terms.json', () => {
       expect(link.url, id).toMatch(/^https:\/\//);
       expect(link.label.en, id).toBeTruthy();
     }
-  });
-
-  it('has no Arabic text left in the policy file', () => {
-    expect(JSON.stringify(raw)).not.toMatch(/[\u0600-\u06FF]/);
-    expect(JSON.stringify(raw)).not.toContain('"ar"');
   });
 
   it('keeps term 3 at the docx base wording: appearance spelled correctly, no tracked "ensure that" suggestion', () => {

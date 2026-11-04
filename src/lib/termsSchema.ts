@@ -9,11 +9,10 @@ export const TERM_IDS = [
   'reporting',
 ] as const;
 export type TermId = (typeof TERM_IDS)[number];
-/** English only. The text keeps its `{ en: … }` shape so a language can be added back later without reshaping the JSON. */
-export type Locale = 'en';
+export type Locale = 'en' | 'ar';
 
 const text = v.pipe(v.string(), v.trim(), v.minLength(1, 'must not be empty'));
-const bilingual = v.object({ en: text });
+const bilingual = v.object({ en: text, ar: text });
 
 /** A body is a list of segments so staff can edit wording and links without touching markup. */
 const segment = v.union([
@@ -23,6 +22,7 @@ const segment = v.union([
 ]);
 const body = v.object({
   en: v.pipe(v.array(segment), v.minLength(1, 'must have at least one segment')),
+  ar: v.pipe(v.array(segment), v.minLength(1, 'must have at least one segment')),
 });
 
 const link = v.object({
@@ -36,7 +36,7 @@ const review = v.picklist(['approved', 'needs-review']);
 
 const termsSchema = v.pipe(
   v.object({
-    meta: v.object({ source: v.string(), reviewStatus: v.object({ en: review }) }),
+    meta: v.object({ source: v.string(), reviewStatus: v.object({ en: review, ar: review }) }),
     document: v.object({ ref: text, stage: bilingual, title: bilingual, intro: bilingual, closing: bilingual }),
     links: v.record(v.string(), link),
     terms: v.pipe(
@@ -49,9 +49,11 @@ const termsSchema = v.pipe(
     const { terms, links } = dataset.value;
     terms.forEach((t, i) => {
       if (t.id !== TERM_IDS[i]) addIssue({ message: `terms.${i}.id must be "${TERM_IDS[i]}" (got "${t.id}")` });
-      for (const seg of t.body.en) {
-        if ('linkId' in seg && !(seg.linkId in links)) {
-          addIssue({ message: `terms.${i}.body.en references unknown link "${seg.linkId}"` });
+      for (const loc of ['en', 'ar'] as const) {
+        for (const seg of t.body[loc]) {
+          if ('linkId' in seg && !(seg.linkId in links)) {
+            addIssue({ message: `terms.${i}.body.${loc} references unknown link "${seg.linkId}"` });
+          }
         }
       }
     });

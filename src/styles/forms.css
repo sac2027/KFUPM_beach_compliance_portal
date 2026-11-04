@@ -56,6 +56,11 @@
   border-color: var(--error);
 }
 
+/* LTR data (email, passport) sits flush with the labels in an RTL page. */
+[dir='rtl'] .field__input[dir='ltr'] {
+  text-align: end;
+}
+
 .field__hint,
 .field__error {
   margin: 0;

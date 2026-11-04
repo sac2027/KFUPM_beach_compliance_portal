@@ -1,15 +1,15 @@
 import type { Locale } from './termsSchema';
 
-/** Gregorian calendar and Latin digits, so every printed date reads the same. */
-const TAGS: Record<Locale, string> = { en: 'en-GB-u-ca-gregory' };
+/** Gregorian calendar and Latin digits in both languages, so every printed date reads the same. */
+const tag = (locale: Locale) => (locale === 'ar' ? 'ar-u-nu-latn-ca-gregory' : 'en-GB-u-ca-gregory');
 
 export function formatDate(iso: string, locale: Locale, timeZone?: string): string {
-  return new Intl.DateTimeFormat(TAGS[locale], { day: 'numeric', month: 'long', year: 'numeric', timeZone }).format(new Date(iso));
+  return new Intl.DateTimeFormat(tag(locale), { day: 'numeric', month: 'long', year: 'numeric', timeZone }).format(new Date(iso));
 }
 
 /** Date and 24-hour time, ending in the time zone (e.g. `13:15 GMT+3`). */
 export function formatDateTime(iso: string, locale: Locale, timeZone?: string): string {
-  return new Intl.DateTimeFormat(TAGS[locale], {
+  return new Intl.DateTimeFormat(tag(locale), {
     day: 'numeric',
     month: 'long',
     year: 'numeric',

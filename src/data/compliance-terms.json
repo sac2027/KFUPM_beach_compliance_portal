@@ -2,29 +2,35 @@
   "meta": {
     "source": "English title, intro and terms 1-2 are verbatim from the legacy Google Site (Full_Page_Embed.pdf, captured 2026-10-29). Terms 3-5 and the closing are from International_Students_Declaration_Form_Dec_19_EDIT_suggestions.docx with its tracked suggestions NOT applied (the word 'that' in term 3 is left out); the only edit is correcting the docx spelling 'apperance' to 'appearance' in term 3.",
     "reviewStatus": {
-      "en": "needs-review"
+      "en": "needs-review",
+      "ar": "needs-review"
     }
   },
   "document": {
     "ref": "KFUPM-INTL-PACF",
     "stage": {
-      "en": "Pre-Arrival State"
+      "en": "Pre-Arrival State",
+      "ar": "مرحلة ما قبل الوصول"
     },
     "title": {
-      "en": "Pre-Arrival Compliance Form for International Students"
+      "en": "Pre-Arrival Compliance Form for International Students",
+      "ar": "نموذج الالتزام قبل الوصول للطلاب الدوليين"
     },
     "intro": {
-      "en": "As an international student at King Fahd University of Petroleum & Minerals, I understand that my stay in the Kingdom of Saudi Arabia requires full compliance with the country’s laws, cultural norms, and University policies. By signing this form, I acknowledge my responsibilities and agree to the following terms:"
+      "en": "As an international student at King Fahd University of Petroleum & Minerals, I understand that my stay in the Kingdom of Saudi Arabia requires full compliance with the country’s laws, cultural norms, and University policies. By signing this form, I acknowledge my responsibilities and agree to the following terms:",
+      "ar": "بصفتي طالبًا دوليًا في جامعة الملك فهد للبترول والمعادن، أدرك أن إقامتي في المملكة العربية السعودية تتطلب الالتزام التام بأنظمة المملكة وقيمها الثقافية وسياسات الجامعة. وبتوقيعي على هذا النموذج، أقرّ بمسؤولياتي وأوافق على الشروط الآتية:"
     },
     "closing": {
-      "en": "By signing below, I affirm that I have read, understood, and agree to comply with the above responsibilities during my time as a student in the Kingdom of Saudi Arabia."
+      "en": "By signing below, I affirm that I have read, understood, and agree to comply with the above responsibilities during my time as a student in the Kingdom of Saudi Arabia.",
+      "ar": "بتوقيعي أدناه، أؤكد أنني قرأتُ المسؤوليات المذكورة أعلاه وفهمتُها وأوافق على الالتزام بها طوال مدة دراستي في المملكة العربية السعودية."
     }
   },
   "links": {
     "pdr-pdf": {
       "url": "https://laws.boe.gov.sa/Files/Download/?attId=737b85fd-a0f0-4b9a-83e8-adbb01042dc7",
       "label": {
-        "en": "Official Public Decency Regulations PDF"
+        "en": "Official Public Decency Regulations PDF",
+        "ar": "النص الرسمي للائحة الذوق العام (PDF)"
       },
       "status": "unverified",
       "note": "URL from the legacy Google Site. The docx cites https://www.moi.gov.sa/wps/wcm/connect/f2a499cd-551b-452e-b511-47a7149fb1d9/Public%2BDecency%2BRegulations.pdf and flags it as not working."
@@ -32,7 +38,8 @@
     "pdr-overview": {
       "url": "https://saudipedia.com/en/public-decency-in-saudi-arabia",
       "label": {
-        "en": "Overview"
+        "en": "Overview",
+        "ar": "نظرة عامة"
       },
       "status": "unverified",
       "note": "URL from the legacy Google Site."
@@ -40,7 +47,8 @@
     "visit-saudi-culture": {
       "url": "https://www.visitsaudi.com/en/stories/saudi-culture-and-customs",
       "label": {
-        "en": "Saudi Culture and Customs Guide"
+        "en": "Saudi Culture and Customs Guide",
+        "ar": "دليل الثقافة والعادات السعودية"
       },
       "status": "unverified",
       "note": "URL from the legacy Google Site and the docx."
@@ -50,7 +58,8 @@
     {
       "id": "saudi-laws",
       "title": {
-        "en": "Compliance with Saudi Laws and Regulations"
+        "en": "Compliance with Saudi Laws and Regulations",
+        "ar": "الالتزام بالأنظمة واللوائح السعودية"
       },
       "body": {
         "en": [
@@ -81,13 +90,43 @@
           {
             "text": ") and other relevant legal resources. I acknowledge that violations of these laws may result in legal consequences that could affect my status in the country."
           }
+        ],
+        "ar": [
+          {
+            "text": "ألتزم بجميع الأنظمة واللوائح المعمول بها في المملكة العربية السعودية، ومنها "
+          },
+          {
+            "strong": "لائحة الذوق العام"
+          },
+          {
+            "text": " التي تنظّم السلوك في الأماكن العامة والزي والتعاملات. وقد اطّلعتُ على "
+          },
+          {
+            "strong": "لائحة الذوق العام الصادرة عن وزارة الداخلية"
+          },
+          {
+            "text": " ("
+          },
+          {
+            "linkId": "pdr-pdf"
+          },
+          {
+            "text": " • "
+          },
+          {
+            "linkId": "pdr-overview"
+          },
+          {
+            "text": ") وعلى غيرها من المصادر النظامية ذات الصلة. وأقرّ بأن مخالفة هذه الأنظمة قد تترتب عليها عواقب نظامية قد تؤثر في وضعي داخل المملكة."
+          }
         ]
       }
     },
     {
       "id": "cultural-norms",
       "title": {
-        "en": "Respect for Saudi Cultural Norms"
+        "en": "Respect for Saudi Cultural Norms",
+        "ar": "احترام الأعراف الثقافية السعودية"
       },
       "body": {
         "en": [
@@ -100,18 +139,35 @@
           {
             "text": ") to familiarize myself with local expectations. I understand that respecting these norms is essential for fostering a positive experience for myself and the local community."
           }
+        ],
+        "ar": [
+          {
+            "text": "سأحترم القيم الثقافية والعادات والتقاليد في المملكة العربية السعودية، بما في ذلك حسن السلوك واللباس المناسب وآداب التواصل. وقد اطّلعتُ على الإرشادات الثقافية التي تقدّمها منصة Visit Saudi ("
+          },
+          {
+            "linkId": "visit-saudi-culture"
+          },
+          {
+            "text": ") للتعرّف على ما هو متوقع في المجتمع المحلي. وأدرك أن احترام هذه الأعراف أمر أساسي لتكوين تجربة إيجابية لي وللمجتمع المحلي."
+          }
         ]
       }
     },
     {
       "id": "university-policies",
       "title": {
-        "en": "Adherence to University Policies"
+        "en": "Adherence to University Policies",
+        "ar": "الالتزام بسياسات الجامعة"
       },
       "body": {
         "en": [
           {
             "text": "I will comply with all the University’s policies in the Code of Conduct, particularly those related to academic integrity, behavior, appearance, and responsible use of social media. I will ensure my actions align with University standards and do not bring disrepute to the institution."
+          }
+        ],
+        "ar": [
+          {
+            "text": "سألتزم بجميع سياسات الجامعة الواردة في مدونة قواعد السلوك، ولا سيما ما يتعلق منها بالنزاهة الأكاديمية والسلوك والمظهر والاستخدام المسؤول لوسائل التواصل الاجتماعي. وسأحرص على أن تتوافق تصرفاتي مع معايير الجامعة وألا تسيء إلى سمعتها."
           }
         ]
       }
@@ -119,12 +175,18 @@
     {
       "id": "representation",
       "title": {
-        "en": "Representation of the University"
+        "en": "Representation of the University",
+        "ar": "تمثيل الجامعة"
       },
       "body": {
         "en": [
           {
             "text": "As a student affiliated with the University, I understand that my conduct reflects on the institution. I will act in a manner that upholds the University’s reputation both on and off campus."
+          }
+        ],
+        "ar": [
+          {
+            "text": "بصفتي طالبًا منتسبًا إلى الجامعة، أدرك أن سلوكي ينعكس على صورة المؤسسة. وسأتصرف بما يحفظ سمعة الجامعة داخل الحرم الجامعي وخارجه."
           }
         ]
       }
@@ -132,12 +194,18 @@
     {
       "id": "reporting",
       "title": {
-        "en": "Reporting and Understanding Consequences"
+        "en": "Reporting and Understanding Consequences",
+        "ar": "الإبلاغ وفهم العواقب"
       },
       "body": {
         "en": [
           {
             "text": "I will report any incidents or situations that may involve legal or disciplinary concerns to the appropriate University authorities. I understand that failure to comply with Saudi laws, cultural norms, or University policies may result in disciplinary action, including suspension or termination of my enrollment, and may lead to legal consequences under Saudi law."
+          }
+        ],
+        "ar": [
+          {
+            "text": "سأُبلغ الجهات المختصة في الجامعة عن أي حوادث أو مواقف قد تنطوي على مسائل نظامية أو تأديبية. وأدرك أن عدم الالتزام بأنظمة المملكة أو أعرافها الثقافية أو سياسات الجامعة قد يؤدي إلى إجراءات تأديبية، تشمل إيقاف قيدي أو إنهاءه، وقد يترتب عليه مساءلة نظامية بموجب أنظمة المملكة العربية السعودية."
           }
         ]
       }

@@ -10,6 +10,10 @@
   --shift: 12px;
 }
 
+[dir='rtl'] .step {
+  --dir: -1;
+}
+
 .step[data-direction='back'] {
   --shift: -12px;
 }

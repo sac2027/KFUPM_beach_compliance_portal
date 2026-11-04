@@ -37,11 +37,11 @@ export function PrintSheet({
   signature: Signature;
   receipt: SubmissionReceipt;
 }) {
-  const { t, locale } = useI18n();
+  const { t, locale, dir } = useI18n();
   const doc = TERMS.document;
   const terms = TERMS.terms.filter((term) => acceptedTermIds.includes(term.id));
   return (
-    <article className="print-sheet">
+    <article className="print-sheet" lang={locale} dir={dir}>
       <header className="print-sheet__head">
         <img className="print-sheet__logo" src="/brand/full-stacked.png" alt={t('brand.logoAlt')} width={240} height={98} />
         <img className="print-sheet__seal" src="/brand/seal/seal-legacy.webp" alt={t('print.sealAlt')} width={96} height={96} />

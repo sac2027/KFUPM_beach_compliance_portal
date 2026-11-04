@@ -38,6 +38,6 @@
 
   /* Type stacks. Headlines: KFUPM Display. Body and ALL user-entered text: IBM Plex Sans Arabic.
      Fonts are registered in Task 3; Segoe UI → system-ui is the brand's fallback chain. */
-  --font-display: 'KFUPM', 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'KFUPM', 'IBM Plex Sans Arabic', 'Segoe UI', system-ui, sans-serif;
   --font-body: 'IBM Plex Sans Arabic', 'Segoe UI', system-ui, sans-serif;
 }

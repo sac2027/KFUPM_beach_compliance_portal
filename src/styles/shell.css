@@ -24,19 +24,32 @@
   flex: none;
 }
 
-.masthead__title {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 1.125rem;
-  letter-spacing: 0.01em;
+.masthead .lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-block-size: 2.75rem;
+  padding-inline: 0.75rem;
+  background: transparent;
   color: var(--beige);
+  border: 0;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.35em;
+  transition: text-decoration-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
 
-@media (max-width: 40rem) {
-  /* The page title sits directly below; on a phone the bar keeps only the mark. */
-  .masthead__title {
-    display: none;
+@media (hover: hover) and (pointer: fine) {
+  .masthead .lang-toggle:hover {
+    text-decoration-color: var(--beige);
   }
+}
+
+.masthead .lang-toggle:active {
+  transform: translateY(1px);
 }
 
 .masthead :focus-visible {
