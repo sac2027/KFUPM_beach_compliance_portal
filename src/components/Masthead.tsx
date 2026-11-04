@@ -8,6 +8,7 @@ export function Masthead() {
     <header className="masthead">
       <div className="masthead__bar">
         <img className="masthead__logo" src="/brand/full-stacked-negative.png" alt={t('brand.logoAlt')} width={196} height={80} fetchPriority="high" />
+        <p className="masthead__title">{t('masthead.title')}</p>
         <LanguageToggle />
       </div>
     </header>

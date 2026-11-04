@@ -28,9 +28,9 @@ import { STUDENTS } from './students';
     expect((await page.locator('h1').innerText()).length).toBeGreaterThan(100);
     await fits('login');
 
-    // Longest valid typed input first (20-char passport, 100 unbroken letters, 254-char email): the form must hold it.
+    // Longest valid typed input first (20-char password, 100 unbroken letters, 254-char email): the form must hold it.
     await page.getByLabel(s.email).fill(`${'a'.repeat(64)}@${'b'.repeat(63)}.${'c'.repeat(63)}.${'d'.repeat(57)}.com`);
-    await page.getByLabel(s.passport).fill('AB1234567890123456CD');
+    await page.getByLabel(s.password).fill('AB1234567890123456CD');
     await fits('login (long input)');
     // Then sign in with the longest realistic address.
     await fillLogin(page, STUDENTS.longEmail);
@@ -104,7 +104,7 @@ test.describe('worst case in Arabic (RTL)', () => {
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
     await fits(page, 'login');
     await page.getByLabel(ar('login.email')).fill(STUDENTS.longEmail.email);
-    await page.getByLabel(ar('login.passport')).fill(STUDENTS.longEmail.passport);
+    await page.getByLabel(ar('login.password')).fill(STUDENTS.longEmail.password);
     await page.locator('button[type="submit"]').click();
     await expect(page.locator('#terms-heading')).toBeFocused({ timeout: 10_000 });
     await fits(page, 'terms');

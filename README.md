@@ -1,7 +1,7 @@
 # KFUPM University Beach Compliance Portal
 
 The bilingual (English and Arabic) form students complete before using the University Beach: they sign in with their
-email and passport number, confirm five terms of the University and University Beach Regulations &
+email and password, confirm five terms of the University and University Beach Regulations &
 Procedures, sign, and receive the signed declaration by email as a PDF. Nothing is stored on a server.
 
 - **Staff editing the wording, IT, deploying:** read [`docs/HANDOFF.md`](docs/HANDOFF.md); the Cloudflare setup and

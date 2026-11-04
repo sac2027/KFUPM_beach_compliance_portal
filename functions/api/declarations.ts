@@ -32,5 +32,5 @@ export const onRequestPost = handle<Env>(async ({ request, env }) => {
   if (!isPdf(bytes)) return error(400, 'invalid_document', 'The document must be a PDF.');
 
   const result = await sendDeclarationEmail(env, { to: email, locale, referenceNumber, submittedAt, pdf: bytes });
-  return json(200, { emailStatus: result.status, emailTo: maskEmail(email) });
+  return json(200, { emailStatus: result.status, emailTo: maskEmail(email), ...(result.status === 'failed' ? { emailError: result.error } : {}) });
 });

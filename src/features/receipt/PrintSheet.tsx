@@ -1,5 +1,5 @@
 import { useI18n } from '../../i18n/I18nProvider';
-import { formatDateTime, maskPassport } from '../../lib/format';
+import { formatDateTime } from '../../lib/format';
 import { loadTerms } from '../../lib/terms';
 import type { Segment, TermId } from '../../lib/termsSchema';
 import type { Session, Signature, SubmissionReceipt } from '../../services/types';
@@ -23,7 +23,7 @@ function Plain({ segments }: { segments: Segment[] }) {
  * The signed declaration as a formal document. Hidden on screen, the only thing shown when printing
  * or saving as PDF: letterhead (Full Stacked lockup and the Seal, which is reserved for formal
  * documents), the full terms the student confirmed, the signature, and the receipt reference.
- * The passport number is masked. It is laid out in physical units (mm, pt) so that the browser's Print and the
+ * Only the email identifies the student. It is laid out in physical units (mm, pt) so that the browser's Print and the
  * off-screen capture that makes the PDF file render the very same page: one A4 sheet for the standard wording.
  */
 export function PrintSheet({
@@ -97,10 +97,6 @@ export function PrintSheet({
             <dt>{t('print.email')}</dt>
             <dd dir="ltr" translate="no">
               {session.student.email}
-            </dd>
-            <dt>{t('print.passport')}</dt>
-            <dd dir="ltr" translate="no">
-              {maskPassport(session.student.passportLast4)}
             </dd>
             <dt>{t('print.signedOn')}</dt>
             <dd>{formatDateTime(receipt.receivedAt, locale)}</dd>

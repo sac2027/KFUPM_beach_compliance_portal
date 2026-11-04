@@ -29,7 +29,7 @@ test('Arabic: every step is mirrored, fits at this width, has no axe violations,
   expect(logo.x + logo.width / 2).toBeGreaterThan(vw / 2);
   expect(toggle.x + toggle.width / 2).toBeLessThan(vw / 2);
   expect(await page.locator('.masthead__logo').evaluate((e) => getComputedStyle(e).transform)).toBe('none');
-  for (const id of ['email', 'passport']) {
+  for (const id of ['email', 'password']) {
     const input = page.locator(`#${id}`);
     await expect(input).toHaveAttribute('dir', 'ltr'); // Latin data stays left-to-right
     expect(await input.evaluate((e) => getComputedStyle(e).textAlign)).toMatch(/^(end|right)$/);
@@ -43,7 +43,7 @@ test('Arabic: every step is mirrored, fits at this width, has no axe violations,
   await scan(page, 'login errors');
 
   await page.getByLabel(ar('login.email')).fill(STUDENTS.mai.email);
-  await page.getByLabel(ar('login.passport')).fill(STUDENTS.mai.passport);
+  await page.getByLabel(ar('login.password')).fill(STUDENTS.mai.password);
   await page.getByRole('button', { name: ar('login.submit') }).click();
   await expect(page.locator('#terms-heading')).toBeFocused({ timeout: 10_000 });
 

@@ -72,12 +72,12 @@ test('keyboard only: the whole flow can be completed, in a sensible order, with 
     stops.push(f.what);
   };
 
-  // Login: skip link, the language switch, then the two fields (email, passport) and the button, in reading order.
+  // Login: skip link, the language switch, then the two fields (email, password) and the button, in reading order.
   for (let i = 0; i < 5; i++) await tab();
   expect(stops.map((s) => s.split('.')[0])).toEqual(['A', 'BUTTON', 'INPUT', 'INPUT', 'BUTTON']);
   const me = STUDENTS.mai;
-  await page.keyboard.press('Shift+Tab'); // Passport
-  await page.keyboard.type(me.passport);
+  await page.keyboard.press('Shift+Tab'); // Password
+  await page.keyboard.type(me.password);
   await page.keyboard.press('Shift+Tab'); // Email
   await page.keyboard.type(me.email);
   await page.keyboard.press('Enter'); // submit from inside a field
@@ -141,7 +141,7 @@ test.describe('other guideline checks', () => {
         void d.dismiss();
       });
       await page.goto('/');
-      await fillLogin(page, stopAt === 'login' ? { email: '', passport: '' } : GOOD);
+      await fillLogin(page, stopAt === 'login' ? { email: '', password: '' } : GOOD);
       if (stopAt === 'terms') await page.locator('.term').first().waitFor();
       await page.locator('body').click({ position: { x: 5, y: 5 } }); // a user gesture, which browsers require before they will ask
       await page.close({ runBeforeUnload: true });

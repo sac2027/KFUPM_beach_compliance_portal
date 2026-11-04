@@ -15,7 +15,7 @@ test('the PDF is sent to the typed address, and the download is a one-page A4 PD
   const ref = (await page.locator('.receipt__ref').textContent())!;
   expect(ref).toMatch(/^UBR-\d{4}-[A-HJ-NP-Z2-9]{6}$/);
   await settleReceipt(page);
-  await expect(page.locator('.receipt__email--sent')).toContainText(creds.email); // EMAIL_MODE=log: reported as sent
+  await expect(page.locator('.receipt__email--logged')).toContainText('Test mode'); // EMAIL_MODE=log: honest about sending nothing
 
   const [download] = await Promise.all([page.waitForEvent('download'), page.getByRole('button', { name: 'Download PDF' }).click()]);
   expect(download.suggestedFilename()).toBe(`KFUPM-${ref}.pdf`);

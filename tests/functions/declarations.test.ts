@@ -49,8 +49,10 @@ describe('POST /api/declarations', () => {
   });
 
   it('reports failed (not an error) when Resend refuses, and when the key is missing', async () => {
-    vi.stubGlobal('fetch', vi.fn(async () => new Response('no', { status: 403 })));
-    expect((await (await call(request(), { ...logEnv, EMAIL_MODE: 'resend', RESEND_API_KEY: 'k' })).json()).emailStatus).toBe('failed');
+    vi.stubGlobal('fetch', vi.fn(async () => new Response('You can only send testing emails to your own email address', { status: 403 })));
+    const refused = await (await call(request(), { ...logEnv, EMAIL_MODE: 'resend', RESEND_API_KEY: 'k' })).json();
+    expect(refused.emailStatus).toBe('failed');
+    expect(refused.emailError).toContain('resend 403'); // the reason is returned so whoever runs the portal can see it
     expect((await (await call(request(), { ...logEnv, EMAIL_MODE: 'resend' })).json()).emailStatus).toBe('failed');
   });
 

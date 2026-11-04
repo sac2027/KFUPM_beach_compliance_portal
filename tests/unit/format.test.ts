@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatDate, formatDateTime, maskPassport } from '../../src/lib/format';
+import { formatDate, formatDateTime } from '../../src/lib/format';
 
 const ISO = '2026-11-01T10:06:30.000Z';
 
@@ -20,13 +20,5 @@ describe('formatDate / formatDateTime (Gregorian, Latin digits)', () => {
   });
   it('never emits Arabic-Indic digits', () => {
     expect(formatDateTime(ISO, 'en', 'UTC')).not.toMatch(/[٠-٩]/);
-  });
-});
-
-describe('maskPassport', () => {
-  it('shows only the last four characters, whether given the full number or just those four', () => {
-    expect(maskPassport('N1234567')).toBe('••••4567');
-    expect(maskPassport('4567')).toBe('••••4567');
-    expect(maskPassport('')).toBe('');
   });
 });

@@ -87,7 +87,7 @@ export async function sendDeclarationEmail(env: EmailEnv, m: DeclarationEmail, f
       headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' },
       body: JSON.stringify({ ...msg, attachments: [{ filename: msg.attachments[0]!.filename, content: toBase64(m.pdf) }] }),
     });
-    if (!res.ok) return { status: 'failed', error: `resend ${res.status}` };
+    if (!res.ok) return { status: 'failed', error: `resend ${res.status}: ${(await res.text()).replace(/\s+/g, ' ').slice(0, 240)}` };
     const data = (await res.json()) as { id?: string };
     return { status: 'sent', messageId: data.id ?? '' };
   } catch (err) {

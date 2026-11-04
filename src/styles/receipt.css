@@ -119,3 +119,9 @@
   margin: 0;
   color: var(--error-text);
 }
+
+.receipt__email-reason {
+  margin: 0;
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}

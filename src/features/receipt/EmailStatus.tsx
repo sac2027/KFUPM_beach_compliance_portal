@@ -14,7 +14,15 @@ export function EmailStatus({ status, onRetry, retrying }: { status: DocumentSta
       </p>
     );
   }
-  if (status.state === 'sent' || status.state === 'logged') {
+  if (status.state === 'logged') {
+    return (
+      <p className="receipt__email receipt__email--logged" role="status">
+        <Icon name="mail-failed" />
+        <span>{t('receipt.email.logged')}</span>
+      </p>
+    );
+  }
+  if (status.state === 'sent') {
     return (
       <p className="receipt__email receipt__email--sent" role="status">
         <Icon name="mail-sent" />
@@ -28,6 +36,11 @@ export function EmailStatus({ status, onRetry, retrying }: { status: DocumentSta
         <Icon name="mail-failed" />
         <span>{t('receipt.email.failed', { email })}</span>
       </p>
+      {status.detail && (
+        <p className="receipt__email-reason" dir="ltr" translate="no">
+          {t('receipt.email.reason', { reason: status.detail })}
+        </p>
+      )}
       <Button type="button" variant="quiet" busy={retrying} onClick={onRetry}>
         <Icon name="retry" />
         <span>{t('receipt.email.retry')}</span>

@@ -24,7 +24,7 @@ export const dbService: DbService = {
     form.set('referenceNumber', request.referenceNumber);
     form.set('submittedAt', request.submittedAt);
     form.set('pdf', new File([pdf], attachmentName(request.referenceNumber), { type: 'application/pdf' }));
-    const r = await api<{ emailStatus: DocumentStatus['state']; emailTo: string }>('/api/declarations', { method: 'POST', body: form });
-    return { state: r.emailStatus, emailTo: r.emailTo };
+    const r = await api<{ emailStatus: DocumentStatus['state']; emailTo: string; emailError?: string }>('/api/declarations', { method: 'POST', body: form });
+    return { state: r.emailStatus, emailTo: r.emailTo, ...(r.emailError ? { detail: r.emailError } : {}) };
   },
 };

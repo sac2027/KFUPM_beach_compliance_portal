@@ -57,7 +57,6 @@ test('the masthead carries the language switch at the opposite end from the lock
   await open(page);
   const [toggle, logo] = await Promise.all([page.locator('.lang-toggle').boundingBox(), page.locator('.masthead__logo').boundingBox()]);
   expect(toggle!.x).toBeGreaterThan(logo!.x + logo!.width);
-  expect(await page.locator('.masthead__title').count()).toBe(0);
 });
 
 test('the footer names the Deanship only', async ({ page }) => {
@@ -79,4 +78,18 @@ test('the page title fits in two lines at every width from 390 px up', async ({ 
   test.skip(page.viewportSize()!.width < 390, 'a 320 px phone cannot fit the title in two lines');
   const lines = await page.locator('h1').evaluate((e) => Math.round(e.getBoundingClientRect().height / parseFloat(getComputedStyle(e).lineHeight)));
   expect(lines).toBeLessThanOrEqual(2);
+});
+
+test('the header carries the portal title between the lockup and the language switch on wider screens', async ({ page }) => {
+  await open(page);
+  const title = page.locator('.masthead__title');
+  await expect(title).toHaveText('University Beach Portal');
+  if (page.viewportSize()!.width > 640) {
+    await expect(title).toBeVisible();
+    const [t, logo, toggle] = await Promise.all([title.boundingBox(), page.locator('.masthead__logo').boundingBox(), page.locator('.lang-toggle').boundingBox()]);
+    expect(t!.x).toBeGreaterThan(logo!.x + logo!.width);
+    expect(t!.x + t!.width).toBeLessThan(toggle!.x);
+  } else {
+    await expect(title).toBeHidden();
+  }
 });

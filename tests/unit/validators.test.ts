@@ -1,7 +1,7 @@
 import * as v from 'valibot';
 import { describe, expect, it } from 'vitest';
 import { normaliseDigits, stripInvisible } from '../../src/lib/normalise';
-import { emailSchema, loginSchema, passportSchema } from '../../src/lib/validators';
+import { emailSchema, loginSchema, passwordSchema } from '../../src/lib/validators';
 
 const ok = (schema: v.GenericSchema, input: unknown) => v.safeParse(schema, input).success;
 const out = (schema: v.GenericSchema, input: unknown) => (v.parse(schema, input) as string);
@@ -21,14 +21,14 @@ describe('normaliseDigits', () => {
   });
 });
 
-describe('passport', () => {
-  it.each(['A1234567', 'AB12345678', 'ab 123-4567', 'N١٢٣٤٥٦٧'])('accepts %s', (p) => expect(ok(passportSchema, p)).toBe(true));
-  it('normalises to upper-case ASCII without spaces or hyphens', () => {
-    expect(out(passportSchema, 'ab 123-4567')).toBe('AB1234567');
-    expect(out(passportSchema, 'N١٢٣٤٥٦٧')).toBe('N1234567');
+describe('password', () => {
+  it.each(['abcdefgh', 'Correct Horse 9!', 'ﾟp@ss wörd٣', 'x'.repeat(128)])('accepts %j', (p) => expect(ok(passwordSchema, p)).toBe(true));
+  it('is never trimmed, upper-cased or otherwise altered', () => {
+    expect(out(passwordSchema, '  Mixed Case 123  ')).toBe('  Mixed Case 123  ');
+    expect(out(passwordSchema, 'N١٢٣٤٥٦٧٨')).toBe('N١٢٣٤٥٦٧٨');
   });
-  it.each(['P<', 'A123', 'A'.repeat(21), '!!!!!!!!', 'محمد12345'])('rejects %s', (p) => expect(msg(passportSchema, p)).toBe('error.passport'));
-  it('reports empty as required', () => expect(msg(passportSchema, '  ')).toBe('error.required'));
+  it.each(['a', 'short12', 'x'.repeat(129)])('rejects %j with the password message', (p) => expect(msg(passwordSchema, p)).toBe('error.password'));
+  it('reports empty as required', () => expect(msg(passwordSchema, '')).toBe('error.required'));
 });
 
 describe('email', () => {
@@ -40,11 +40,11 @@ describe('email', () => {
 
 describe('loginSchema', () => {
   it('returns normalised values for both fields, in form order', () => {
-    const out = v.parse(loginSchema, { email: ' M@Example.com', passportNumber: 'a1234567' });
-    expect(out).toEqual({ email: 'm@example.com', passportNumber: 'A1234567' });
-    expect(Object.keys(out)).toEqual(['email', 'passportNumber']);
+    const out = v.parse(loginSchema, { email: ' M@Example.com', password: 'a1234567' });
+    expect(out).toEqual({ email: 'm@example.com', password: 'a1234567' });
+    expect(Object.keys(out)).toEqual(['email', 'password']);
   });
   it('asks for nothing else: no name, phone or nationality', () => {
-    expect(Object.keys(loginSchema.entries)).toEqual(['email', 'passportNumber']);
+    expect(Object.keys(loginSchema.entries)).toEqual(['email', 'password']);
   });
 });

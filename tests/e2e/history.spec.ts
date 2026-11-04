@@ -43,7 +43,7 @@ test('Back from the terms asks first; declining stays, confirming returns to a c
   await page.getByRole('button', { name: 'Change my details' }).click();
   await page.getByRole('button', { name: 'Yes, sign in again' }).click();
   await expect(page.locator('#login-heading')).toBeVisible();
-  await expect(page.getByLabel('Passport number')).toHaveValue('');
+  await expect(page.getByLabel('Password')).toHaveValue('');
   await expect(page.getByRole('status')).toContainText(/terms you confirmed are kept/);
   await fillLogin(page, STUDENTS.mai);
   await expect(page.getByRole('checkbox', { checked: true })).toHaveCount(2); // the ticks came back

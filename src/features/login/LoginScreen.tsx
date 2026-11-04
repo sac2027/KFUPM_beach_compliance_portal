@@ -36,7 +36,7 @@ export function LoginScreen({ auth = authService, onLoggedIn, notice }: { auth?:
     resolver,
     mode: 'onBlur',
     reValidateMode: 'onChange',
-    defaultValues: { email: '', passportNumber: '' },
+    defaultValues: { email: '', password: '' },
   });
   const [pending, setPending] = useState(false);
   const [failure, setFailure] = useState<MessageKey | null>(null);
@@ -97,16 +97,17 @@ export function LoginScreen({ auth = authService, onLoggedIn, notice }: { auth?:
           {...register('email')}
         />
         <Field
-          id="passport"
-          label={t('login.passport')}
-          hint={t('login.passport.hint')}
-          error={err('passportNumber')}
+          id="password"
+          type="password"
+          label={t('login.password')}
+          hint={t('login.password.hint')}
+          error={err('password')}
           dir="ltr"
-          autoComplete="off"
-          autoCapitalize="characters"
+          autoComplete="current-password"
+          autoCapitalize="none"
           spellCheck={false}
-          maxLength={40}
-          {...register('passportNumber')}
+          maxLength={128}
+          {...register('password')}
         />
         {failure && (
           <p className="form__alert" role="alert">

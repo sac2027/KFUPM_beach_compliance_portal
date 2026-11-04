@@ -3,7 +3,7 @@ import type { Page } from '@playwright/test';
 
 export const L = {
   email: 'Email address',
-  passport: 'Passport number',
+  password: 'Password',
   signin: 'Sign in',
   cont: 'Continue to signature',
   submit: 'Sign and submit',
@@ -38,14 +38,14 @@ export const clipped = (page: Page) =>
       .map((el) => `${el.tagName}.${(el as HTMLElement).className}`),
   );
 
-export async function fillLogin(page: Page, p: { email: string; passport: string }) {
+export async function fillLogin(page: Page, p: { email: string; password: string }) {
   await page.getByLabel(L.email).fill(p.email);
-  await page.getByLabel(L.passport).fill(p.passport);
+  await page.getByLabel(L.password).fill(p.password);
   await page.getByRole('button', { name: L.signin }).click();
 }
 
 /** Signs in and waits for the terms step. */
-export async function signIn(page: Page, creds: { email: string; passport: string }) {
+export async function signIn(page: Page, creds: { email: string; password: string }) {
   await fillLogin(page, creds);
   await expect(page.locator('#terms-heading')).toBeFocused({ timeout: 10_000 });
 }
@@ -93,7 +93,7 @@ export const makePng = (page: Page, o: { w: number; h: number; ink: boolean; gro
 
 /** The receipt renders and uploads the PDF right after it opens; wait until that has settled before measuring it. */
 export async function settleReceipt(page: Page) {
-  await expect(page.locator('.receipt__email--sent, .receipt__email--failed')).toBeVisible({ timeout: 25_000 });
+  await expect(page.locator('.receipt__email--sent, .receipt__email--logged, .receipt__email--failed')).toBeVisible({ timeout: 25_000 });
   await expect(page.locator('[data-capture-stage]')).toHaveCount(0);
 }
 

@@ -20,9 +20,3 @@ export function formatDateTime(iso: string, locale: Locale, timeZone?: string): 
     timeZone,
   }).format(new Date(iso));
 }
-
-/** Shows only the last four characters: the printed copy leaves the student's hands. Accepts a full number or the last four. */
-export function maskPassport(passport: string): string {
-  if (passport.length === 0) return '';
-  return `••••${passport.slice(-4)}`;
-}

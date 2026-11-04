@@ -11,7 +11,7 @@ import type { Session } from '../../src/services/types';
 const TERMS = loadTerms();
 const session: Session = {
   sessionId: 's-1',
-  student: { email: 'mai@example.com', passportLast4: '4567' },
+  student: { email: 'mai@example.com' },
   issuedAt: '2026-11-01T10:00:00.000Z',
 };
 

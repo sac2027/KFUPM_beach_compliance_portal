@@ -39,7 +39,7 @@ In the Pages project: Settings, Variables and secrets, Add, type **Secret**, env
 | `RESEND_API_KEY` | The API key from step 5. |
 
 Then redeploy (push a commit, or Deployments, Retry). Open `https://<your-site>/api/health`. It must show
-`{"ok":true,"email":"resend","configured":true}`. If `configured` is false, the key is missing.
+`{"ok":true,"email":"resend","configured":true,"from":"…","bcc":true}`. If `configured` is false, the key is missing.
 
 ## 5. Email (Resend)
 
@@ -74,3 +74,15 @@ npm run dev                        # http://localhost:5173, hot reload, API prox
 ```
 
 In log mode the receipt reports the email as sent, but nothing leaves your machine.
+
+## 8. The email did not arrive: what to check
+
+The receipt tells the student what happened, and when a send fails it also shows the reason from Resend. Work through these in order:
+
+1. **Open `https://<your-site>/api/health`.**
+   - `"email":"log"` means the site is in test mode and sends nothing (the receipt says "Test mode"). Set `EMAIL_MODE` to `"resend"` in `wrangler.jsonc`, commit and push. A brand-new Pages project only uses `wrangler.jsonc` if it is built from this repository.
+   - `"configured":false` means `RESEND_API_KEY` is missing. Add it as a **Secret** in the new project (step 4), for the Production environment, then redeploy: secrets only reach a new deployment.
+2. **Sender and recipient.** With `EMAIL_FROM` at `onboarding@resend.dev`, Resend only delivers to the email address that owns the Resend account. Any other recipient is refused (the receipt shows "resend 403 … you can only send testing emails to your own email address"). To email students, verify the KFUPM domain in Resend (step 5) and set `EMAIL_FROM` to an address on it.
+3. **Resend's Emails log** shows every attempt, the recipient and the error.
+4. **Spam folder** for the first message from a new sender.
+5. **A wrong key** shows "resend 401". Create a new key with "Sending access" and replace the secret.

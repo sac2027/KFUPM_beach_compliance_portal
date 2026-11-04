@@ -11,7 +11,7 @@ import type { DbService, DocumentStatus, Session } from '../../src/services/type
 const TERMS = loadTerms();
 const session: Session = {
   sessionId: 's-1',
-  student: { email: 'mai@example.com', passportLast4: '4567' },
+  student: { email: 'mai@example.com' },
   issuedAt: '2026-11-01T10:00:00.000Z',
 };
 const receipt = { id: '11111111-1111-4111-8111-111111111111', referenceNumber: 'UBR-2026-K7M2QX', receivedAt: '2026-11-01T10:06:30.000Z' };
@@ -60,6 +60,17 @@ describe('ReceiptScreen (on screen)', () => {
     await waitFor(() => expect(onDocumentStatus).toHaveBeenCalledWith({ state: 'sent', emailTo: 'mai@example.com' }));
     expect(renderPdf).toHaveBeenCalledTimes(1);
     expect(db.sendDocument).toHaveBeenCalledWith({ email: 'mai@example.com', locale: 'en', referenceNumber: receipt.referenceNumber, submittedAt: receipt.receivedAt }, pdfBlob);
+  });
+
+  it('shows the reason a send failed, and is honest in test mode that nothing was sent', () => {
+    setup({ document: { state: 'failed', emailTo: 'mai@example.com', detail: 'resend 403: testing emails only' } });
+    expect(screen.getByText('Reason: resend 403: testing emails only')).toBeInTheDocument();
+  });
+
+  it('says in test mode that no email was sent (not that one was)', () => {
+    setup({ document: { state: 'logged', emailTo: 'mai@example.com' } });
+    expect(document.querySelector('.receipt__email--logged')).toHaveTextContent('Test mode: this server did not send any email');
+    expect(screen.queryByText(/has been emailed/)).toBeNull();
   });
 
   it('shows the email status line for each state, with retry only on failure', () => {
@@ -152,12 +163,11 @@ describe('printable signed declaration', () => {
     });
   });
 
-  it('shows who signed (by email), a masked passport, the dates, the reference and the signature image', () => {
+  it('shows who signed (by email), no password, the dates, the reference and the signature image', () => {
     setup();
     const text = sheet().textContent!;
     expect(text).toContain('mai@example.com');
-    expect(text).toContain('••••4567');
-    expect(text).not.toContain('N1234567'); // the full passport number is never printed
+    expect(text).not.toMatch(/password|passport/i); // nothing secret is ever printed
     expect(text).toContain('UBR-2026-K7M2QX');
     expect(within(sheet()).getByRole('img', { name: /signature/i })).toHaveAttribute('src', signature.dataUrl);
   });

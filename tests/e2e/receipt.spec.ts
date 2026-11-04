@@ -58,10 +58,10 @@ test('leaves no personal data in the URL or browser storage, and Finish wipes th
   await expect(page.getByRole('button', { name: 'Yes, clear my details' })).toBeFocused();
   await page.getByRole('button', { name: 'Yes, clear my details' }).click();
   await expect(page.getByRole('heading', { level: 2, name: 'Sign in' })).toBeVisible();
-  await expect(page.getByLabel('Passport number')).toHaveValue('');
+  await expect(page.getByLabel('Password')).toHaveValue('');
   await expect(page.getByLabel('Email address')).toHaveValue('');
   const body = await page.evaluate(() => document.body.innerHTML);
-  for (const secret of [STUDENTS.mai.passport, STUDENTS.mai.email, 'data:image/png']) expect(body).not.toContain(secret);
+  for (const secret of [STUDENTS.mai.password, STUDENTS.mai.email, 'data:image/png']) expect(body).not.toContain(secret);
   await expect(page.locator('.stepper [aria-current="step"]').first()).toContainText('Sign in');
 });
 
@@ -75,8 +75,7 @@ test('print media shows only the formal declaration, with letterhead, seal and t
     expect(await img.evaluate((e: HTMLImageElement) => e.complete && e.naturalWidth > 0)).toBe(true);
   }
   expect(await sheet.locator('.print-sheet__band').evaluate((e) => getComputedStyle(e).backgroundColor)).toBe('rgb(17, 95, 102)');
-  await expect(sheet).not.toContainText(STUDENTS.mai.passport);
-  await expect(sheet).toContainText('0001'); // last four of E2E00001
+  await expect(sheet).not.toContainText(STUDENTS.mai.password);
 });
 
 test('the receipt fits at this width', async ({ page }) => {
@@ -109,8 +108,7 @@ test('the receipt fits at this width', async ({ page }) => {
     expect(pages).toBe(1); // what the student prints is one A4 page
     expect(text).toContain(ref);
     expect(text).toContain('KFUPM-UBR');
-    expect(text).toContain(creds.passport.slice(-4));
-    expect(text).not.toContain(creds.passport);
+    expect(text).not.toContain(creds.password);
     for (const chrome of ['Continue to signature', 'Print', 'Deanship of Student Affairs • ']) expect(text).not.toContain(chrome);
     expect(text).toContain('University and University Beach Regulations & Procedures');
     expect(text).toContain('Dress Code and Public Decency');

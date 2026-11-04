@@ -6,7 +6,7 @@ For the Cloudflare and Resend setup, see `docs/HANDOVER.md`.
 ## What this is
 
 A static single-page app (Vite, React, TypeScript) in English and Arabic, served by Cloudflare Pages, plus one function. A
-student goes through four steps: **sign in** (email and passport number) then **confirm five terms** then **sign** (draw, or
+student goes through four steps: **sign in** (email and password) then **confirm five terms** then **sign** (draw, or
 upload an image) then **receipt** (reference number, a PDF by email, and a printable signed declaration). Everything the
 student types stays in the browser's memory; nothing is written to storage, URLs or logs. Nothing is stored on a server.
 
@@ -47,7 +47,7 @@ Labels, buttons and error messages are in `src/i18n/en.json` and `src/i18n/ar.js
 
 | Piece | Where | What it does |
 | --- | --- | --- |
-| Sign-in | `src/services/authService.ts` | Accepts any well-formed email and passport number, in the browser. To use KFUPM SSO later, replace its `login` and keep the `Session` shape. |
+| Sign-in | `src/services/authService.ts` | Accepts any well-formed email and password, in the browser. To use KFUPM SSO later, replace its `login` and keep the `Session` shape. |
 | Declarations | `src/services/dbService.ts` | Checks the declaration and issues the reference number in the browser, then posts the PDF to `/api/declarations`. The file name stays for lineage; nothing is stored. |
 | Endpoint | `functions/api/declarations.ts` | Validates the form, limits requests per IP, and emails the PDF through Resend, copying `EMAIL_BCC`. |
 | Email | `functions/lib/email.ts` | Resend (HTTP API) when `EMAIL_MODE=resend`; otherwise sends nothing. |

@@ -8,9 +8,10 @@ const open = async (page: Page) => {
   await page.evaluate(() => document.fonts.ready);
 };
 
-test('the form asks for email and passport number, in that order, and nothing else', async ({ page }) => {
+test('the form asks for email and password, in that order, and nothing else', async ({ page }) => {
   await open(page);
-  expect(await page.locator('.field__label').allTextContents()).toEqual(['Email address', 'Passport number']);
+  expect(await page.locator('.field__label').allTextContents()).toEqual(['Email address', 'Password']);
+  await expect(page.getByLabel('Password')).toHaveAttribute('type', 'password');
   for (const gone of [/phone/i, /full name/i, /nationality/i]) await expect(page.getByLabel(gone)).toHaveCount(0);
 });
 
@@ -29,19 +30,19 @@ test('well-formed details sign in and the terms show the typed email', async ({ 
   await expect(page.locator('.declarant')).toContainText(STUDENTS.mai.email);
 });
 
-test('Arabic-Indic digits, spacing and case in the typed details are normalised', async ({ page }) => {
+test('the email is trimmed and lower-cased, and the password is accepted as typed', async ({ page }) => {
   await open(page);
-  await fillLogin(page, { email: ' Mohammed@Example.com ', passport: 'n١٢٣٤٥٦٧' });
+  await fillLogin(page, { email: ' Mohammed@Example.com ', password: 'Correct Horse 9' });
   await expect(page.locator('#terms-heading')).toBeFocused({ timeout: 10_000 });
   await expect(page.locator('.declarant')).toContainText('mohammed@example.com');
 });
 
-test('a badly formatted passport is refused with a message, and pressing Sign in is not lost to the message appearing', async ({ page }) => {
+test('a too-short password is refused with a message, and pressing Sign in is not lost to the message appearing', async ({ page }) => {
   await open(page);
-  await fillLogin(page, { email: STUDENTS.mai.email, passport: 'P<' });
-  await expect(page.locator('#passport-error')).toContainText('5–20 letters and numbers');
+  await fillLogin(page, { email: STUDENTS.mai.email, password: 'abc' });
+  await expect(page.locator('#password-error')).toContainText('at least 8 characters');
   await expect(page.getByLabel('Email address')).toHaveValue(STUDENTS.mai.email);
-  await page.getByLabel('Passport number').fill(STUDENTS.mai.passport);
+  await page.getByLabel('Password').fill(STUDENTS.mai.password);
   await page.getByRole('button', { name: 'Sign in' }).click();
   await expect(page.locator('#terms-heading')).toBeFocused({ timeout: 10_000 });
 });
@@ -49,7 +50,7 @@ test('a badly formatted passport is refused with a message, and pressing Sign in
 test('the longest realistic input at this width stays inside the viewport', async ({ page }) => {
   await open(page);
   await page.getByLabel(L.email).fill(`${'a'.repeat(64)}@${'b'.repeat(63)}.${'c'.repeat(63)}.com`);
-  await page.getByLabel(L.passport).fill('A'.repeat(20));
+  await page.getByLabel(L.password).fill('A'.repeat(20));
   expect(await overflow(page)).toEqual({ overflow: 0, escapes: [] });
   await page.getByRole('button', { name: L.signin }).click();
   await expect(page.locator('#terms-heading')).toBeFocused({ timeout: 10_000 });
@@ -58,7 +59,7 @@ test('the longest realistic input at this width stays inside the viewport', asyn
 
 test('typed text is never set in the KFUPM display font (it has no glyphs for most names)', async ({ page }) => {
   await open(page);
-  for (const label of ['Passport number', 'Email address']) {
+  for (const label of ['Password', 'Email address']) {
     const family = await page.getByLabel(label).evaluate((e) => getComputedStyle(e).fontFamily);
     expect(family, label).not.toMatch(/KFUPM/);
     expect(family, label).toMatch(/^"?IBM Plex Sans Arabic/);
@@ -67,10 +68,10 @@ test('typed text is never set in the KFUPM display font (it has no glyphs for mo
 
 test('errors are announced with the field description', async ({ page }) => {
   await open(page);
-  await page.getByLabel('Passport number').fill('P<');
-  await page.getByLabel('Passport number').blur();
-  await expect(page.locator('#passport-error')).toBeVisible();
-  expect(await page.getByLabel('Passport number').getAttribute('aria-describedby')).toContain('passport-error');
+  await page.getByLabel('Password').fill('abc');
+  await page.getByLabel('Password').blur();
+  await expect(page.locator('#password-error')).toBeVisible();
+  expect(await page.getByLabel('Password').getAttribute('aria-describedby')).toContain('password-error');
 });
 
 test('the portal opens in English by default, and ?lang=ar opens the Arabic form', async ({ page }) => {

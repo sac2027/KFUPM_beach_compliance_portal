@@ -4,14 +4,10 @@
  * reaches authService is clean.
  */
 import * as v from 'valibot';
-import { normaliseDigits, stripInvisible } from './normalise';
+import { stripInvisible } from './normalise';
 
-export const passportSchema = v.pipe(
-  v.string(),
-  v.transform((s) => normaliseDigits(s).replace(/[\s-]/g, '').toUpperCase()),
-  v.nonEmpty('error.required'),
-  v.regex(/^[A-Z0-9]{5,20}$/, 'error.passport'),
-);
+/** Any password of 8 to 128 characters. Never trimmed or altered, and never leaves the browser. */
+export const passwordSchema = v.pipe(v.string(), v.nonEmpty('error.required'), v.minLength(8, 'error.password'), v.maxLength(128, 'error.password'));
 
 export const emailSchema = v.pipe(
   v.string(),
@@ -21,10 +17,10 @@ export const emailSchema = v.pipe(
   v.regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'error.email'),
 );
 
-/** Field order on the form: email, passport number. */
+/** Field order on the form: email, password. */
 export const loginSchema = v.object({
   email: emailSchema,
-  passportNumber: passportSchema,
+  password: passwordSchema,
 });
 
 export type LoginInput = v.InferInput<typeof loginSchema>;

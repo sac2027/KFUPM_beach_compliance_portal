@@ -9,13 +9,12 @@ export type { Locale, TermId };
 /** What the student types at sign-in. Only the format is checked; nothing is looked up. */
 export interface Credentials {
   email: string;
-  passportNumber: string;
+  password: string;
 }
 
-/** The signed-in student. The email is the real address (memory only); the passport is reduced to its last four. */
+/** The signed-in student. The email is the real address (memory only). The password is checked for format and then dropped. */
 export interface Student {
   email: string;
-  passportLast4: string;
 }
 
 export interface Session {
@@ -63,6 +62,8 @@ export type EmailState = 'pending' | 'sent' | 'logged' | 'failed';
 export interface DocumentStatus {
   state: EmailState;
   emailTo?: string;
+  /** Why the email failed, as reported by the server (shown to help whoever runs the portal). */
+  detail?: string;
 }
 
 /** What the server needs to email the declaration. The address is the one typed at sign-in. */

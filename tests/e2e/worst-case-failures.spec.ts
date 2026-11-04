@@ -23,7 +23,7 @@ const inkPixels = (page: Page) =>
     await fillLogin(page, GOOD);
     await expect(page.getByRole('alert')).toContainText(NETWORK);
     await expect(page.getByLabel(s.email)).toHaveValue(GOOD.email);
-    await expect(page.getByLabel(s.passport)).toHaveValue(GOOD.passport);
+    await expect(page.getByLabel(s.password)).toHaveValue(GOOD.password);
     await expect(page.locator('#login-heading')).toBeVisible(); // still on the login step
 
     await page.getByRole('button', { name: s.signin }).click(); // retry

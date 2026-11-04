@@ -16,6 +16,6 @@ test('when the PDF upload fails the record still exists, the receipt says the em
   await expect(page.getByRole('alert')).toContainText('could not email your copy');
 
   await page.getByRole('button', { name: 'Send the email again' }).click();
-  await expect(page.locator('.receipt__email--sent')).toBeVisible({ timeout: 20_000 });
+  await expect(page.locator('.receipt__email--logged')).toBeVisible({ timeout: 20_000 });
   expect(await page.locator('.receipt__ref').textContent()).toBe(ref); // same record
 });

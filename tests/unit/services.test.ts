@@ -5,11 +5,11 @@ import { authService } from '../../src/services/authService';
 import { dbService } from '../../src/services/dbService';
 import type { Credentials, Session, SubmissionPayload } from '../../src/services/types';
 
-const creds: Credentials = { passportNumber: 'A1234567', email: 'm@example.com' };
+const creds: Credentials = { password: 'A1234567', email: 'm@example.com' };
 const PNG = 'data:image/png;base64,iVBORw0KGgo=';
 
 const payload = (over: Partial<SubmissionPayload> = {}): SubmissionPayload => ({
-  session: { sessionId: 's-1', student: { email: creds.email, passportLast4: '4567' }, issuedAt: '2026-11-01T10:00:00.000Z' } satisfies Session,
+  session: { sessionId: 's-1', student: { email: creds.email }, issuedAt: '2026-11-01T10:00:00.000Z' } satisfies Session,
   documentRef: 'KFUPM-UBR',
   acceptedTermIds: [...TERM_IDS],
   signature: { method: 'draw', dataUrl: PNG },
@@ -23,17 +23,17 @@ afterEach(() => {
 });
 
 describe('authService (client-side)', () => {
-  it('returns a session for the typed email with the passport reduced to its last four, and never touches the network', async () => {
+  it('returns a session for the typed email and never touches the network', async () => {
     const fetchSpy = vi.spyOn(globalThis, 'fetch');
-    const s = await authService.login({ email: ' M@Example.com', passportNumber: 'a1234567' });
+    const s = await authService.login({ email: ' M@Example.com', password: 'a1234567' });
     expect(s.sessionId.length).toBeGreaterThan(8);
-    expect(s.student).toEqual({ email: 'm@example.com', passportLast4: '4567' });
+    expect(s.student).toEqual({ email: 'm@example.com' });
     expect(new Date(s.issuedAt).toISOString()).toBe(s.issuedAt);
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
   it('rejects badly formatted input with invalid_credentials', async () => {
-    for (const bad of [{ ...creds, passportNumber: ' ' }, { ...creds, passportNumber: 'A1' }, { ...creds, email: '' }, { ...creds, email: 'not-an-email' }]) {
+    for (const bad of [{ ...creds, password: ' ' }, { ...creds, password: 'A1' }, { ...creds, email: '' }, { ...creds, email: 'not-an-email' }]) {
       await expect(authService.login(bad)).rejects.toMatchObject({ code: 'invalid_credentials' });
     }
   });
