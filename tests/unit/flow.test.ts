@@ -6,11 +6,8 @@ import type { Session } from '../../src/services/types';
 
 const session: Session = {
   sessionId: 's-1',
-  student: { fullName: 'Mai Nguyễn', email: 'm•••@example.com', passportLast4: '4567' },
+  student: { email: 'mai@example.com', passportLast4: '4567' },
   issuedAt: '2026-11-01T10:00:00.000Z',
-  expiresAt: '2026-11-01T10:30:00.000Z',
-  nationality: 'VN',
-  token: 't',
 };
 const all = [...TERM_IDS];
 const at = (over: Partial<FlowState>): FlowState => ({ ...initialFlowState, ...over });
@@ -71,15 +68,6 @@ describe('flowReducer', () => {
     expect(flowReducer(sign, { type: 'documentStatus', status: { state: 'sent' } })).toBe(sign); // only on done
   });
 
-  it('an expired session returns to login but keeps the confirmed terms', () => {
-    const sign = at({ step: 'sign', session, acceptedTermIds: all });
-    const s = flowReducer(sign, { type: 'sessionExpired' });
-    expect(s.step).toBe('login');
-    expect(s.session).toBeNull();
-    expect(s.acceptedTermIds).toEqual(all);
-    expect(flowReducer(initialFlowState, { type: 'sessionExpired' })).toBe(initialFlowState);
-  });
-
   it('goto moves only along allowed edges: sign→terms, terms→login (keeps the ticks, drops the session); never from done', () => {
     const sign = at({ step: 'sign', session, acceptedTermIds: all });
     expect(flowReducer(sign, { type: 'goto', step: 'terms' }).step).toBe('terms');
@@ -101,9 +89,9 @@ describe('flowReducer', () => {
     const two = flowReducer(terms, { type: 'termsProgress', ids: ['reporting', 'saudi-laws'] });
     expect(two.acceptedTermIds).toEqual(['saudi-laws', 'reporting']); // mandated order, not click order
     expect(flowReducer(initialFlowState, { type: 'termsProgress', ids: all })).toBe(initialFlowState);
-    const expired = flowReducer(two, { type: 'sessionExpired' });
-    expect(expired.loginNotice).toBe('expired');
-    expect(flowReducer(expired, { type: 'loggedIn', session }).loginNotice).toBeNull();
+    const back = flowReducer(two, { type: 'goto', step: 'login' });
+    expect(back.loginNotice).toBe('changed');
+    expect(flowReducer(back, { type: 'loggedIn', session }).loginNotice).toBeNull();
   });
 
   it('reset wipes everything (the session and PII are dropped)', () => {

@@ -4,7 +4,6 @@ import type { ServiceErrorCode } from './types';
 const KNOWN: Record<string, ServiceErrorCode> = {
   no_match: 'invalid_credentials',
   too_many_attempts: 'too_many_attempts',
-  session_expired: 'session_expired',
   invalid_submission: 'invalid_submission',
 };
 

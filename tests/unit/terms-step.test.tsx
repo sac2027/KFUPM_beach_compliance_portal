@@ -11,11 +11,8 @@ import type { Session } from '../../src/services/types';
 const TERMS = loadTerms();
 const session: Session = {
   sessionId: 's-1',
-  student: { fullName: 'Mai Nguyễn', email: 'm•••@example.com', passportLast4: '4567' },
+  student: { email: 'mai@example.com', passportLast4: '4567' },
   issuedAt: '2026-11-01T10:00:00.000Z',
-  expiresAt: '2026-11-01T10:30:00.000Z',
-  nationality: 'VN',
-  token: 't',
 };
 
 function setup(initialAccepted: TermId[] = [], who: Session = session) {
@@ -49,13 +46,13 @@ describe('TermsStep', () => {
     expect(screen.getAllByRole('checkbox')).toHaveLength(5);
   });
 
-  it('shows the declarant name and the sign-in date (Gregorian, Latin digits)', () => {
+  it('shows the declarant email and the sign-in date (Gregorian, Latin digits)', () => {
     render(
       <I18nProvider>
         <TermsStep session={session} initialAccepted={[]} onContinue={() => {}} />
       </I18nProvider>,
     );
-    expect(screen.getByText('Mai Nguyễn')).toBeInTheDocument();
+    expect(screen.getByText('mai@example.com')).toBeInTheDocument();
     expect(screen.getByText('1 November 2026')).toBeInTheDocument();
   });
 
@@ -110,11 +107,11 @@ describe('TermsStep', () => {
     expect(within(list[0]!).getAllByText('Public Decency Regulations', { selector: 'strong' })).toHaveLength(1);
   });
 
-  it('lays out a very long unbroken name without relying on word breaks', () => {
-    const long = { ...session, student: { ...session.student, fullName: 'م'.repeat(100) } };
+  it('lays out a very long unbroken email without relying on word breaks', () => {
+    const long = { ...session, student: { ...session.student, email: 'a'.repeat(60) + '@' + 'b'.repeat(60) + '.example.com' } };
     setup([], long);
-    const name = screen.getByText('م'.repeat(100));
-    expect(name.closest('[dir]')?.getAttribute('dir')).toBe('auto');
+    const email = screen.getByText(long.student.email);
+    expect(email.closest('[dir]')?.getAttribute('dir')).toBe('ltr');
   });
 });
 
@@ -129,11 +126,11 @@ describe('TermsStep: changing details', () => {
     );
     return { onChangeDetails, onCancelLeave, user: userEvent.setup() };
   }
-  it('asks before ending the verified session, then calls back', async () => {
+  it('asks before returning to sign-in, then calls back', async () => {
     const { onChangeDetails, user } = setupWithChange();
     await user.click(screen.getByRole('button', { name: 'Change my details' }));
     expect(onChangeDetails).not.toHaveBeenCalled();
-    expect(screen.getByRole('alert')).toHaveTextContent('ends your verified sign-in');
+    expect(screen.getByRole('alert')).toHaveTextContent('returns you to sign-in');
     const yes = screen.getByRole('button', { name: 'Yes, sign in again' });
     expect(yes).toHaveFocus();
     await user.click(yes);
@@ -149,7 +146,7 @@ describe('TermsStep: changing details', () => {
   });
   it('shows the same question when the browser Back button asked to leave', async () => {
     const { onCancelLeave, user } = setupWithChange(true);
-    expect(screen.getByRole('alert')).toHaveTextContent('ends your verified sign-in');
+    expect(screen.getByRole('alert')).toHaveTextContent('returns you to sign-in');
     await user.click(screen.getByRole('button', { name: 'Stay here' }));
     expect(onCancelLeave).toHaveBeenCalledTimes(1);
   });

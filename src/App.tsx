@@ -88,13 +88,7 @@ function Shell() {
                   onLoggedIn={(session) =>
                     dispatch({ type: "loggedIn", session })
                   }
-                  notice={
-                    flow.loginNotice === "expired"
-                      ? "error.sessionExpired"
-                      : flow.loginNotice === "changed"
-                        ? "login.again"
-                        : undefined
-                  }
+                  notice={flow.loginNotice === "changed" ? "login.again" : undefined}
                 />
               )}
               {flow.step === "terms" && flow.session && (
@@ -113,7 +107,6 @@ function Shell() {
               {flow.step === "sign" && flow.session && (
                 <SignatureStep
                   onBack={() => dispatch({ type: "back" })}
-                  onSessionExpired={() => dispatch({ type: "sessionExpired" })}
                   onSubmit={async (signature) => {
                     const receipt = await dbService.submitCompliance({
                       session: flow.session!,

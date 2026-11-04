@@ -1,24 +1,22 @@
 /**
- * Sign-in: the browser sends the name, email and passport number to POST /api/verify, which checks them against the
- * roster (functions/api/verify.ts) and answers with a session for the verified student or one generic refusal.
- * Nothing typed is logged, stored or put in a URL.
+ * Sign-in is client-side: any correctly formatted email and passport number is accepted, and nothing is looked up or sent.
+ * The email is kept in memory so the signed declaration can be mailed to it. Nothing typed is logged, stored or put in a URL.
  */
+import * as v from 'valibot';
 import { shouldFailOnce } from '../dev/worstCase';
-import { api } from './http';
+import { loginSchema } from '../lib/validators';
 import { ServiceError } from './types';
 import type { AuthService, Credentials, Session } from './types';
 
 export const authService: AuthService = {
   async login(credentials: Credentials): Promise<Session> {
     if (import.meta.env.DEV && shouldFailOnce('login')) throw new ServiceError('network', 'dev: simulated outage');
-    const { nationality, ...checked } = credentials; // the nationality is not part of the check
-    const { session, token } = await api<{ session: Omit<Session, 'token' | 'nationality'>; token: string }>('/api/verify', {
-      method: 'POST',
-      body: JSON.stringify(checked),
-    });
-    return { ...session, nationality, token };
+    const parsed = v.safeParse(loginSchema, credentials);
+    if (!parsed.success) throw new ServiceError('invalid_credentials', 'Enter a valid email address and passport number.');
+    const { email, passportNumber } = parsed.output;
+    return { sessionId: crypto.randomUUID(), student: { email, passportLast4: passportNumber.slice(-4) }, issuedAt: new Date().toISOString() };
   },
   async logout(): Promise<void> {
-    // Sessions are single-use and expire on the server; there is nothing to revoke from the browser.
+    // Nothing is held outside the browser's memory.
   },
 };

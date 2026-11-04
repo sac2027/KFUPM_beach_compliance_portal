@@ -6,8 +6,6 @@ import * as v from 'valibot';
 import { Button } from '../../components/Button';
 import { Icon } from '../../components/Icon';
 import { Field } from '../../components/Field';
-import { SelectField } from '../../components/SelectField';
-import { COUNTRIES } from '../../data/countries';
 import { useI18n } from '../../i18n/I18nProvider';
 import type { MessageKey } from '../../i18n/I18nProvider';
 import { loginSchema } from '../../lib/validators';
@@ -38,7 +36,7 @@ export function LoginScreen({ auth = authService, onLoggedIn, notice }: { auth?:
     resolver,
     mode: 'onBlur',
     reValidateMode: 'onChange',
-    defaultValues: { fullName: '', email: '', nationality: '', passportNumber: '' },
+    defaultValues: { email: '', passportNumber: '' },
   });
   const [pending, setPending] = useState(false);
   const [failure, setFailure] = useState<MessageKey | null>(null);
@@ -85,17 +83,6 @@ export function LoginScreen({ auth = authService, onLoggedIn, notice }: { auth?:
       <p className="login__intro">{t('login.intro')}</p>
       <form className="form" noValidate onSubmit={onSubmit}>
         <Field
-          id="full-name"
-          label={t('login.name')}
-          hint={t('login.name.hint')}
-          error={err('fullName')}
-          dir="auto"
-          autoComplete="name"
-          spellCheck={false}
-          maxLength={200}
-          {...register('fullName')}
-        />
-        <Field
           id="email"
           label={t('login.email')}
           hint={t('login.email.hint')}
@@ -108,16 +95,6 @@ export function LoginScreen({ auth = authService, onLoggedIn, notice }: { auth?:
           spellCheck={false}
           maxLength={254}
           {...register('email')}
-        />
-        <SelectField
-          id="nationality"
-          label={t('login.nationality')}
-          hint={t('login.nationality.hint')}
-          placeholder={t('login.nationality.placeholder')}
-          options={COUNTRIES.map(([code, name]) => [code, name] as const)}
-          error={err('nationality')}
-          autoComplete="country"
-          {...register('nationality')}
         />
         <Field
           id="passport"

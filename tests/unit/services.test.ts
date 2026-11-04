@@ -1,15 +1,15 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { TERM_IDS } from '../../src/lib/termsSchema';
-import { createMockAuthService } from '../../src/services/authService.mock';
+import { authService } from '../../src/services/authService';
 import { createMockDbService } from '../../src/services/dbService.mock';
 import { ServiceError } from '../../src/services/types';
 import type { Credentials, Session, SubmissionPayload } from '../../src/services/types';
 
-const creds: Credentials = { passportNumber: 'A1234567', email: 'm@example.com', nationality: 'SA', fullName: 'محمد عبدالله' };
+const creds: Credentials = { passportNumber: 'A1234567', email: 'm@example.com' };
 const PNG = 'data:image/png;base64,iVBORw0KGgo=';
 
 const payload = (over: Partial<SubmissionPayload> = {}): SubmissionPayload => ({
-  session: { sessionId: 's-1', student: { fullName: creds.fullName, email: 'm•••@example.com', passportLast4: '4567' }, issuedAt: '2026-11-01T10:00:00.000Z', expiresAt: '2026-11-01T10:30:00.000Z', nationality: 'SA', token: 't' } satisfies Session,
+  session: { sessionId: 's-1', student: { email: creds.email, passportLast4: '4567' }, issuedAt: '2026-11-01T10:00:00.000Z' } satisfies Session,
   documentRef: 'KFUPM-INTL-PACF',
   acceptedTermIds: [...TERM_IDS],
   signature: { method: 'draw', dataUrl: PNG },
@@ -22,39 +22,24 @@ afterEach(() => {
   vi.useRealTimers();
 });
 
-describe('authService (mock)', () => {
-  it('returns a session carrying the verified student (masked), an ISO issue time and a token', async () => {
-    const s = await createMockAuthService({ latencyMs: 0 }).login(creds);
+describe('authService (client-side)', () => {
+  it('returns a session for the typed email with the passport reduced to its last four, and never touches the network', async () => {
+    const fetchSpy = vi.spyOn(globalThis, 'fetch');
+    const s = await authService.login({ email: ' M@Example.com', passportNumber: 'a1234567' });
     expect(s.sessionId.length).toBeGreaterThan(8);
-    expect(s.student).toEqual({ fullName: 'محمد عبدالله', email: 'm•••@example.com', passportLast4: '4567' });
+    expect(s.student).toEqual({ email: 'm@example.com', passportLast4: '4567' });
     expect(new Date(s.issuedAt).toISOString()).toBe(s.issuedAt);
-    expect(s.token).toBeTruthy();
+    expect(fetchSpy).not.toHaveBeenCalled();
   });
 
-  it('rejects with invalid_credentials when any field is blank', async () => {
-    const auth = createMockAuthService({ latencyMs: 0 });
-    for (const bad of [{ ...creds, passportNumber: ' ' }, { ...creds, nationality: '' }, { ...creds, email: '' }, { ...creds, fullName: '' }]) {
-      await expect(auth.login(bad)).rejects.toMatchObject({ code: 'invalid_credentials' });
+  it('rejects badly formatted input with invalid_credentials', async () => {
+    for (const bad of [{ ...creds, passportNumber: ' ' }, { ...creds, passportNumber: 'A1' }, { ...creds, email: '' }, { ...creds, email: 'not-an-email' }]) {
+      await expect(authService.login(bad)).rejects.toMatchObject({ code: 'invalid_credentials' });
     }
   });
 
-  it('surfaces an injected failure (so the UI error path is testable)', async () => {
-    const boom = new ServiceError('network', 'offline');
-    await expect(createMockAuthService({ latencyMs: 0, failWith: boom }).login(creds)).rejects.toBe(boom);
-  });
-
-  it('simulates latency', async () => {
-    vi.useFakeTimers();
-    let done = false;
-    void createMockAuthService({ latencyMs: 500 }).login(creds).then(() => (done = true));
-    await vi.advanceTimersByTimeAsync(499);
-    expect(done).toBe(false);
-    await vi.advanceTimersByTimeAsync(2);
-    expect(done).toBe(true);
-  });
-
   it('logout resolves', async () => {
-    await expect(createMockAuthService({ latencyMs: 0 }).logout()).resolves.toBeUndefined();
+    await expect(authService.logout()).resolves.toBeUndefined();
   });
 });
 
@@ -105,7 +90,7 @@ describe('PII hygiene', () => {
   it('never logs and never writes to storage', async () => {
     const spies = (['log', 'info', 'warn', 'error', 'debug'] as const).map((m) => vi.spyOn(console, m));
     const setItem = vi.spyOn(Storage.prototype, 'setItem');
-    const s = await createMockAuthService({ latencyMs: 0 }).login(creds);
+    const s = await authService.login(creds);
     await createMockDbService({ latencyMs: 0 }).submitCompliance(payload({ session: s }));
     await createMockDbService({ latencyMs: 0 }).submitCompliance(payload({ acceptedTermIds: [] })).catch(() => {});
     for (const spy of spies) expect(spy).not.toHaveBeenCalled();

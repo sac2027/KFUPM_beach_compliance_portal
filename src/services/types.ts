@@ -6,32 +6,23 @@ import type { TermId } from '../lib/termsSchema';
 
 export type { TermId };
 
-/** What the student types. Name, email and passport number are checked against the roster; nationality is recorded, not checked. */
+/** What the student types at sign-in. Only the format is checked; nothing is looked up. */
 export interface Credentials {
-  fullName: string;
   email: string;
-  /** ISO 3166-1 alpha-2 code from the dropdown (src/data/countries.ts). */
-  nationality: string;
   passportNumber: string;
 }
 
-/** What the server tells the browser about the verified student: the roster's name, a masked email, the last four of the passport. */
-export interface VerifiedStudent {
-  fullName: string;
+/** The signed-in student. The email is the real address (memory only); the passport is reduced to its last four. */
+export interface Student {
   email: string;
   passportLast4: string;
 }
 
 export interface Session {
   sessionId: string;
-  student: VerifiedStudent;
-  /** ISO-8601 time the session was issued; the declaration displays this date after sign-in. */
+  student: Student;
+  /** ISO-8601 time of sign-in; the declaration displays this date. */
   issuedAt: string;
-  expiresAt: string;
-  /** The nationality the student chose at sign-in (ISO code). Kept with the session so it is recorded with the declaration. */
-  nationality: string;
-  /** Bearer token for the submission calls. Memory only. */
-  token: string;
 }
 
 export interface AuthService {
@@ -85,7 +76,7 @@ export interface DbService {
   downloadDocument(session: Session, submissionId: string): Promise<Blob>;
 }
 
-export type ServiceErrorCode = 'invalid_credentials' | 'too_many_attempts' | 'session_expired' | 'invalid_submission' | 'network';
+export type ServiceErrorCode = 'invalid_credentials' | 'too_many_attempts' | 'invalid_submission' | 'network';
 
 export class ServiceError extends Error {
   readonly code: ServiceErrorCode;

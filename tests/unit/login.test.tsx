@@ -8,11 +8,8 @@ import type { AuthService, Session } from '../../src/services/types';
 
 const session: Session = {
   sessionId: 's-1',
-  student: { fullName: 'Mai Nguyễn', email: 'm•••@example.com', passportLast4: '4567' },
+  student: { email: 'mai@example.com', passportLast4: '4567' },
   issuedAt: '2026-11-01T10:00:00.000Z',
-  expiresAt: '2026-11-01T10:30:00.000Z',
-  nationality: 'VN',
-  token: 't',
 };
 const makeAuth = (login: AuthService['login']): AuthService => ({ login: vi.fn(login), logout: vi.fn() });
 
@@ -25,31 +22,32 @@ function setup(auth: AuthService) {
   );
   const user = userEvent.setup();
   const f = {
-    name: () => screen.getByLabelText(/full name/i),
     email: () => screen.getByLabelText(/email address/i),
-    nationality: () => screen.getByLabelText(/nationality/i),
     passport: () => screen.getByLabelText(/passport number/i),
     submit: () => screen.getByRole('button', { name: /sign in|signing in/i }),
   };
-  const fill = async (p = 'a1234567', n = 'Mai Nguyễn', e = ' Mai@Example.com', nat = 'VN') => {
-    await user.type(f.name(), n);
+  const fill = async (p = 'a1234567', e = 'Mai@Example.com') => {
     await user.type(f.email(), e);
-    await user.selectOptions(f.nationality(), nat);
     await user.type(f.passport(), p);
   };
   return { user, f, fill, onLoggedIn };
 }
 
 describe('LoginScreen', () => {
-  it('shows four errors on an empty submit, focuses the first, and does not call auth', async () => {
+  it('shows two errors on an empty submit, focuses the first, and does not call auth', async () => {
     const auth = makeAuth(async () => session);
     const { user, f } = setup(auth);
     await user.click(f.submit());
-    expect(await screen.findAllByText('This field is required.')).toHaveLength(3);
-    expect(screen.getByText('Choose your nationality from the list.')).toBeInTheDocument();
-    for (const el of [f.name(), f.email(), f.nationality(), f.passport()]) expect(el).toHaveAttribute('aria-invalid', 'true');
-    expect(f.name()).toHaveFocus();
+    expect(await screen.findAllByText('This field is required.')).toHaveLength(2);
+    for (const el of [f.email(), f.passport()]) expect(el).toHaveAttribute('aria-invalid', 'true');
+    expect(f.email()).toHaveFocus();
     expect(auth.login).not.toHaveBeenCalled();
+  });
+
+  it('asks for exactly two fields, in the order email then passport number', () => {
+    setup(makeAuth(async () => session));
+    expect([...document.querySelectorAll('.field__label')].map((l) => l.textContent)).toEqual(['Email address', 'Passport number']);
+    for (const gone of [/full name/i, /phone/i, /nationality/i]) expect(screen.queryByLabelText(gone)).toBeNull();
   });
 
   it('signs in with normalised values and reports the session', async () => {
@@ -59,35 +57,15 @@ describe('LoginScreen', () => {
     await user.click(f.submit());
     await waitFor(() => expect(onLoggedIn).toHaveBeenCalledWith(session));
     expect(auth.login).toHaveBeenCalledTimes(1);
-    expect(auth.login).toHaveBeenCalledWith({ fullName: 'Mai Nguyễn', email: 'mai@example.com', nationality: 'VN', passportNumber: 'A1234567' });
+    expect(auth.login).toHaveBeenCalledWith({ email: 'mai@example.com', passportNumber: 'A1234567' });
   });
 
-  it('accepts Arabic-Indic digits and an Arabic name', async () => {
+  it('accepts Arabic-Indic digits in the passport number', async () => {
     const auth = makeAuth(async () => session);
     const { user, f, fill } = setup(auth);
-    await fill('N١٢٣٤٥٦٧', 'محمد عبدالله الغامدي', undefined, 'SA');
+    await fill('N١٢٣٤٥٦٧');
     await user.click(f.submit());
-    await waitFor(() => expect(auth.login).toHaveBeenCalledTimes(1));
-    expect(auth.login).toHaveBeenCalledWith({ fullName: 'محمد عبدالله الغامدي', email: 'mai@example.com', nationality: 'SA', passportNumber: 'N1234567' });
-  });
-
-  it('offers a nationality dropdown (not a text box), sorted, with a prompt first', () => {
-    setup(makeAuth(async () => session));
-    const select = screen.getByLabelText(/nationality/i);
-    expect(select.tagName).toBe('SELECT');
-    const options = [...select.querySelectorAll('option')].map((o) => o.textContent!);
-    expect(options[0]).toBe('Select your nationality');
-    expect(options.length).toBeGreaterThan(190);
-    expect(options.slice(1)).toEqual([...options.slice(1)].sort((a, b) => a.localeCompare(b, 'en')));
-    expect(options).toContain('Saudi Arabia');
-  });
-
-  it('asks for a nationality when none is chosen, and has no phone field', async () => {
-    const { user, f } = setup(makeAuth(async () => session));
-    expect(screen.queryByLabelText(/phone/i)).toBeNull();
-    await user.click(f.nationality());
-    await user.tab();
-    expect(await screen.findByText('Choose your nationality from the list.')).toBeInTheDocument();
+    await waitFor(() => expect(auth.login).toHaveBeenCalledWith({ email: 'mai@example.com', passportNumber: 'N1234567' }));
   });
 
   it('validates a field when it loses focus, linking the error with aria-describedby', async () => {
@@ -112,7 +90,7 @@ describe('LoginScreen', () => {
   });
 
   it.each([
-    ['invalid_credentials', /do not match our records/i],
+    ['invalid_credentials', /check your email address and passport number/i],
     ['too_many_attempts', /too many attempts/i],
     ['network', /can’t reach the server/i],
   ] as const)('keeps the form filled and announces a %s failure', async (code, text) => {
@@ -123,25 +101,19 @@ describe('LoginScreen', () => {
     await fill();
     await user.click(f.submit());
     expect(await screen.findByRole('alert')).toHaveTextContent(text);
-    expect(f.name()).toHaveValue('Mai Nguyễn');
+    expect(f.email()).toHaveValue('Mai@Example.com');
     expect(f.submit()).toBeEnabled();
     expect(onLoggedIn).not.toHaveBeenCalled();
   });
 
-  it('sets direction per field: passport and email LTR, name auto; and PII-safe autocomplete', () => {
+  it('sets direction per field (email and passport LTR) and PII-safe autocomplete', () => {
     setup(makeAuth(async () => session));
     const p = screen.getByLabelText(/passport number/i);
     expect(p).toHaveAttribute('dir', 'ltr');
     expect(p).toHaveAttribute('autocomplete', 'off');
-    expect(screen.getByLabelText(/email address/i)).toHaveAttribute('dir', 'ltr');
-    expect(screen.getByLabelText(/email address/i)).toHaveAttribute('autocomplete', 'email');
-    expect(screen.getByLabelText(/email address/i)).toHaveAttribute('type', 'email');
-    expect(screen.getByLabelText(/full name/i)).toHaveAttribute('dir', 'auto');
-  });
-
-  it('lists the fields in the order name, email, nationality, passport number', () => {
-    setup(makeAuth(async () => session));
-    const order = [...document.querySelectorAll('.field__label')].map((l) => l.textContent);
-    expect(order).toEqual(['Full name', 'Email address', 'Nationality', 'Passport number']);
+    const e = screen.getByLabelText(/email address/i);
+    expect(e).toHaveAttribute('dir', 'ltr');
+    expect(e).toHaveAttribute('autocomplete', 'email');
+    expect(e).toHaveAttribute('type', 'email');
   });
 });

@@ -16,7 +16,7 @@ export interface FlowState {
   /** Where the PDF copy went (set by the document upload after the receipt step opens). */
   document: DocumentStatus | null;
   /** Why the student is back at sign-in, if they have been further. */
-  loginNotice: 'expired' | 'changed' | null;
+  loginNotice: 'changed' | null;
 }
 
 export type FlowAction =
@@ -24,7 +24,6 @@ export type FlowAction =
   | { type: 'termsAccepted'; ids: TermId[] }
   | { type: 'back' }
   | { type: 'submitted'; receipt: SubmissionReceipt; signature: Signature }
-  | { type: 'sessionExpired' }
   | { type: 'documentStatus'; status: DocumentStatus }
   | { type: 'goto'; step: Step }
   | { type: 'termsProgress'; ids: TermId[] }
@@ -61,9 +60,6 @@ export function flowReducer(state: FlowState, action: FlowAction): FlowState {
       return state;
     case 'documentStatus':
       return state.step === 'done' ? { ...state, document: action.status } : state;
-    case 'sessionExpired':
-      // Back to sign-in, keeping what the student already confirmed so the terms come back pre-ticked.
-      return state.step === 'terms' || state.step === 'sign' ? { ...state, step: 'login', session: null, loginNotice: 'expired' } : state;
     case 'reset':
       return initialFlowState;
   }

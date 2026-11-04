@@ -15,26 +15,25 @@ export const dbService: DbService = {
     if (import.meta.env.DEV && shouldFailOnce('submit')) throw new ServiceError('network', 'dev: simulated outage');
     const r = await api<{ id: string; referenceNumber: string; submittedAt: string }>('/api/submissions', {
       method: 'POST',
-      token: payload.session.token,
-      body: JSON.stringify({ nationality: payload.session.nationality, acceptedTermIds: payload.acceptedTermIds, signature: payload.signature }),
+      body: JSON.stringify({ acceptedTermIds: payload.acceptedTermIds, signature: payload.signature }),
     });
     return { id: r.id, referenceNumber: r.referenceNumber, receivedAt: r.submittedAt };
   },
-  async uploadDocument(session, submissionId, pdf) {
+  async uploadDocument(_session, submissionId, pdf) {
     if (import.meta.env.DEV && shouldFailOnce('document')) throw new ServiceError('network', 'dev: simulated outage');
-    return status(await api(`/api/submissions/${encodeURIComponent(submissionId)}/document`, { method: 'PUT', token: session.token, body: pdf, headers: { 'content-type': 'application/pdf' } }));
+    return status(await api(`/api/submissions/${encodeURIComponent(submissionId)}/document`, { method: 'PUT', body: pdf, headers: { 'content-type': 'application/pdf' } }));
   },
-  async resendEmail(session, submissionId) {
-    return status(await api(`/api/submissions/${encodeURIComponent(submissionId)}/resend-email`, { method: 'POST', token: session.token }));
+  async resendEmail(_session, submissionId) {
+    return status(await api(`/api/submissions/${encodeURIComponent(submissionId)}/resend-email`, { method: 'POST' }));
   },
-  async downloadDocument(session, submissionId) {
+  async downloadDocument(_session, submissionId) {
     let res: Response;
     try {
-      res = await fetch(`/api/submissions/${encodeURIComponent(submissionId)}/document.pdf`, { headers: { authorization: `Bearer ${session.token}` } });
+      res = await fetch(`/api/submissions/${encodeURIComponent(submissionId)}/document.pdf`, );
     } catch {
       throw new ServiceError('network', 'offline');
     }
-    if (!res.ok) throw new ServiceError(res.status === 401 ? 'session_expired' : 'network', res.statusText);
+    if (!res.ok) throw new ServiceError('network', res.statusText);
     return res.blob();
   },
 };

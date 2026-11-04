@@ -11,11 +11,8 @@ import type { DbService, DocumentStatus, Session } from '../../src/services/type
 const TERMS = loadTerms();
 const session: Session = {
   sessionId: 's-1',
-  student: { fullName: 'Mai Nguyễn', email: 'm•••@example.com', passportLast4: '4567' },
+  student: { email: 'mai@example.com', passportLast4: '4567' },
   issuedAt: '2026-11-01T10:00:00.000Z',
-  expiresAt: '2026-11-01T10:30:00.000Z',
-  nationality: 'VN',
-  token: 't',
 };
 const receipt = { id: '11111111-1111-4111-8111-111111111111', referenceNumber: 'PACF-2026-K7M2QX', receivedAt: '2026-11-01T10:06:30.000Z' };
 const signature = { method: 'draw' as const, dataUrl: 'data:image/png;base64,SIGNED' };
@@ -125,7 +122,7 @@ describe('ReceiptScreen (on screen)', () => {
   it('marks names and reference numbers as never-to-translate', () => {
     setup();
     expect(document.querySelector('.receipt__ref')).toHaveAttribute('translate', 'no');
-    expect(document.querySelector('.print-sheet [dir="auto"]')).toHaveAttribute('translate', 'no');
+    expect(document.querySelector('.print-sheet [translate="no"][dir="ltr"]')).toHaveAttribute('translate', 'no');
   });
 });
 
@@ -151,13 +148,12 @@ describe('printable signed declaration', () => {
     });
   });
 
-  it('shows who signed, a masked passport, the dates, the reference and the signature image', () => {
+  it('shows who signed (by email), a masked passport, the dates, the reference and the signature image', () => {
     setup();
     const text = sheet().textContent!;
-    expect(text).toContain('Mai Nguyễn');
+    expect(text).toContain('mai@example.com');
     expect(text).toContain('••••4567');
     expect(text).not.toContain('N1234567'); // the full passport number is never printed
-    expect(text).toContain('Vietnam'); // the nationality the student chose
     expect(text).toContain('PACF-2026-K7M2QX');
     expect(within(sheet()).getByRole('img', { name: /signature/i })).toHaveAttribute('src', signature.dataUrl);
   });

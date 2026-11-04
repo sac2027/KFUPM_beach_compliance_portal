@@ -4,10 +4,7 @@
  * reaches authService is clean.
  */
 import * as v from 'valibot';
-import { COUNTRIES } from '../data/countries';
-import { normaliseDigits, stripInvisible, trimJoiners } from './normalise';
-
-export const NAME_MAX = 100;
+import { normaliseDigits, stripInvisible } from './normalise';
 
 export const passportSchema = v.pipe(
   v.string(),
@@ -24,34 +21,9 @@ export const emailSchema = v.pipe(
   v.regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'error.email'),
 );
 
-/**
- * Unicode letters and marks (Arabic, Latin with diacritics, Urdu, CJK, Thai…), plus space, apostrophes,
- * period, hyphen, the middle dots used when transliterating names (U+00B7, U+30FB) and the zero-width
- * (non-)joiners that belong to the spelling of many names (never first or last).
- */
-const NAME_CHARS = /^[\p{L}\p{M}](?:[\p{L}\p{M} '’ʼ.\u00B7\u30FB-]|\u200C|\u200D)*$/u;
-
-export const nameSchema = v.pipe(
-  v.string(),
-  v.transform((s) => trimJoiners(stripInvisible(s).replace(/\s+/g, ' ').trim())),
-  v.nonEmpty('error.required'),
-  v.regex(NAME_CHARS, 'error.name'),
-  v.check((s) => [...s].filter((c) => /\p{L}/u.test(c)).length >= 2, 'error.name'),
-  v.maxLength(NAME_MAX, 'error.name'),
-);
-
-/** One of the codes in the dropdown. Recorded with the declaration, never matched against the roster. */
-export const nationalitySchema = v.pipe(
-  v.string(),
-  v.nonEmpty('error.nationality'),
-  v.picklist(COUNTRIES.map(([code]) => code), 'error.nationality'),
-);
-
-/** Field order on the form: name, email, nationality, passport number. */
+/** Field order on the form: email, passport number. */
 export const loginSchema = v.object({
-  fullName: nameSchema,
   email: emailSchema,
-  nationality: nationalitySchema,
   passportNumber: passportSchema,
 });
 

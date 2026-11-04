@@ -23,7 +23,7 @@ Every task's requirements include these. The first block is carried over from th
 - Bilingual: `lang`/`dir` switch EN↔AR, every UI string in both `en.json` and `ar.json` (identical key sets), every policy string in `{ en, ar }`. RTL is mirrored by logical CSS; directional icons are swapped, never transformed. Zero horizontal scroll from 320 px to 1920 px in both directions.
 - Five terms exactly, in this order, with these ids: `dress-code`, `cleanliness`, `respect-privacy`, `beach-regulations`, `swimming-safety`. English wording is verbatim from the brief of 2026-11-03 (Task 6 pins every sentence in a test). Arabic is drafted by Claude with `meta.reviewStatus.ar = "needs-review"`; the Deanship's official Arabic replaces it when supplied.
 - Title (exact): `University and University Beach Regulations & Procedures`. Document ref `KFUPM-UBR`. Reference numbers `UBR-YYYY-XXXXXX` (six characters from the alphabet `ABCDEFGHJKLMNPQRSTUVWXYZ23456789`). PDF and attachment name `KFUPM-UBR-<reference>.pdf`.
-- Sign-in collects exactly four fields, in this order: full name, email address, phone number (country code required, stored E.164), passport number. No nationality, no roster check. Any correctly formatted input signs in.
+- Sign-in collects exactly two fields, in this order: email address, passport number (decided by the user on 2026-11-04: "email and pass is enough"). No name, phone or nationality, no roster check. Any correctly formatted input signs in. The declaration identifies the student by email and the last four of the passport number; the email greeting is "Dear student".
 - No D1, R2, KV, Durable Object or any other storage binding. `wrangler.jsonc` declares only `vars`; the only secret is `RESEND_API_KEY`. `EMAIL_MODE=log` means "send nothing, report `logged`", with no side effects.
 - Resend stays as the email driver (`functions/lib/email.ts`); the email goes to the address typed at sign-in, carries the PDF, and BCCs `EMAIL_BCC` when set.
 - `npm run verify` (typecheck + lint + unit tests + terms validation) green before every commit; one commit per task; `npm run test:e2e` green at Tasks 3, 5, 7, 8 and 9. Commit messages: `type(scope): imperative summary`, as in the source repository.
@@ -102,14 +102,16 @@ docs/{HANDOFF,HANDOVER}.md, README.md, CLAUDE.md, docs/architecture/**, docs/qa/
 - [ ] **Step 4:** `npm run verify` → PASS (docs only; the terms test walks `src/` only).
 - [ ] **Step 5: Commit** `docs: adaptation plan, beach design spec and project rules`
 
-### Task 2: Client-side sign-in with name, email, phone and passport
+### Task 2: Client-side sign-in with email and passport (revised 2026-11-04: no name or phone)
 
 **Files:**
 - Modify: `src/services/types.ts`, `src/services/authService.ts`, `src/lib/validators.ts`, `src/features/login/LoginScreen.tsx`, `src/i18n/en.json`, `src/state/flow.ts`, `src/App.tsx`, `src/features/terms/TermsStep.tsx` (copy only), `src/features/receipt/PrintSheet.tsx` (nationality row → email and phone rows), `src/features/signature/SignatureStep.tsx` (drop `onSessionExpired`), `src/services/dbService.mock.ts` (type only), `src/dev/worst-case-terms.json` (no change), `src/lib/format.ts` (add `maskEmail`)
 - Delete: `src/services/authService.mock.ts`, `src/data/countries.ts`, `src/components/SelectField.tsx`
 - Test: `tests/unit/validators.test.ts`, `tests/unit/login.test.tsx`, `tests/unit/services.test.ts`, `tests/unit/flow.test.ts`, `tests/unit/receipt.test.tsx` (session fixture), `tests/unit/signature-step.test.tsx` (session fixture), `tests/unit/terms-step.test.tsx` (session fixture), `tests/unit/i18n.test.tsx` (the "no phone keys" assertion inverts)
 
-**Interfaces:**
+**Revision note (2026-11-04):** the phone and name fields below were dropped at the user's request. As built: `Credentials { email; passportNumber }`, `Student { email; passportLast4 }`, `Session { sessionId; student; issuedAt }`; `phoneSchema`, `nameSchema`, `maskEmail` (not needed yet) were not built; `countries.ts` stays until Task 4 because `functions/lib/validate.ts` imports it; `dbService.ts` no longer sends a token or nationality, so the old `/api/submissions` calls fail until Task 3 replaces them. Later tasks: read "fullName" and "phone" as removed; the email body greets "Dear student"; the print sheet shows Email, masked passport and Signed on.
+
+**Interfaces (original, superseded where the note above says so):**
 - Produces, in `types.ts`:
   - `interface Credentials { fullName: string; email: string; phoneNumber: string; passportNumber: string }`
   - `interface Student { fullName: string; email: string; phoneNumber: string; passportLast4: string }` (`email` is the real address: memory only, masked only for display)

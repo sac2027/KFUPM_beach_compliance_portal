@@ -1,6 +1,5 @@
 import { useI18n } from '../../i18n/I18nProvider';
 import { formatDateTime, maskPassport } from '../../lib/format';
-import { countryName } from '../../data/countries';
 import { loadTerms } from '../../lib/terms';
 import type { Segment, TermId } from '../../lib/termsSchema';
 import type { Session, Signature, SubmissionReceipt } from '../../services/types';
@@ -86,12 +85,10 @@ export function PrintSheet({
             <span className="print-sheet__line" aria-hidden="true" />
           </div>
           <dl className="print-sheet__meta">
-            <dt>{t('print.signedBy')}</dt>
-            <dd dir="auto" translate="no">
-              {session.student.fullName}
+            <dt>{t('print.email')}</dt>
+            <dd dir="ltr" translate="no">
+              {session.student.email}
             </dd>
-            <dt>{t('print.nationality')}</dt>
-            <dd translate="no">{countryName(session.nationality) ?? ''}</dd>
             <dt>{t('print.passport')}</dt>
             <dd dir="ltr" translate="no">
               {maskPassport(session.student.passportLast4)}
