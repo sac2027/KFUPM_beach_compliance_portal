@@ -1,42 +1,29 @@
 # Architecture map
 
-A snapshot (2026-11-02, phase 2) of how `src/`, `functions/` and `scripts/` fit together, built with graphify from
-the code itself: 341 symbols, 820 relationships, every one read directly from the source (none inferred by a model),
-12 clusters.
+A snapshot (2026-11-04, beach portal) of how `src/`, `functions/` and `scripts/` fit together, built with graphify from the
+code itself: 542 symbols and files, 1,270 relationships, 99% read directly from the source and 1% inferred (8 links), in 20
+clusters. The previous Pre-Arrival version of this map is in `docs/archive/pre-arrival/` history.
 
 - Open **`graph.html`** in a browser for the interactive map (no server needed).
-- **`GRAPH_REPORT.md`** is the generated report: clusters, the most-connected symbols, and the questions the graph suggests.
+- **`GRAPH_REPORT.md`** is the generated report: clusters, the most-connected symbols and suggested questions.
 
 ## How to read it
 
 | Cluster | What it is |
 | --- | --- |
-| App shell and step flow | `App`, the masthead, language toggle, `StepPanel`, and the step state machine |
-| Login form and input validation | the login screen and `src/lib/validators.ts` |
-| Policy terms | `compliance-terms.json`, its loader and schema, and the term cards |
-| Signature step | draw pad, upload zone, tabs, and the shared `Button` |
-| Receipt and printable declaration | the receipt screen, the print sheet, date formatting |
-| Browser API clients | `authService.ts`, `dbService.ts`, `http.ts`: thin clients for the API |
-| Sign-in verification (API) | `functions/api/verify.ts` with matching, throttling and session tokens |
-| Documents and email (API) | the submission endpoints, R2 storage, the email drivers |
-| Language and i18n | the provider, the dictionaries, locale detection |
-| Roster import and export scripts | `scripts/roster-import.ts`, `scripts/data-export.ts` |
+| App shell and UI components | `App`, the masthead, language toggle, buttons and icons |
+| Login form, validation and dev hooks | the sign-in screen, `src/lib/validators.ts`, the dev-only stress hooks |
+| Step flow, history and panel | the step state machine, browser Back and Forward, the animated panel |
+| Language provider (en/ar) and tests | the provider, both dictionaries, locale detection |
+| Terms schema, print sheet and checker | `compliance-terms.json`, its schema, the term cards, the printable declaration, `validate-terms` |
+| Email endpoint (functions) | `functions/api/declarations.ts`, field checks, the rate limit and the Resend driver |
+| PDF rendering | the browser-side PDF made from the print sheet |
+| Signature image checks | drawn and uploaded signature validation |
+| Colour palette and contrast | the single source of colour and the contrast test |
+| Playwright suite | the real-browser tests |
 
 ## What it tells us
 
-- **No import cycles.** Dependencies run one way: screens → components and libraries → data and services; the API
-  (`functions/`) shares nothing with the browser code except the pure `match.ts` rules (used by the roster importer too).
-- **The core abstractions are the right ones.** `useI18n()` (31 links) is the most connected symbol, then `Icon`,
-  `Shell`, `Button`, the API's `error()` helper and `ServiceError`: language, the one icon vocabulary, the page frame, the
-  one shared control, and the two error paths.
-- **The weak "cohesion" scores and "should this be split?" suggestions are mostly an artifact of those shared hubs.** Every
-  screen uses `useI18n` and `Button`, which makes clusters look loosely coupled to each other. They are not candidates for
-  splitting.
-- **One coupling to know about:** the browser clients and `src/lib/terms.ts` import small dev-only helpers
-  (`src/dev/worstCase.ts`) for the stress and failure-injection modes. All of it is guarded by `import.meta.env.DEV` and
-  removed from the production bundle (a test proves it).
-
-## Regenerating
-
-The map is a snapshot and will drift as the code changes. To rebuild it: `pip install graphifyy`, then run graphify's
-pipeline on `src/`, `functions/` and `scripts/` (code only, so no AI extraction is needed).
+The browser holds everything: the only edge that leaves it is the PDF post to `/api/declarations`. There is no database
+cluster any more, which is the point of this version. The most-connected symbols are the language hook, the test helpers and
+the shell, so a change to strings or the shell touches many tests; run `npm run verify` after either.

@@ -1,119 +1,104 @@
 # Hand-off guide
 
 For Student Affairs staff (wording), KFUPM IT (systems and deployment), and whoever maintains this next.
-For the step-by-step Cloudflare setup and account hand-over, see `docs/HANDOVER.md`.
+For the Cloudflare and Resend setup, see `docs/HANDOVER.md`.
 
 ## What this is
 
-A static single-page app (Vite, React, TypeScript) served by Cloudflare. A student goes through four steps:
-**sign in** (full name, email, nationality, passport number) → **confirm five terms** → **sign** (draw, or upload an image)
-→ **receipt** (reference number, and a printable signed declaration). Everything the student types stays in the
-browser's memory; nothing is written to storage, URLs or logs. The two places that talk to the outside world are
-deliberately small and replaceable (section 3), and are mocks today.
+A static single-page app (Vite, React, TypeScript) in English and Arabic, served by Cloudflare Pages, plus one function. A
+student goes through four steps: **sign in** (email and passport number) then **confirm five terms** then **sign** (draw, or
+upload an image) then **receipt** (reference number, a PDF by email, and a printable signed declaration). Everything the
+student types stays in the browser's memory; nothing is written to storage, URLs or logs. Nothing is stored on a server.
 
 ## 1. For Student Affairs staff: editing the wording
 
-All policy wording, the three external links, and the document title live in **one file**:
-`src/data/compliance-terms.json`. You never need to touch the screens.
+All policy wording and the document title live in **one file**: `src/data/compliance-terms.json`. You never need to touch the screens.
 
 ```jsonc
 {
-  "meta":     { "reviewStatus": { "en": "needs-review" } },  // set to "approved" once signed off
-  "document": { "ref": "KFUPM-INTL-PACF", "stage": {...}, "title": {...}, "intro": {...}, "closing": {...} },
-  "links": {                                  // every external URL is defined once, here
-    "pdr-pdf": { "url": "https://…", "label": { "en": "…" }, "status": "unverified" }  // → "verified" when checked
-  },
-  "terms": [                                  // exactly five, in this order: saudi-laws, cultural-norms,
-    { "id": "saudi-laws",                     //   university-policies, representation, reporting
-      "title": { "en": "…" },
-      "body":  { "en": [ { "text": "…" }, { "strong": "bold words" }, { "linkId": "pdr-pdf" } ] } }
+  "meta":     { "reviewStatus": { "en": "needs-review", "ar": "needs-review" } },   // "approved" once signed off
+  "document": { "ref": "KFUPM-UBR", "scope": {...}, "title": {...}, "intro": {...}, "closing": {...} },
+  "links":    {},                               // optional external links, each defined once: { url, label: {en, ar}, status }
+  "terms": [                                    // exactly five, in this order: dress-code, cleanliness,
+    { "id": "dress-code",                       //   respect-privacy, beach-regulations, swimming-safety
+      "title":  { "en": "…", "ar": "…" },
+      "body":   { "en": [ { "text": "…" } ], "ar": [ { "text": "…" } ] },     // the lead sentence
+      "points": { "en": [ [ { "text": "…" } ] ], "ar": [ [ { "text": "…" } ] ] } }  // optional bullet points
   ]
 }
 ```
 
-- A body is a list of pieces: plain `text`, `strong` (bold) and `linkId` (a link defined under `links`). The portal is English
-  only; the `{ "en": … }` shape is kept so another language can be added back later.
-- After editing, run `npm run validate:terms`. It rejects a broken file with the exact path of the problem, and warns about
-  anything that should be resolved before launch (unverified links, wording not yet marked `approved`, very long text).
+- A piece of text is a list of segments: plain `text`, `strong` (bold) and `linkId` (a link defined under `links`).
+- `points` is optional. English and Arabic must have the same number of points; the checker rejects a file that does not.
+- After editing, run `npm run validate:terms`. It rejects a broken file with the exact path of the problem and warns about
+  anything to resolve before launch (wording not yet `approved`, unverified links, very long text).
 - Never type a URL or policy sentence anywhere else: a test fails if one appears in the screens' code.
-- The English intro and terms 1–2 match the legacy Google Site word for word (a test pins this). If KFUPM approves new
-  wording, change the JSON **and** the matching strings in `tests/unit/terms.test.ts` in the same change.
-- The Arabic version was removed at the Deanship's request; nothing in the repository depends on it.
-- Changes go live when they are merged and deployed (section 4).
+- The English terms are word for word from the brief of 2026-11-03; a test pins each one. If the Deanship approves new wording,
+  change the JSON **and** the matching strings in `tests/unit/terms.test.ts` in the same change.
+- The Arabic text, and the English intro and closing sentences, were drafted by Claude and are marked `needs-review`.
+- Changes go live when merged and deployed (section 4).
 
 ## 2. User-interface text (not policy)
 
-Labels, buttons and error messages are in `src/i18n/en.json`. `{n}` style placeholders are filled in by the code.
+Labels, buttons and error messages are in `src/i18n/en.json` and `src/i18n/ar.json`. They must have identical keys (a test checks).
+`{n}` style placeholders are filled in by the code.
 
-## 3. For IT: the systems behind the form
+## 3. For IT: the two replaceable files and the one endpoint
 
-Phase 2 replaced the mocks with real services, all on Cloudflare. `docs/HANDOVER.md` is the step-by-step walkthrough
-for creating them and handing the account over; this section is the map.
-
-| Piece | Where | What it holds |
+| Piece | Where | What it does |
 | --- | --- | --- |
-| Roster | D1 `pacf-roster`, table `students` | Who may sign in: passport number (key), name as in the passport, the student's own email, programme. Imported from CSV with `npm run roster:import`. |
-| Records | D1 `pacf-records`, table `submissions` | One row per signed declaration: name, **last four of the passport only**, email, nationality, the five term ids, signature and PDF keys, timestamps, email status. Also `sessions`, `verify_attempts` and the `outbox` (log-mode email). |
-| Documents | R2 `pacf-documents` | `submissions/<id>/declaration.pdf` and `signature.png`. |
-| API | `functions/api/` (Pages Functions) | `POST /verify`, `POST /submissions`, `PUT /submissions/:id/document`, `POST …/resend-email`, `GET …/document.pdf`, `GET /health`. |
-| Email | `functions/lib/email.ts` | Resend (HTTP API) when `EMAIL_MODE=resend`; otherwise the outbox table. Microsoft Graph is the natural institutional replacement: one driver function. |
+| Sign-in | `src/services/authService.ts` | Accepts any well-formed email and passport number, in the browser. To use KFUPM SSO later, replace its `login` and keep the `Session` shape. |
+| Declarations | `src/services/dbService.ts` | Checks the declaration and issues the reference number in the browser, then posts the PDF to `/api/declarations`. The file name stays for lineage; nothing is stored. |
+| Endpoint | `functions/api/declarations.ts` | Validates the form, limits requests per IP, and emails the PDF through Resend, copying `EMAIL_BCC`. |
+| Email | `functions/lib/email.ts` | Resend (HTTP API) when `EMAIL_MODE=resend`; otherwise sends nothing. |
+| Health | `functions/api/health.ts` | Reports whether email is configured. |
 
-Rules the API enforces regardless of the browser: all four sign-in factors must match an active roster row (one generic
-refusal, failures throttled per passport and per IP); a session lasts 30 minutes and records one submission; exactly the
-five term ids in order; the signature must be a real PNG/JPEG ≤ 2 MB; the document a real PDF ≤ 8 MB; the email goes to
-the roster address, never to one typed in the browser.
-
-To swap the sign-in for KFUPM SSO later: keep `POST /api/verify`'s response shape (a `Session` with a Bearer token) and
-replace its body; nothing in the browser changes.
+Because the student chooses the address and no roster exists, the endpoint is open to anyone: see `docs/HANDOVER.md` section 6.
+The PDF is rendered in the student's browser from the declaration they see (so Arabic shapes correctly) and is the same file
+that is emailed and downloaded.
 
 ## 4. Deploying
 
-The Pages project builds from Git on every push (build `npm run build`, output `dist`). Bindings come from
-`wrangler.jsonc`; secrets are set in the Pages project (see `docs/HANDOVER.md` §5). Before the first real deployment run
-`npm run release:check` locally; it stays red until the wording and links in section 1 are resolved.
+The Pages project builds from Git on every push (build `npm run build`, output `dist`). Settings come from `wrangler.jsonc`;
+the one secret is set in the Pages project (see `docs/HANDOVER.md`). Before the first real deployment run
+`npm run release:check`; it stays red until the wording is approved.
 
 ## 5. Tests
 
 | Command | What it covers |
 | --- | --- |
-| `npm run verify` | Types, lint, ~200 unit tests, terms-file schema; includes a test that builds the production bundle and proves none of the stress-test tooling ships |
-| `npm run test:e2e` | ~280 real-browser tests against the local API and databases (`wrangler pages dev`): English, 320 / 360 / 768 / 1280 / 1920 px, keyboard only, accessibility (axe), sign-in refusals and throttling, failure and retry of every network step, the stored and emailed PDF (byte-identical to the download), the printed PDF, the security policy |
+| `npm run verify` | Types, lint, about 215 unit tests, terms-file schema; includes a test that builds the production bundle and proves none of the stress-test tooling ships |
+| `npm run test:e2e` | About 245 real-browser tests against the local API: English and Arabic, 320 to 1920 px, keyboard only, accessibility (axe), failure and retry of every network step, the emailed PDF, the printed page, the security policy |
 | `npm run release:check` | Both of the above, the strict wording gate, and a production build |
 
 The browser tests need Chromium (`npx playwright install chromium`), `poppler-utils` (they read the generated PDF) and a
-`.dev.vars` file (`cp .dev.vars.example .dev.vars`). To see the stress data, run `npm run dev` with `npm run dev:api`
-in another terminal and open `/?data=worst`; `?fail=login|submit|document` makes the next such call fail once.
+`.dev.vars` file (`cp .dev.vars.example .dev.vars`). To see the stress data run `npm run dev` with `npm run dev:api` in another
+terminal and open `/?data=worst`; `?fail=login|submit|document` makes the next such call fail once.
 
 ## 6. Brand assets and fonts
 
-- `public/brand/`: Full Stacked lockup (unaltered), two FAST Matrix exports, and the seal. **The seal in the repo is the old
-  one and must be replaced with the official Primary or Secondary seal (Brand Guidelines §4.2).** It appears only on the
-  printed declaration.
-- `public/fonts/`: KFUPM Display (served exactly as supplied; its licence forbids modification or reproduction, so **keep
-  this repository private**) and IBM Plex Sans Arabic (open licence).
-- Rules baked into tests: the lockup and Matrix are never altered, the Matrix is never mirrored, and the display
-  font never renders text a student typed.
+- `public/brand/`: Full Stacked lockup (unaltered) and the seal. **The seal in the repo is the old one and must be replaced with
+  the official Primary or Secondary seal (Brand Guidelines section 4.2).** It appears only on the printed declaration.
+- The page ground (`src/styles/shore.css`) is drawn in CSS from the brand's turquoise, blue and beige. The FAST Matrix is not used.
+- `public/fonts/`: KFUPM Display (served exactly as supplied; its licence forbids modification or reproduction, so **keep this
+  repository private**) and IBM Plex Sans Arabic (open licence), which also sets Arabic headings.
+- Rules baked into tests: the lockup is never altered or mirrored, and the display font never renders text a student typed.
 
 ## 7. Before launch
 
-- [ ] KFUPM reviews the English wording; set `meta.reviewStatus` to `approved`.
-- [ ] Verify the three links open the right documents; set each `status` to `verified`. The docx notes the Ministry of
-      Interior link as not working; the alternative URL is recorded in the `note` field.
+- [ ] KFUPM reviews the English and Arabic wording (including the intro and closing sentences); set both `meta.reviewStatus` values to `approved`.
 - [ ] Replace the seal with the official artwork.
-- [ ] Follow `docs/HANDOVER.md`: create the databases and bucket, set the secrets, import the real roster (the four test
-      students are the only ones who can sign in until then).
-- [ ] Email: verify the KFUPM domain in Resend (IT adds three DNS records) so messages come from the deanship address and
-      reach everyone; until then only the Resend account's own address receives mail.
-- [ ] Decide the open questions in `docs/qa/break-ui.md` (Back button and reload behaviour, and the others listed there).
-- [ ] `npm run release:check` passes (the strict wording gate stays red until the items above are done).
-- [ ] Confirm the repository is private.
-- [ ] Attach the domain and deploy.
+- [ ] Follow `docs/HANDOVER.md`: set `EMAIL_BCC`, the `RESEND_API_KEY` secret and the WAF rate-limiting rule.
+- [ ] Verify the KFUPM domain in Resend so messages come from the Deanship address and reach everyone.
+- [ ] `npm run release:check` passes.
+- [ ] Confirm the repository is private; attach the domain and deploy.
 
 ## 8. Where things are
 
 ```
-src/data/compliance-terms.json   all policy wording and links          src/features/   one folder per step
-src/i18n/                        interface text (English)              src/services/   the two replaceable files
-src/lib/                         validation, formatting, signatures    src/styles/     tokens, shell, forms, print
-public/_headers                  security headers and caching          docs/           plan, design, audits
+src/data/compliance-terms.json   all policy wording                 src/features/   one folder per step
+src/i18n/                        interface text (English, Arabic)   src/services/   the two replaceable files
+src/lib/                         validation, formatting, signatures src/styles/     tokens, shell, shore, forms, print
+functions/                       the email endpoint                 docs/           plan, design, audits, architecture
+public/_headers                  security headers and caching
 ```
