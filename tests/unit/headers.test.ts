@@ -50,3 +50,13 @@ describe('public/_headers', () => {
     expect(rules['/fonts/*']!['Cache-Control']).toMatch(/max-age=604800/);
   });
 });
+
+describe('no server-side storage', () => {
+  it('declares no database, bucket, KV or Durable Object binding, and ships no storage dependency or script', () => {
+    const wrangler = readFileSync('wrangler.jsonc', 'utf8').replace(/\/\/.*$/gm, '');
+    for (const key of ['d1_databases', 'r2_buckets', 'kv_namespaces', 'durable_objects']) expect(wrangler, key).not.toContain(key);
+    const pkg = JSON.parse(readFileSync('package.json', 'utf8')) as { dependencies: Record<string, string>; scripts: Record<string, string> };
+    expect(pkg.dependencies).not.toHaveProperty('jose');
+    expect(Object.keys(pkg.scripts).filter((s) => /^db:|roster|data:export/.test(s))).toEqual([]);
+  });
+});

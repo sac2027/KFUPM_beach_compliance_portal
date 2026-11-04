@@ -174,6 +174,8 @@ In `services.test.ts`: `authService.login(creds)` resolves to a session whose `s
 
 ### Task 4: Remove the roster, databases, bucket and migrations
 
+**As built (2026-11-04):** the server-code removals, `wrangler.jsonc`, `package.json` (`jose` and the db scripts), the e2e `global-setup`, the new health shape and `.dev.vars.example` moved into Task 3 because the new email contract broke the old endpoints. Task 4 therefore removed `migrations/`, `data/`, `docs/setup/` and added the no-storage guard test. Also in Task 3: `functions/lib/ratelimit.ts` (not `throttle.ts`), an optional `DECLARATIONS_PER_WINDOW` setting, the attachment name `KFUPM-<reference>.pdf`, and `DbService.sendDocument(request, pdf)`.
+
 **Files:**
 - Delete: everything under DELETE in File Structure that Tasks 2–3 have not already removed: `functions/api/verify.ts`, `functions/api/submissions/**`, `functions/lib/{jwt,match,records,verify}.ts`, `migrations/**`, `data/**`, `docs/setup/**`, `scripts/roster-import.ts`, `scripts/data-export.ts`, `scripts/lib/roster.ts`, `tests/functions/{jwt,match,roster-import,verify}.test.ts`, `tests/e2e/{verify-api,submission-api}.spec.ts`, `tests/e2e/global-setup.ts`
 - Modify: `functions/lib/env.ts`, `functions/api/health.ts`, `functions/lib/validate.ts` (only `isPdf`, `MAX_PDF_BYTES` remain), `wrangler.jsonc`, `package.json`, `package-lock.json` (via `npm uninstall jose`), `.dev.vars.example`, `playwright.config.ts`, `.github/workflows/ci.yml` (drop nothing; `cp .dev.vars.example .dev.vars` stays), `.gitignore` (unchanged)

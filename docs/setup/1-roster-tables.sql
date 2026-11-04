@@ -1,2 +1,0 @@
-CREATE TABLE IF NOT EXISTS students ( passport_number TEXT PRIMARY KEY, full_name TEXT NOT NULL, email TEXT NOT NULL, nationality TEXT, program TEXT, intake_term TEXT, status TEXT NOT NULL DEFAULT 'active', created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')), updated_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) );
-CREATE INDEX IF NOT EXISTS students_email ON students (email);

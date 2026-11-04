@@ -122,7 +122,7 @@ test('the receipt fits at this width', async ({ page }) => {
     const ink = await signatureInkAboveLine(page, execFileSync('cat', [join(dir, 'page.png')]));
     expect(ink.lineFound).toBe(true);
     expect(ink.inkPixels).toBeGreaterThan(40);
-    // Optional: keep the PDFs for a human to look at (PACF_PDF_OUT=/some/dir npm run test:e2e).
-    if (process.env.PACF_PDF_OUT) execFileSync('cp', [file, `${process.env.PACF_PDF_OUT}/`]);
+    // Optional: keep the PDFs for a human to look at (UBR_PDF_OUT=/some/dir npm run test:e2e).
+    if (process.env.UBR_PDF_OUT) execFileSync('cp', [file, `${process.env.PACF_PDF_OUT}/`]);
   });
 }
