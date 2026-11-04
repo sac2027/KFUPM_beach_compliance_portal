@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      # Unit tests, types, lint, and the terms-file schema.
+      - run: npm run verify
+      # The end-to-end suite drives a real browser and checks the generated PDF text.
+      - run: sudo apt-get update && sudo apt-get install -y poppler-utils
+      - run: npx playwright install --with-deps chromium
+      - run: cp .dev.vars.example .dev.vars
+      - run: npm run test:e2e
+        env:
+          WRANGLER_SEND_METRICS: 'false'

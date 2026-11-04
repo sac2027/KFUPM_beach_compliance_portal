@@ -1,0 +1,15 @@
+node_modules
+dist
+.wrangler
+.dev.vars
+test-results
+playwright-report
+*.log
+.DS_Store
+.taste-skill
+.dev.vars
+.wrangler
+export
+
+# graphify working caches (the architecture map lives in docs/architecture)
+**/graphify-out/

@@ -1,0 +1,200 @@
+.sign {
+  display: grid;
+  gap: 1rem;
+  margin-block-start: 2rem;
+}
+
+.sign h2 {
+  font-size: 1.25rem;
+}
+
+.sign__closing {
+  margin: 0;
+  max-inline-size: 65ch;
+}
+
+/* ---------- Tabs ---------- */
+.tabs {
+  display: grid;
+  gap: 1rem;
+}
+
+.tabs__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, max-content));
+  gap: 0.5rem;
+}
+
+@media (max-width: 30rem) {
+  .tabs__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.tabs__tab {
+  min-block-size: 2.75rem;
+  padding-inline: 1rem;
+  background: var(--beige);
+  color: var(--turquoise);
+  border: 0;
+  border-radius: 0;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.tabs__tab[data-state='active'] {
+  background: var(--turquoise);
+  color: var(--white);
+}
+
+.tabs__tab:active {
+  transform: scale(0.97);
+}
+
+/* forceMount keeps both panels in the DOM (so work survives a tab switch); Radix marks the idle one with
+   data-state, not [hidden], so it must be hidden here. */
+.tabs__panel[data-state='inactive'] {
+  display: none;
+}
+
+/* ---------- Drawing surface ---------- */
+.pad {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.pad__surface {
+  position: relative;
+  background: var(--white);
+  border: 2px solid var(--border-input);
+}
+
+.pad__canvas {
+  display: block;
+  inline-size: 100%;
+  block-size: 11rem;
+  touch-action: none; /* drawing must not scroll the page */
+  cursor: crosshair;
+}
+
+.pad__canvas:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* The signing line: a functional affordance, like a field boundary. */
+.pad__line {
+  position: absolute;
+  inset-inline: 1rem;
+  inset-block-end: 2.5rem;
+  block-size: 2px;
+  background: var(--sand);
+  pointer-events: none;
+}
+
+.pad__hint {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.pad__tools {
+  display: flex;
+  gap: 0.25rem;
+}
+
+/* Quiet buttons keep a 44px tap target but their text lines up with the content edge. */
+.pad__tools,
+.upload__preview .btn--quiet {
+  margin-inline-start: -0.75rem;
+}
+
+/* ---------- Upload ---------- */
+.upload {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.drop {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-block-size: 11rem;
+  padding: 1.5rem;
+  background: color-mix(in srgb, var(--beige) 30%, white);
+  border: 2px dashed var(--border-input);
+  text-align: center;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+
+.drop[data-over='true'] {
+  background: var(--beige);
+  border-color: var(--turquoise);
+}
+
+.drop__input {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  opacity: 0;
+}
+
+.drop:has(.drop__input:focus-visible) {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.drop__body {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  color: var(--turquoise);
+}
+
+.drop__body > span {
+  color: var(--ink);
+}
+
+.drop__browse {
+  color: var(--green-700);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.upload__preview {
+  display: grid;
+  gap: 0.5rem;
+  justify-items: start;
+}
+
+.upload__preview img {
+  max-block-size: 8rem;
+  max-inline-size: 100%;
+  background: var(--white);
+  border: 2px solid var(--border-input);
+}
+
+.sign__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-block-start: 0.5rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tabs__tab[data-state='inactive']:hover {
+    background: color-mix(in srgb, var(--beige) 70%, white);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tabs__tab:active {
+    transform: none;
+  }
+}

@@ -1,0 +1,1 @@
+ALTER TABLE students DROP COLUMN phone_e164;

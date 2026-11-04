@@ -1,0 +1,165 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--page);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-wrap: anywhere; /* break-word would still let the longest word force a grid column wider than the screen */
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: var(--font-body);
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.skip-link {
+  position: absolute;
+  inset-block-start: 0.5rem;
+  inset-inline-start: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--turquoise);
+  color: var(--white);
+  border-radius: var(--radius-s);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 700;
+  font-family: var(--font-display);
+  color: var(--heading);
+  text-wrap: balance;
+}
+
+/* Every one-column grid may shrink below its content's minimum width. */
+.login,
+.terms,
+.sign,
+.receipt,
+.form,
+.field,
+.tabs,
+.pad,
+.upload,
+.terms__list,
+.terms__progress,
+.terms__actions,
+.doc__head {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+img,
+svg,
+canvas {
+  display: block;
+  max-inline-size: 100%;
+}
+
+a {
+  color: var(--link);
+}
+
+:root {
+  color-scheme: light; /* brand surfaces are light-only: stop OS "force dark" from inverting the form */
+  accent-color: var(--turquoise);
+}
+
+::selection {
+  background: var(--turquoise);
+  color: var(--white);
+}
+
+input,
+textarea {
+  caret-color: var(--turquoise);
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+/* Gentler, not zero: animations and smooth scrolling stop; each component keeps (or drops) its own transitions. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Step headings take programmatic focus (not tab stops), so they carry no ring. */
+main:focus {
+  outline: none; /* a skip-link target, not a control */
+}
+
+[data-step-heading]:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* A keyboard user who just moved to a new step sees where they landed. */
+[data-step-heading]:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 6px;
+}
+
+/* No 300ms double-tap-to-zoom delay on controls; the signature canvas keeps touch-action: none. */
+a,
+button,
+label,
+input,
+[role='tab'] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: color-mix(in srgb, var(--turquoise) 18%, transparent);
+}
+
+.noscript {
+  max-inline-size: 40rem;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: var(--white);
+  color: var(--ink);
+  border: 2px solid var(--turquoise);
+}
+
+.noscript p {
+  margin: 0 0 0.75rem;
+}
+
+.sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

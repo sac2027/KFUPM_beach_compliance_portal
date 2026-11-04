@@ -1,0 +1,40 @@
+/*
+ * Step transition. Purpose: spatial consistency (forward moves with the reading direction, back reverses)
+ * and no teleporting between steps. A student sees this about four times in total, so it is allowed to be
+ * noticeable, but it stays short: 220ms, strong ease-out, transform + opacity only, no exit (new content is
+ * never delayed). The panel starts offset towards the inline-end and settles at its place; in RTL that is
+ * the opposite physical side via --dir. The artwork is never mirrored, only this offset.
+ */
+.step {
+  --dir: 1;
+  --shift: 12px;
+}
+
+.step[data-direction='back'] {
+  --shift: -12px;
+}
+
+.step[data-animate] {
+  transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+}
+
+@starting-style {
+  .step[data-animate] {
+    opacity: 0;
+    transform: translateX(calc(var(--dir) * var(--shift)));
+  }
+}
+
+/* Reduced motion means gentler, not none: keep the fade, drop the travel. */
+@media (prefers-reduced-motion: reduce) {
+  .step[data-animate] {
+    transition: opacity 160ms ease-out;
+  }
+
+  @starting-style {
+    .step[data-animate] {
+      opacity: 0;
+      transform: none;
+    }
+  }
+}

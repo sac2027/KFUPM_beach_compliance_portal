@@ -1,0 +1,223 @@
+.terms {
+  display: grid;
+  gap: 1rem;
+  margin-block-start: 2rem;
+}
+
+.terms h2 {
+  font-size: 1.25rem;
+}
+
+.declarant {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 0.75rem;
+  row-gap: 0.25rem;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.declarant dt {
+  color: var(--turquoise);
+  font-weight: 500;
+}
+
+.declarant dd {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.terms__lead {
+  margin: 0;
+}
+
+/* Progress stays in view while the student works down the list, but only where there is room: on a short
+   screen (landscape phone, or text enlarged on a small one) a sticky bar would hide the term being read. */
+.terms__progress {
+  position: static;
+  display: grid;
+  gap: 0.375rem;
+  padding-block: 0.75rem;
+  background: var(--surface);
+}
+
+@media (min-height: 43.75rem) {
+  .terms__progress {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 2;
+  }
+}
+
+.meter {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.375rem;
+}
+
+.meter__seg {
+  block-size: 0.375rem;
+  background: var(--beige);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.meter__seg[data-on='true'] {
+  background: var(--turquoise);
+}
+
+.terms__count {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.terms__list {
+  container-type: inline-size;
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---------- One term: a tactile, formal checkpoint ---------- */
+.term {
+  position: relative;
+  scroll-margin-block-start: 5rem; /* clears the sticky progress meter when a term is focused or scrolled to */
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  padding: 20px 16px; /* px: on a phone with enlarged text, the padding must not eat the text column */
+  background: color-mix(in srgb, var(--beige) 30%, white);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.term[data-checked='true'] {
+  background: color-mix(in srgb, var(--beige) 65%, white);
+}
+
+.term__input {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  opacity: 0;
+}
+
+.term__box {
+  display: grid;
+  place-items: center;
+  inline-size: 1.75rem;
+  block-size: 1.75rem;
+  margin-block-start: 0.125rem;
+  background: var(--white);
+  color: var(--white);
+  border: 2px solid var(--turquoise);
+  transition: transform 80ms var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+
+.term[data-checked='true'] .term__box {
+  background: var(--turquoise);
+}
+
+/* Press: the box answers the finger at once. */
+.term:active .term__box {
+  transform: scale(0.94);
+}
+
+.term__check {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 100ms var(--ease-out); /* un-confirming is snappy */
+}
+
+.term[data-checked='true'] .term__check {
+  clip-path: inset(0 0 0 0);
+  transition-duration: 180ms; /* confirming is the deliberate moment */
+}
+
+.term__input:focus-visible + .term__box {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.term__title {
+  margin: 0 0 0.375rem;
+  font-size: 1.0625rem;
+  line-height: 1.35;
+}
+
+.term__title label {
+  color: var(--turquoise);
+  cursor: pointer;
+}
+
+/* The label stretches over the whole card; links below stay clickable above it. */
+.term__title label::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.term__body {
+  margin: 0;
+  max-inline-size: 65ch;
+}
+
+.term__body a {
+  position: relative;
+  z-index: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .term:hover .term__box {
+    background: color-mix(in srgb, var(--turquoise) 10%, white);
+  }
+
+  .term[data-checked='true']:hover .term__box {
+    background: var(--turquoise);
+  }
+}
+
+.terms__actions {
+  display: grid;
+  gap: 0.75rem;
+  margin-block-start: 0.5rem;
+}
+
+.terms__hint {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .term:active .term__box {
+    transform: none;
+  }
+
+  .term__check,
+  .term[data-checked='true'] .term__check {
+    transition: none;
+  }
+}
+
+@media (min-width: 48rem) {
+  .term {
+    padding: 1.5rem;
+  }
+}
+
+/* A card narrower than about 15 of its own ems (a phone with text enlarged): the box sits above the text. */
+@container (max-width: 15rem) {
+  .term {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .term__title {
+    font-size: 1rem;
+  }
+}

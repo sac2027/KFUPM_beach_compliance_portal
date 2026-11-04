@@ -1,0 +1,121 @@
+.receipt {
+  display: grid;
+  gap: 1rem;
+  margin-block-start: 2rem;
+}
+
+.receipt h2 {
+  font-size: 1.25rem;
+}
+
+.receipt__lead,
+.receipt__privacy {
+  margin: 0;
+  max-inline-size: 65ch;
+}
+
+.receipt__privacy {
+  font-size: 0.875rem;
+}
+
+.receipt__facts {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 1rem;
+  row-gap: 0.5rem;
+  align-items: baseline;
+  margin: 0;
+  padding: 1.25rem 1rem;
+  background: var(--beige);
+  font-variant-numeric: tabular-nums;
+}
+
+.receipt__facts dt {
+  color: var(--turquoise);
+  font-weight: 500;
+}
+
+.receipt__facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.receipt__ref {
+  font-family: var(--font-display); /* generated ASCII reference, never user-entered text */
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--turquoise);
+  letter-spacing: 0.02em;
+  user-select: all; /* one click selects the whole reference, ready to copy */
+}
+
+/* Narrow screens: the label sits above its value, so a long reference gets the full width instead of a sliver. */
+@media (max-width: 30rem) {
+  .receipt__facts {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0.25rem;
+  }
+
+  .receipt__facts dd + dt {
+    margin-block-start: 0.75rem;
+  }
+
+  .receipt__ref {
+    font-size: 1.125rem;
+  }
+}
+
+.receipt__confirm {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: var(--beige);
+}
+
+.receipt__confirm p {
+  margin: 0;
+  font-weight: 500;
+}
+
+.receipt__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+@media (min-width: 48rem) {
+  .receipt__facts {
+    padding: 1.5rem;
+  }
+}
+
+.receipt__email {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.receipt__email .icon {
+  margin-block-start: 0.2rem;
+}
+
+.receipt__email--failed p {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+}
+
+.receipt__email--failed {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: var(--beige);
+}
+
+.receipt__email--failed p {
+  margin: 0;
+  color: var(--error-text);
+}

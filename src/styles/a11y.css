@@ -1,0 +1,64 @@
+/*
+ * Windows High Contrast / forced-colours mode strips background colours, so everything that carries
+ * meaning through a fill (progress segments, the checked box, button states) is restated with system colours.
+ */
+@media (forced-colors: active) {
+  .stepper__item::before,
+  .meter__seg {
+    forced-color-adjust: none;
+    background: GrayText; /* not started */
+  }
+
+  .stepper__item[data-state='done']::before,
+  .stepper__item[data-state='current']::before,
+  .meter__seg[data-on='true'] {
+    background: Highlight;
+  }
+
+  .term {
+    border: 1px solid CanvasText; /* taste-skill-ignore: forced colours drops the tone step, so the card needs an outline to stay distinct */
+  }
+
+  .term__box {
+    forced-color-adjust: none;
+    background: Canvas;
+    color: Canvas;
+    border-color: ButtonText;
+  }
+
+  .term[data-checked='true'] .term__box {
+    background: Highlight;
+    color: HighlightText;
+    border-color: Highlight;
+  }
+
+  .term__input:focus-visible + .term__box,
+  .field__input:focus-visible,
+  .pad__canvas:focus-visible {
+    outline: 3px solid Highlight;
+  }
+
+  .btn {
+    border: 2px solid ButtonText;
+  }
+
+  .btn[aria-disabled='true']:not([aria-busy='true']) {
+    border-color: GrayText;
+    color: GrayText;
+  }
+
+  .tabs__tab {
+    border: 2px solid ButtonText;
+  }
+
+  .tabs__tab[data-state='active'] {
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+    border-color: Highlight;
+  }
+
+  .drop {
+    border-color: ButtonText;
+  }
+}

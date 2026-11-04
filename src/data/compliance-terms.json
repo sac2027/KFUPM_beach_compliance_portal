@@ -1,0 +1,146 @@
+{
+  "meta": {
+    "source": "English title, intro and terms 1-2 are verbatim from the legacy Google Site (Full_Page_Embed.pdf, captured 2026-10-29). Terms 3-5 and the closing are from International_Students_Declaration_Form_Dec_19_EDIT_suggestions.docx with its tracked suggestions NOT applied (the word 'that' in term 3 is left out); the only edit is correcting the docx spelling 'apperance' to 'appearance' in term 3.",
+    "reviewStatus": {
+      "en": "needs-review"
+    }
+  },
+  "document": {
+    "ref": "KFUPM-INTL-PACF",
+    "stage": {
+      "en": "Pre-Arrival State"
+    },
+    "title": {
+      "en": "Pre-Arrival Compliance Form for International Students"
+    },
+    "intro": {
+      "en": "As an international student at King Fahd University of Petroleum & Minerals, I understand that my stay in the Kingdom of Saudi Arabia requires full compliance with the country’s laws, cultural norms, and University policies. By signing this form, I acknowledge my responsibilities and agree to the following terms:"
+    },
+    "closing": {
+      "en": "By signing below, I affirm that I have read, understood, and agree to comply with the above responsibilities during my time as a student in the Kingdom of Saudi Arabia."
+    }
+  },
+  "links": {
+    "pdr-pdf": {
+      "url": "https://laws.boe.gov.sa/Files/Download/?attId=737b85fd-a0f0-4b9a-83e8-adbb01042dc7",
+      "label": {
+        "en": "Official Public Decency Regulations PDF"
+      },
+      "status": "unverified",
+      "note": "URL from the legacy Google Site. The docx cites https://www.moi.gov.sa/wps/wcm/connect/f2a499cd-551b-452e-b511-47a7149fb1d9/Public%2BDecency%2BRegulations.pdf and flags it as not working."
+    },
+    "pdr-overview": {
+      "url": "https://saudipedia.com/en/public-decency-in-saudi-arabia",
+      "label": {
+        "en": "Overview"
+      },
+      "status": "unverified",
+      "note": "URL from the legacy Google Site."
+    },
+    "visit-saudi-culture": {
+      "url": "https://www.visitsaudi.com/en/stories/saudi-culture-and-customs",
+      "label": {
+        "en": "Saudi Culture and Customs Guide"
+      },
+      "status": "unverified",
+      "note": "URL from the legacy Google Site and the docx."
+    }
+  },
+  "terms": [
+    {
+      "id": "saudi-laws",
+      "title": {
+        "en": "Compliance with Saudi Laws and Regulations"
+      },
+      "body": {
+        "en": [
+          {
+            "text": "I commit to adhering to all applicable laws and regulations of the Kingdom of Saudi Arabia, including the "
+          },
+          {
+            "strong": "Public Decency Regulations"
+          },
+          {
+            "text": ", which govern public behavior, dress code, and interactions. I have reviewed the "
+          },
+          {
+            "strong": "Ministry of Interior Public Decency Regulations"
+          },
+          {
+            "text": " ("
+          },
+          {
+            "linkId": "pdr-pdf"
+          },
+          {
+            "text": " • "
+          },
+          {
+            "linkId": "pdr-overview"
+          },
+          {
+            "text": ") and other relevant legal resources. I acknowledge that violations of these laws may result in legal consequences that could affect my status in the country."
+          }
+        ]
+      }
+    },
+    {
+      "id": "cultural-norms",
+      "title": {
+        "en": "Respect for Saudi Cultural Norms"
+      },
+      "body": {
+        "en": [
+          {
+            "text": "I will respect the cultural values, customs, and traditions of Saudi Arabia, including appropriate conduct, attire, and communication. I have reviewed cultural guidelines provided by Visit Saudi ("
+          },
+          {
+            "linkId": "visit-saudi-culture"
+          },
+          {
+            "text": ") to familiarize myself with local expectations. I understand that respecting these norms is essential for fostering a positive experience for myself and the local community."
+          }
+        ]
+      }
+    },
+    {
+      "id": "university-policies",
+      "title": {
+        "en": "Adherence to University Policies"
+      },
+      "body": {
+        "en": [
+          {
+            "text": "I will comply with all the University’s policies in the Code of Conduct, particularly those related to academic integrity, behavior, appearance, and responsible use of social media. I will ensure my actions align with University standards and do not bring disrepute to the institution."
+          }
+        ]
+      }
+    },
+    {
+      "id": "representation",
+      "title": {
+        "en": "Representation of the University"
+      },
+      "body": {
+        "en": [
+          {
+            "text": "As a student affiliated with the University, I understand that my conduct reflects on the institution. I will act in a manner that upholds the University’s reputation both on and off campus."
+          }
+        ]
+      }
+    },
+    {
+      "id": "reporting",
+      "title": {
+        "en": "Reporting and Understanding Consequences"
+      },
+      "body": {
+        "en": [
+          {
+            "text": "I will report any incidents or situations that may involve legal or disciplinary concerns to the appropriate University authorities. I understand that failure to comply with Saudi laws, cultural norms, or University policies may result in disciplinary action, including suspension or termination of my enrollment, and may lead to legal consequences under Saudi law."
+          }
+        ]
+      }
+    }
+  ]
+}

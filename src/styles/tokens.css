@@ -1,0 +1,43 @@
+/* Mirrors src/styles/palette.ts — tests/unit/contrast.test.ts fails if they drift. */
+:root {
+  /* Brand primary */
+  --turquoise: #115F66;
+  --green: #009767;
+  --beige: #ECE0C7;
+  /* Brand secondary */
+  --sand: #AA8C6D;
+  --gold: #F0BA45;
+  --blue: #71B8D4;
+  --gray: #ADACAD;
+  --white: #FFFFFF;
+  --ink: #000000;
+  /* Brand feedback: borders, icons, fills only */
+  --success: #2AA880;
+  --error: #DE5E5E;
+  --warning: #F2C56C;
+  --info: #89C4DB;
+  /* Derived for text: 6.13:1 on white, 4.69:1 on beige / 6.57:1 on white */
+  --green-700: #00704D;
+  --error-text: #B42318;
+
+  /* Roles */
+  --page: var(--beige);
+  --surface: var(--white);
+  --text: var(--ink);
+  --heading: var(--turquoise);
+  --link: var(--green-700);
+  --border-input: var(--sand);   /* 3.14:1 on white */
+  --focus: var(--turquoise);     /* 7.36:1 on white; gold on turquoise (4.14:1) inside the masthead */
+
+  /* Shape: square corners everywhere (formal document); decided once. */
+
+  /* Motion (used from Task 8) */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --dur-fast: 140ms;
+  --dur-base: 220ms;
+
+  /* Type stacks. Headlines: KFUPM Display. Body and ALL user-entered text: IBM Plex Sans Arabic.
+     Fonts are registered in Task 3; Segoe UI → system-ui is the brand's fallback chain. */
+  --font-display: 'KFUPM', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'IBM Plex Sans Arabic', 'Segoe UI', system-ui, sans-serif;
+}

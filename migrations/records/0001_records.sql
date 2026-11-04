@@ -1,0 +1,58 @@
+-- Who signed, and the proof. Never holds a full passport number.
+CREATE TABLE IF NOT EXISTS submissions (
+  id                   TEXT PRIMARY KEY,
+  reference_number     TEXT NOT NULL UNIQUE,
+  full_name            TEXT NOT NULL,
+  passport_last4       TEXT NOT NULL,
+  email                TEXT NOT NULL,
+  phone_e164           TEXT NOT NULL,
+  locale               TEXT NOT NULL,
+  accepted_term_ids    TEXT NOT NULL,          -- JSON array, exactly the five ids in order
+  signature_method     TEXT NOT NULL,          -- draw | upload
+  signature_key        TEXT NOT NULL,          -- R2 key
+  pdf_key              TEXT,
+  pdf_sha256           TEXT,
+  pdf_bytes            INTEGER,
+  submitted_at         TEXT NOT NULL,
+  document_received_at TEXT,
+  email_status         TEXT NOT NULL DEFAULT 'pending',  -- pending | sent | logged | failed
+  email_message_id     TEXT,
+  email_error          TEXT,
+  email_sent_at        TEXT,
+  user_agent           TEXT
+);
+CREATE INDEX IF NOT EXISTS submissions_submitted_at ON submissions (submitted_at);
+CREATE INDEX IF NOT EXISTS submissions_email ON submissions (email);
+
+-- Verified sign-ins. One submission per session.
+CREATE TABLE IF NOT EXISTS sessions (
+  sid             TEXT PRIMARY KEY,
+  passport_number TEXT NOT NULL,
+  issued_at       TEXT NOT NULL,
+  expires_at      TEXT NOT NULL,
+  used_at         TEXT,
+  submission_id   TEXT
+);
+
+-- Sign-in throttling (fixed windows).
+CREATE TABLE IF NOT EXISTS verify_attempts (
+  key          TEXT PRIMARY KEY,   -- "p:<passport>" or "ip:<hash>"
+  window_start INTEGER NOT NULL,   -- unix seconds
+  count        INTEGER NOT NULL
+);
+
+-- Emails written here instead of sent when EMAIL_MODE=log (local development and tests).
+CREATE TABLE IF NOT EXISTS outbox (
+  id              INTEGER PRIMARY KEY AUTOINCREMENT,
+  submission_id   TEXT,
+  to_address      TEXT NOT NULL,
+  from_address    TEXT NOT NULL,
+  reply_to        TEXT,
+  bcc             TEXT,
+  subject         TEXT NOT NULL,
+  text_body       TEXT NOT NULL,
+  attachment_name TEXT,
+  attachment_sha256 TEXT,
+  attachment_bytes INTEGER,
+  created_at      TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
+);
