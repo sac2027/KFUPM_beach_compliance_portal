@@ -31,7 +31,7 @@ test('shows the declarant, the sign-in date, five unchecked terms and no select-
   await expect(page.getByText('0 of 5 confirmed')).toBeVisible();
 });
 
-test('the whole card toggles, a link inside does not, and the keyboard works', async ({ page }) => {
+test('the whole card toggles and the keyboard works', async ({ page }) => {
   await toTerms(page);
   const cards = page.locator('.term');
   // Click the body text like a person would, by coordinates: the label's overlay is the real hit target.
@@ -40,10 +40,6 @@ test('the whole card toggles, a link inside does not, and the keyboard works', a
   await page.mouse.click(body.x + 40, body.y + 12);
   await expect(page.getByRole('checkbox').nth(1)).toBeChecked();
   await cards.nth(0).scrollIntoViewIfNeeded();
-
-  page.on('popup', (p) => void p.close());
-  await cards.nth(0).getByRole('link').first().click();
-  await expect(page.getByRole('checkbox').nth(0)).not.toBeChecked(); // following a link is not agreeing
 
   await page.getByRole('checkbox').nth(2).focus();
   await page.keyboard.press('Space');

@@ -7,191 +7,437 @@
     }
   },
   "document": {
-    "ref": "KFUPM-INTL-PACF",
-    "stage": {
-      "en": "Pre-Arrival State (Awaiting Visa Issuance and Medical Clearance)",
-      "ar": "مرحلة ما قبل الوصول (بانتظار إصدار التأشيرة والتصريح الطبي)"
+    "ref": "KFUPM-UBR",
+    "scope": {
+      "en": "University Beach (Singles and Families areas, Summer and Winter seasons, Academic Year 1448 AH / 2026–2027)",
+      "ar": "شاطئ الجامعة (منطقتا العزاب والعائلات، موسما الصيف والشتاء، العام الجامعي ١٤٤٨ هـ / ٢٠٢٦–٢٠٢٧)"
     },
     "title": {
-      "en": "Pre-Arrival Compliance and Conduct Declaration Form for International Undergraduate, Graduate and Exchange Students (Academic Year 1448 AH / 2026–2027)",
-      "ar": "نموذج الالتزام والسلوك قبل الوصول للطلاب الدوليين في مرحلتي البكالوريوس والدراسات العليا وطلاب التبادل (العام الدراسي 1448 هـ / 2026–2027)"
+      "en": "University and University Beach Regulations & Procedures for Undergraduate, Graduate, Exchange and Visiting Students, Staff Guests and Service Providers (Academic Year 1448 AH / 2026–2027)",
+      "ar": "لوائح وإجراءات الجامعة وشاطئ الجامعة للطلاب في مرحلتي البكالوريوس والدراسات العليا وطلاب التبادل والزائرين وضيوف الموظفين ومقدمي الخدمات (العام الجامعي ١٤٤٨ هـ / ٢٠٢٦–٢٠٢٧)"
     },
     "intro": {
-      "en": "I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel. I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel. I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel.",
-      "ar": "أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري. أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري. أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري."
+      "en": "As a student of King Fahd University of Petroleum & Minerals, I understand that using the University and its beach requires me to follow the University's regulations and procedures and the values and customs of the Kingdom of Saudi Arabia. By signing this form, I acknowledge my responsibilities and agree to the following terms: As a student of King Fahd University of Petroleum & Minerals, I understand that using the University and its beach requires me to follow the University's regulations and procedures and the values and customs of the Kingdom of Saudi Arabia. By signing this form, I acknowledge my responsibilities and agree to the following terms: As a student of King Fahd University of Petroleum & Minerals, I understand that using the University and its beach requires me to follow the University's regulations and procedures and the values and customs of the Kingdom of Saudi Arabia. By signing this form, I acknowledge my responsibilities and agree to the following terms:",
+      "ar": "بصفتي طالبًا في جامعة الملك فهد للبترول والمعادن، أدرك أن استخدام الجامعة وشاطئها يتطلب مني الالتزام بلوائح الجامعة وإجراءاتها وبقيم المملكة العربية السعودية وعاداتها. وبتوقيعي على هذا النموذج، أقرّ بمسؤولياتي وأوافق على الشروط الآتية: بصفتي طالبًا في جامعة الملك فهد للبترول والمعادن، أدرك أن استخدام الجامعة وشاطئها يتطلب مني الالتزام بلوائح الجامعة وإجراءاتها وبقيم المملكة العربية السعودية وعاداتها. وبتوقيعي على هذا النموذج، أقرّ بمسؤولياتي وأوافق على الشروط الآتية: بصفتي طالبًا في جامعة الملك فهد للبترول والمعادن، أدرك أن استخدام الجامعة وشاطئها يتطلب مني الالتزام بلوائح الجامعة وإجراءاتها وبقيم المملكة العربية السعودية وعاداتها. وبتوقيعي على هذا النموذج، أقرّ بمسؤولياتي وأوافق على الشروط الآتية:"
     },
     "closing": {
-      "en": "By signing below, I affirm that I have read, understood, and agree to comply with every responsibility listed above for the whole of my time as a student in the Kingdom of Saudi Arabia. By signing below, I affirm that I have read, understood, and agree to comply with every responsibility listed above for the whole of my time as a student in the Kingdom of Saudi Arabia.",
-      "ar": "بتوقيعي أدناه، أؤكد أنني قرأتُ جميع المسؤوليات المذكورة أعلاه وفهمتُها وأوافق على الالتزام بها طوال مدة دراستي في المملكة العربية السعودية. بتوقيعي أدناه، أؤكد أنني قرأتُ جميع المسؤوليات المذكورة أعلاه وفهمتُها وأوافق على الالتزام بها طوال مدة دراستي في المملكة العربية السعودية."
+      "en": "By signing below, I affirm that I have read, understood, and agree to comply with the above regulations and procedures whenever I use the University and the University Beach. By signing below, I affirm that I have read, understood, and agree to comply with the above regulations and procedures whenever I use the University and the University Beach.",
+      "ar": "بتوقيعي أدناه، أؤكد أنني قرأتُ اللوائح والإجراءات المذكورة أعلاه وفهمتُها وأوافق على الالتزام بها كلما استخدمتُ الجامعة وشاطئ الجامعة. بتوقيعي أدناه، أؤكد أنني قرأتُ اللوائح والإجراءات المذكورة أعلاه وفهمتُها وأوافق على الالتزام بها كلما استخدمتُ الجامعة وشاطئ الجامعة."
     }
   },
   "links": {
-    "pdr-pdf": {
-      "url": "https://example.com/regulations/public-decency/official-text.pdf?utm_param0=value0longvalue&utm_param1=value1longvalue&utm_param2=value2longvalue&utm_param3=value3longvalue&utm_param4=value4longvalue&utm_param5=value5longvalue&utm_param6=value6longvalue&utm_param7=value7longvalue&utm_param8=value8longvalue&utm_param9=value9longvalue&utm_param10=value10longvalue&utm_param11=value11longvalue&utm_param12=value12longvalue&utm_param13=value13longvalue&utm_param14=value14longvalue&utm_param15=value15longvalue&utm_param16=value16longvalue&utm_param17=value17longvalue",
+    "reg-pdf": {
+      "url": "https://example.com/regulations/beach/official-text.pdf?utm_param0=value0longvalue&utm_param1=value1longvalue&utm_param2=value2longvalue&utm_param3=value3longvalue&utm_param4=value4longvalue&utm_param5=value5longvalue&utm_param6=value6longvalue&utm_param7=value7longvalue&utm_param8=value8longvalue&utm_param9=value9longvalue&utm_param10=value10longvalue&utm_param11=value11longvalue&utm_param12=value12longvalue&utm_param13=value13longvalue&utm_param14=value14longvalue&utm_param15=value15longvalue&utm_param16=value16longvalue&utm_param17=value17longvalue",
       "label": {
-        "en": "Official Public Decency Regulations PDF (Royal Decree No. M/12 dated 1443/03/27 AH, Ministry of Interior, Bureau of Experts at the Council of Ministers)",
-        "ar": "النص الرسمي للائحة الذوق العام (المرسوم الملكي رقم م/12 وتاريخ 27/03/1443هـ، وزارة الداخلية، هيئة الخبراء بمجلس الوزراء)"
+        "en": "Official University Beach Regulations PDF (Decision No. 12 dated 1447/03/27 AH, Deanship of Student Affairs, Beach Committee)",
+        "ar": "النص الرسمي لأنظمة شاطئ الجامعة (القرار رقم ١٢ وتاريخ ١٤٤٧/٠٣/٢٧ هـ، عمادة شؤون الطلاب، لجنة الشاطئ)"
       },
       "status": "unverified"
     },
-    "pdr-overview": {
+    "reg-overview": {
       "url": "https://example.com/overview",
       "label": {
         "en": "Overview",
         "ar": "نظرة عامة"
       },
       "status": "unverified"
-    },
-    "visit-saudi-culture": {
-      "url": "https://example.com/regulations/public-decency/official-text.pdf?utm_param0=value0longvalue&utm_param1=value1longvalue&utm_param2=value2longvalue&utm_param3=value3longvalue&utm_param4=value4longvalue&utm_param5=value5longvalue&utm_param6=value6longvalue&utm_param7=value7longvalue&utm_param8=value8longvalue&utm_param9=value9longvalue&utm_param10=value10longvalue&utm_param11=value11longvalue&utm_param12=value12longvalue&utm_param13=value13longvalue&utm_param14=value14longvalue&utm_param15=value15longvalue&utm_param16=value16longvalue&utm_param17=value17longvalue",
-      "label": {
-        "en": "Saudi Culture and Customs Guide for Visitors, Residents and International Students (2026 edition)",
-        "ar": "دليل الثقافة والعادات السعودية للزوار والمقيمين والطلاب الدوليين (طبعة 2026)"
-      },
-      "status": "unverified"
     }
   },
   "terms": [
     {
-      "id": "saudi-laws",
+      "id": "dress-code",
       "title": {
-        "en": "Compliance with All Applicable Laws, Regulations, Royal Decrees and Ministerial Resolutions of the Kingdom of Saudi Arabia, Including the Public Decency Regulations",
-        "ar": "الالتزام بجميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية، ومنها لائحة الذوق العام"
+        "en": "Dress Code and Public Decency, Modest Attire, Beachwear and Appearance on Campus, at the Beach and at University Events",
+        "ar": "الزي والذوق العام والملبس المحتشم ولباس البحر والمظهر داخل الحرم الجامعي وعلى الشاطئ وفي فعاليات الجامعة"
       },
       "body": {
         "en": [
           {
-            "text": "I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel. I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel. I have reviewed the "
+            "text": "Adherence to the morals, values, and customs observed in the Kingdom of Saudi Arabia, avoiding anything inconsistent with Saudi traditions. Adherence to the morals, values, and customs observed in the Kingdom of Saudi Arabia, avoiding anything inconsistent with Saudi traditions. Adherence to the morals, values, and customs observed in the Kingdom of Saudi Arabia, avoiding anything inconsistent with Saudi traditions. <script>alert(1)</script> **not bold** {n} of {total} "
           },
           {
-            "strong": "Ministry of Interior Public Decency Regulations"
+            "strong": "Beach Regulations"
           },
           {
             "text": " ("
           },
           {
-            "linkId": "pdr-pdf"
+            "linkId": "reg-pdf"
           },
           {
             "text": " • "
           },
           {
-            "linkId": "pdr-overview"
+            "linkId": "reg-overview"
           },
           {
-            "text": ") and the full text at https://laws.boe.gov.sa/BoeLaws/Laws/LawDetails/9f8e7d6c-5b4a-4c3d-8e2f-1a0b9c8d7e6f/1?tab=text&version=2026&lang=ar . I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel. I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel."
+            "text": ") KFUPMDSACODEOFCONDUCTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX."
           }
         ],
         "ar": [
           {
-            "text": "أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري. أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري. وقد اطّلعتُ على "
+            "text": "الالتزام بالأخلاق والقيم والعادات المتبعة في المملكة العربية السعودية، وتجنّب كل ما يتعارض مع التقاليد السعودية. الالتزام بالأخلاق والقيم والعادات المتبعة في المملكة العربية السعودية، وتجنّب كل ما يتعارض مع التقاليد السعودية. الالتزام بالأخلاق والقيم والعادات المتبعة في المملكة العربية السعودية، وتجنّب كل ما يتعارض مع التقاليد السعودية. <script>alert(1)</script> **not bold** {n} of {total} "
           },
           {
-            "strong": "لائحة الذوق العام الصادرة عن وزارة الداخلية"
+            "strong": "أنظمة الشاطئ"
           },
           {
             "text": " ("
           },
           {
-            "linkId": "pdr-pdf"
+            "linkId": "reg-pdf"
           },
           {
             "text": " • "
           },
           {
-            "linkId": "pdr-overview"
+            "linkId": "reg-overview"
           },
           {
-            "text": ") وعلى النص الكامل في https://laws.boe.gov.sa/BoeLaws/Laws/LawDetails/9f8e7d6c-5b4a-4c3d-8e2f-1a0b9c8d7e6f/1?tab=text&version=2026&lang=ar . أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري. أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري."
+            "text": ") KFUPMDSACODEOFCONDUCTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX."
+          }
+        ]
+      },
+      "points": {
+        "en": [
+          [
+            {
+              "text": "Maintaining a decent appearance within the University campus and adhering to modest attire. Maintaining a decent appearance within the University campus and adhering to modest attire."
+            }
+          ],
+          [
+            {
+              "text": "Avoiding clothing that violates public decency, such as pajamas, shorts, overly short, transparent, or tight clothing, or attire bearing inappropriate images or phrases. Avoiding clothing that violates public decency, such as pajamas, shorts, overly short, transparent, or tight clothing, or attire bearing inappropriate images or phrases."
+            }
+          ],
+          [
+            {
+              "text": "Female students are required to wear an abaya, or equivalent modest attire, with full head covering. Female students are required to wear an abaya, or equivalent modest attire, with full head covering."
+            }
+          ],
+          [
+            {
+              "text": "Appropriate beachwear that aligns with our community values and traditions is required. Appropriate beachwear that aligns with our community values and traditions is required."
+            }
+          ],
+          [
+            {
+              "text": "Maintaining a decent appearance within the University campus and adhering to modest attire. Maintaining a decent appearance within the University campus and adhering to modest attire."
+            }
+          ],
+          [
+            {
+              "text": "Avoiding clothing that violates public decency, such as pajamas, shorts, overly short, transparent, or tight clothing, or attire bearing inappropriate images or phrases. Avoiding clothing that violates public decency, such as pajamas, shorts, overly short, transparent, or tight clothing, or attire bearing inappropriate images or phrases."
+            }
+          ],
+          [
+            {
+              "text": "Female students are required to wear an abaya, or equivalent modest attire, with full head covering. Female students are required to wear an abaya, or equivalent modest attire, with full head covering."
+            }
+          ],
+          [
+            {
+              "text": "Appropriate beachwear that aligns with our community values and traditions is required. Appropriate beachwear that aligns with our community values and traditions is required."
+            }
+          ],
+          [
+            {
+              "text": "Maintaining a decent appearance within the University campus and adhering to modest attire. Maintaining a decent appearance within the University campus and adhering to modest attire."
+            }
+          ],
+          [
+            {
+              "text": "Avoiding clothing that violates public decency, such as pajamas, shorts, overly short, transparent, or tight clothing, or attire bearing inappropriate images or phrases. Avoiding clothing that violates public decency, such as pajamas, shorts, overly short, transparent, or tight clothing, or attire bearing inappropriate images or phrases."
+            }
+          ],
+          [
+            {
+              "text": "Female students are required to wear an abaya, or equivalent modest attire, with full head covering. Female students are required to wear an abaya, or equivalent modest attire, with full head covering."
+            }
+          ],
+          [
+            {
+              "text": "Appropriate beachwear that aligns with our community values and traditions is required. Appropriate beachwear that aligns with our community values and traditions is required."
+            }
+          ]
+        ],
+        "ar": [
+          [
+            {
+              "text": "المحافظة على المظهر اللائق داخل الحرم الجامعي والالتزام بالزي المحتشم. المحافظة على المظهر اللائق داخل الحرم الجامعي والالتزام بالزي المحتشم."
+            }
+          ],
+          [
+            {
+              "text": "تجنّب الملابس المخلّة بالذوق العام، مثل البيجامات والشورتات والملابس القصيرة جدًا أو الشفافة أو الضيقة، أو الملابس التي تحمل صورًا أو عبارات غير لائقة. تجنّب الملابس المخلّة بالذوق العام، مثل البيجامات والشورتات والملابس القصيرة جدًا أو الشفافة أو الضيقة، أو الملابس التي تحمل صورًا أو عبارات غير لائقة."
+            }
+          ],
+          [
+            {
+              "text": "على الطالبات ارتداء العباءة أو ما يماثلها من اللباس المحتشم مع تغطية الرأس بالكامل. على الطالبات ارتداء العباءة أو ما يماثلها من اللباس المحتشم مع تغطية الرأس بالكامل."
+            }
+          ],
+          [
+            {
+              "text": "يُشترط ارتداء لباس البحر المناسب بما ينسجم مع قيمنا وتقاليدنا المجتمعية. يُشترط ارتداء لباس البحر المناسب بما ينسجم مع قيمنا وتقاليدنا المجتمعية."
+            }
+          ],
+          [
+            {
+              "text": "المحافظة على المظهر اللائق داخل الحرم الجامعي والالتزام بالزي المحتشم. المحافظة على المظهر اللائق داخل الحرم الجامعي والالتزام بالزي المحتشم."
+            }
+          ],
+          [
+            {
+              "text": "تجنّب الملابس المخلّة بالذوق العام، مثل البيجامات والشورتات والملابس القصيرة جدًا أو الشفافة أو الضيقة، أو الملابس التي تحمل صورًا أو عبارات غير لائقة. تجنّب الملابس المخلّة بالذوق العام، مثل البيجامات والشورتات والملابس القصيرة جدًا أو الشفافة أو الضيقة، أو الملابس التي تحمل صورًا أو عبارات غير لائقة."
+            }
+          ],
+          [
+            {
+              "text": "على الطالبات ارتداء العباءة أو ما يماثلها من اللباس المحتشم مع تغطية الرأس بالكامل. على الطالبات ارتداء العباءة أو ما يماثلها من اللباس المحتشم مع تغطية الرأس بالكامل."
+            }
+          ],
+          [
+            {
+              "text": "يُشترط ارتداء لباس البحر المناسب بما ينسجم مع قيمنا وتقاليدنا المجتمعية. يُشترط ارتداء لباس البحر المناسب بما ينسجم مع قيمنا وتقاليدنا المجتمعية."
+            }
+          ],
+          [
+            {
+              "text": "المحافظة على المظهر اللائق داخل الحرم الجامعي والالتزام بالزي المحتشم. المحافظة على المظهر اللائق داخل الحرم الجامعي والالتزام بالزي المحتشم."
+            }
+          ],
+          [
+            {
+              "text": "تجنّب الملابس المخلّة بالذوق العام، مثل البيجامات والشورتات والملابس القصيرة جدًا أو الشفافة أو الضيقة، أو الملابس التي تحمل صورًا أو عبارات غير لائقة. تجنّب الملابس المخلّة بالذوق العام، مثل البيجامات والشورتات والملابس القصيرة جدًا أو الشفافة أو الضيقة، أو الملابس التي تحمل صورًا أو عبارات غير لائقة."
+            }
+          ],
+          [
+            {
+              "text": "على الطالبات ارتداء العباءة أو ما يماثلها من اللباس المحتشم مع تغطية الرأس بالكامل. على الطالبات ارتداء العباءة أو ما يماثلها من اللباس المحتشم مع تغطية الرأس بالكامل."
+            }
+          ],
+          [
+            {
+              "text": "يُشترط ارتداء لباس البحر المناسب بما ينسجم مع قيمنا وتقاليدنا المجتمعية. يُشترط ارتداء لباس البحر المناسب بما ينسجم مع قيمنا وتقاليدنا المجتمعية."
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "id": "cleanliness",
+      "title": {
+        "en": "Cleanliness and University Property",
+        "ar": "النظافة والممتلكات الجامعية"
+      },
+      "body": {
+        "en": [
+          {
+            "text": "Maintaining public property and keeping all beach facilities clean."
+          }
+        ],
+        "ar": [
+          {
+            "text": "المحافظة على الممتلكات العامة والحفاظ على نظافة جميع مرافق الشاطئ."
+          }
+        ]
+      },
+      "points": {
+        "en": [
+          [
+            {
+              "text": "To maintain general cleanliness and avoid consuming food or drinks in prohibited areas."
+            }
+          ],
+          [
+            {
+              "text": "Spitting or littering outside designated areas is prohibited."
+            }
+          ]
+        ],
+        "ar": [
+          [
+            {
+              "text": "الحفاظ على النظافة العامة وتجنّب تناول الطعام أو الشراب في الأماكن الممنوعة."
+            }
+          ],
+          [
+            {
+              "text": "يُمنع البصق أو رمي النفايات خارج الأماكن المخصصة."
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "id": "respect-privacy",
+      "title": {
+        "en": "Respecting Others and Privacy",
+        "ar": "احترام الآخرين والخصوصية"
+      },
+      "body": {
+        "en": [
+          {
+            "text": "Comply with Islamic ethics and respect the privacy of others. Comply with Islamic ethics and respect the privacy of others. Comply with Islamic ethics and respect the privacy of others. Comply with Islamic ethics and respect the privacy of others. ("
+          },
+          {
+            "linkId": "reg-overview"
+          },
+          {
+            "text": ")"
+          }
+        ],
+        "ar": [
+          {
+            "text": "الالتزام بالآداب الإسلامية واحترام خصوصية الآخرين. الالتزام بالآداب الإسلامية واحترام خصوصية الآخرين. الالتزام بالآداب الإسلامية واحترام خصوصية الآخرين. الالتزام بالآداب الإسلامية واحترام خصوصية الآخرين. ("
+          },
+          {
+            "linkId": "reg-overview"
+          },
+          {
+            "text": ")"
+          }
+        ]
+      },
+      "points": {
+        "en": [
+          [
+            {
+              "text": "To treat all University members, guests, and service providers with due respect, preserving their dignity and refraining from any form of insult, abuse, or inappropriate behavior."
+            }
+          ],
+          [
+            {
+              "text": "Playing loud music or causing disturbance with excessive noise is prohibited."
+            }
+          ],
+          [
+            {
+              "text": "To respect the privacy of all University members, including refraining from photography, collecting personal information without prior authorization, or publishing such material by any means."
+            }
+          ],
+          [
+            {
+              "text": "It is forbidden to cross from the Singles area to the Families' area."
+            }
+          ]
+        ],
+        "ar": [
+          [
+            {
+              "text": "معاملة جميع منسوبي الجامعة وضيوفها ومقدمي الخدمات بالاحترام الواجب، وصون كرامتهم، والامتناع عن أي شكل من أشكال الإساءة أو الشتم أو السلوك غير اللائق."
+            }
+          ],
+          [
+            {
+              "text": "يُمنع تشغيل الموسيقى الصاخبة أو التسبب في الإزعاج بالضجيج المفرط."
+            }
+          ],
+          [
+            {
+              "text": "احترام خصوصية جميع منسوبي الجامعة، بما في ذلك الامتناع عن التصوير أو جمع المعلومات الشخصية دون إذن مسبق أو نشر هذه المواد بأي وسيلة."
+            }
+          ],
+          [
+            {
+              "text": "يُمنع الانتقال من منطقة العزاب إلى منطقة العائلات."
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "id": "beach-regulations",
+      "title": {
+        "en": "University Beach Regulations",
+        "ar": "أنظمة شاطئ الجامعة"
+      },
+      "body": {
+        "en": [
+          {
+            "text": "Book ahead."
+          }
+        ],
+        "ar": [
+          {
+            "text": "احجز مسبقًا."
           }
         ]
       }
     },
     {
-      "id": "cultural-norms",
+      "id": "swimming-safety",
       "title": {
-        "en": "Respect for Saudi Cultural Norms",
-        "ar": "احترام الأعراف الثقافية السعودية"
+        "en": "Swimming Safety Guidelines",
+        "ar": "إرشادات السلامة في السباحة"
       },
       "body": {
         "en": [
           {
-            "text": "Literal markup must stay literal: <script>alert(1)</script> &amp; **not bold** <b>not bold either</b> {n} of {total}. I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel. See "
-          },
-          {
-            "linkId": "visit-saudi-culture"
-          },
-          {
-            "text": "."
+            "text": "Ensure lifeguards are present and follow their instructions."
           }
         ],
         "ar": [
           {
-            "text": "يجب أن تبقى الرموز حرفية: <script>alert(1)</script> &amp; **ليس غامقًا** {n} of {total}. أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري. انظر "
-          },
-          {
-            "linkId": "visit-saudi-culture"
-          },
-          {
-            "text": "."
+            "text": "التأكد من وجود المنقذين واتباع تعليماتهم."
           }
         ]
-      }
-    },
-    {
-      "id": "university-policies",
-      "title": {
-        "en": "Adherence to University Policies KFUPMDSACODEOFCONDUCTSECTION4SUBSECTION2PARAGRAPH7AREVISION20261101VERSIONFINAL",
-        "ar": "الالتزام بسياسات الجامعة KFUPMDSACODEOFCONDUCTSECTION4SUBSECTION2PARAGRAPH7AREVISION20261101VERSIONFINAL"
       },
-      "body": {
+      "points": {
         "en": [
-          {
-            "text": "Reference KFUPMDSACODEOFCONDUCTSECTION4SUBSECTION2PARAGRAPH7AREVISION20261101VERSIONFINAL KFUPMDSACODEOFCONDUCTSECTION4SUBSECTION2PARAGRAPH7AREVISION20261101VERSIONFINAL — I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel. I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel."
-          }
+          [
+            {
+              "text": "Do not exceed the designated swimming area."
+            }
+          ],
+          [
+            {
+              "text": "Swim parallel to the shore."
+            }
+          ],
+          [
+            {
+              "text": "Swimming after sunset is prohibited."
+            }
+          ],
+          [
+            {
+              "text": "Diving is not allowed at any time."
+            }
+          ],
+          [
+            {
+              "text": "Rough play, climbing on others' shoulders, diving, or pushing others into the water is not allowed."
+            }
+          ]
         ],
         "ar": [
-          {
-            "text": "المرجع KFUPMDSACODEOFCONDUCTSECTION4SUBSECTION2PARAGRAPH7AREVISION20261101VERSIONFINAL KFUPMDSACODEOFCONDUCTSECTION4SUBSECTION2PARAGRAPH7AREVISION20261101VERSIONFINAL — أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري. أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري."
-          }
-        ]
-      }
-    },
-    {
-      "id": "representation",
-      "title": {
-        "en": "Conduct",
-        "ar": "السلوك"
-      },
-      "body": {
-        "en": [
-          {
-            "text": "I will follow the rules."
-          }
-        ],
-        "ar": [
-          {
-            "text": "سألتزم بالقواعد."
-          }
-        ]
-      }
-    },
-    {
-      "id": "reporting",
-      "title": {
-        "en": "Reporting and Understanding Consequences of Non-Compliance with Saudi Law, Cultural Norms or University Policy",
-        "ar": "الإبلاغ وفهم عواقب عدم الالتزام بالأنظمة السعودية أو الأعراف الثقافية أو سياسات الجامعة"
-      },
-      "body": {
-        "en": [
-          {
-            "text": "I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel. I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel. I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel. I understand and accept that every law, regulation, royal decree and ministerial resolution in force in the Kingdom of Saudi Arabia applies to me from the moment I arrive, that ignorance of a rule is not a defence, and that I am responsible for reading the official texts before I travel."
-          }
-        ],
-        "ar": [
-          {
-            "text": "أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري. أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري. أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري. أدرك وأقرّ بأن جميع الأنظمة واللوائح والمراسيم الملكية والقرارات الوزارية السارية في المملكة العربية السعودية تسري عليّ منذ لحظة وصولي، وأن الجهل بالقاعدة ليس عذرًا، وأنني مسؤول عن قراءة النصوص الرسمية قبل سفري."
-          }
+          [
+            {
+              "text": "عدم تجاوز منطقة السباحة المحددة."
+            }
+          ],
+          [
+            {
+              "text": "السباحة بالتوازي مع الشاطئ."
+            }
+          ],
+          [
+            {
+              "text": "تُمنع السباحة بعد غروب الشمس."
+            }
+          ],
+          [
+            {
+              "text": "يُمنع الغطس في جميع الأوقات."
+            }
+          ],
+          [
+            {
+              "text": "يُمنع اللعب العنيف أو الصعود على أكتاف الآخرين أو الغطس أو دفع الآخرين في الماء."
+            }
+          ]
         ]
       }
     }

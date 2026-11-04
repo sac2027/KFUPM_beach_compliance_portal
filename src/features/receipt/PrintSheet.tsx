@@ -55,8 +55,8 @@ export function PrintSheet({
           <dd translate="no">{doc.ref}</dd>
         </div>
         <div>
-          <dt>{t('print.stage')}</dt>
-          <dd>{doc.stage[locale]}</dd>
+          <dt>{t('print.scope')}</dt>
+          <dd>{doc.scope[locale]}</dd>
         </div>
         <div>
           <dt>{t('receipt.reference')}</dt>
@@ -74,6 +74,15 @@ export function PrintSheet({
             <p>
               <Plain segments={term.body[locale]} />
             </p>
+            {term.points && (
+              <ul className="print-sheet__points">
+                {term.points[locale].map((point, i) => (
+                  <li key={i}>
+                    <Plain segments={point} />
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
         ))}
       </ol>

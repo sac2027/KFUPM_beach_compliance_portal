@@ -63,9 +63,20 @@ export function TermCard({
             {index + 1}. {term.title[locale]}
           </label>
         </h3>
-        <p className="term__body" id={`${id}-body`}>
-          <Body segments={term.body[locale]} links={links} />
-        </p>
+        <div className="term__body" id={`${id}-body`}>
+          <p>
+            <Body segments={term.body[locale]} links={links} />
+          </p>
+          {term.points && (
+            <ul className="term__points">
+              {term.points[locale].map((point, i) => (
+                <li key={i}>
+                  <Body segments={point} links={links} />
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </li>
   );

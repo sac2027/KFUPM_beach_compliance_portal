@@ -79,3 +79,14 @@ test('worst case: the printed declaration keeps the closing statement and the si
   expect(closingPage).toBeDefined();
   expect(signedPage).toBe(closingPage); // a signature never sits alone on a page away from what it signs
 });
+
+test('worst case: a link inside a term opens in a new tab and does not confirm the term', async ({ page }) => {
+  await page.goto('/?data=worst');
+  await fillLogin(page, STUDENTS.mai);
+  await expect(page.locator('#terms-heading')).toBeFocused({ timeout: 10_000 });
+  page.on('popup', (p) => void p.close());
+  const card = page.locator('.term').first();
+  await card.scrollIntoViewIfNeeded();
+  await card.getByRole('link').first().click();
+  await expect(page.getByRole('checkbox').first()).not.toBeChecked(); // following a link is not agreeing
+});

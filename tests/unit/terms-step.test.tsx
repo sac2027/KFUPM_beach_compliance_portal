@@ -41,7 +41,7 @@ describe('TermsStep', () => {
 
   it('describes each checkbox by its full term text, and has no select-all', () => {
     const { boxes } = setup();
-    expect(boxes()[3]).toHaveAccessibleDescription(/^As a student affiliated with the University/);
+    expect(boxes()[3]).toHaveAccessibleDescription(/^Advance reservation is required to enter the beach/);
     expect(screen.queryByText(/select all/i)).toBeNull();
     expect(screen.getAllByRole('checkbox')).toHaveLength(5);
   });
@@ -78,7 +78,7 @@ describe('TermsStep', () => {
 
   it('toggles from the label text and from the keyboard, and un-confirms', async () => {
     const { user, boxes } = setup();
-    await user.click(screen.getByText(/Respect for Saudi Cultural Norms/));
+    await user.click(screen.getByText(/Cleanliness and University Property/));
     expect(boxes()[1]).toBeChecked();
     boxes()[0]!.focus();
     await user.keyboard(' ');
@@ -93,18 +93,14 @@ describe('TermsStep', () => {
     expect(cont()).not.toHaveAttribute('aria-disabled', 'true');
   });
 
-  it('renders the JSON links as safe new-tab links, and bold segments as <strong>', () => {
-    setup();
-    const list = screen.getAllByRole('listitem');
-    const links = within(list[0]!).getAllByRole('link');
-    expect(links.map((l) => l.textContent?.replace(/\s*\(.*\)$/, ''))).toEqual(['Official Public Decency Regulations PDF', 'Overview']);
-    for (const l of screen.getAllByRole('link')) {
-      expect(l).toHaveAttribute('target', '_blank');
-      expect(l).toHaveAttribute('rel', 'noopener noreferrer');
-      expect(l.getAttribute('href')).toMatch(/^https:\/\//);
-    }
-    expect(screen.getAllByRole('link')).toHaveLength(3);
-    expect(within(list[0]!).getAllByText('Public Decency Regulations', { selector: 'strong' })).toHaveLength(1);
+  it('describes the first card by its lead sentence and all four points, shown as list items', () => {
+    const { boxes } = setup();
+    const description = boxes()[0]!.getAttribute('aria-describedby')!;
+    const body = document.getElementById(description)!;
+    expect(within(body).getAllByRole('listitem')).toHaveLength(4);
+    expect(body).toHaveTextContent('Appropriate beachwear that aligns with our community values and traditions is required.');
+    expect(boxes()[3]!.getAttribute('aria-describedby')).toBeTruthy();
+    expect(within(document.getElementById(boxes()[3]!.getAttribute('aria-describedby')!)!).queryAllByRole('listitem')).toHaveLength(0); // term 4 is one paragraph
   });
 
   it('lays out a very long unbroken email without relying on word breaks', () => {

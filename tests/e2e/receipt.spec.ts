@@ -108,13 +108,14 @@ test('the receipt fits at this width', async ({ page }) => {
     const pages = Number(/Pages:\s+(\d+)/.exec(execFileSync('pdfinfo', [file], { encoding: 'utf8' }))![1]);
     expect(pages).toBe(1); // what the student prints is one A4 page
     expect(text).toContain(ref);
-    expect(text).toContain('KFUPM-INTL-PACF');
+    expect(text).toContain('KFUPM-UBR');
     expect(text).toContain(creds.passport.slice(-4));
     expect(text).not.toContain(creds.passport);
-    for (const chrome of ['Continue to signature', 'Print', 'Pre-Arrival Compliance Portal', 'Deanship of Student Affairs • ']) expect(text).not.toContain(chrome);
-    expect(text).toContain('Pre-Arrival Compliance Form for International Students');
-    expect(text).toContain('Compliance with Saudi Laws and Regulations');
-    expect(text).toContain('Reporting and Understanding Consequences');
+    for (const chrome of ['Continue to signature', 'Print', 'Deanship of Student Affairs • ']) expect(text).not.toContain(chrome);
+    expect(text).toContain('University and University Beach Regulations & Procedures');
+    expect(text).toContain('Dress Code and Public Decency');
+    expect(text).toContain('Swimming Safety Guidelines');
+    expect(text).toContain('Rough play, climbing on others');
     expect(text).toContain(creds.email);
 
     // The signature is in the printed page, not only in the data: look for handwriting above the signature line.
@@ -123,6 +124,6 @@ test('the receipt fits at this width', async ({ page }) => {
     expect(ink.lineFound).toBe(true);
     expect(ink.inkPixels).toBeGreaterThan(40);
     // Optional: keep the PDFs for a human to look at (UBR_PDF_OUT=/some/dir npm run test:e2e).
-    if (process.env.UBR_PDF_OUT) execFileSync('cp', [file, `${process.env.PACF_PDF_OUT}/`]);
+    if (process.env.UBR_PDF_OUT) execFileSync('cp', [file, `${process.env.UBR_PDF_OUT}/`]);
   });
 }

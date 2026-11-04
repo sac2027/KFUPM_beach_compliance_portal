@@ -1,6 +1,6 @@
 /* Run with `npm run validate:terms`. Exits 1 on schema errors; warnings never fail the build. */
 import { readFileSync } from 'node:fs';
-import { parseTerms } from '../src/lib/termsSchema.ts';
+import { parseTerms, termText } from '../src/lib/termsSchema.ts';
 
 const file = new URL('../src/data/compliance-terms.json', import.meta.url);
 let terms;
@@ -24,7 +24,7 @@ const MAX_TITLE = 110;
 const MAX_BODY = 1200;
 for (const t of terms.terms) {
   for (const loc of ['en', 'ar'] as const) {
-    const body = t.body[loc].map((s) => ('text' in s ? s.text : 'strong' in s ? s.strong : (terms.links[s.linkId]?.label[loc] ?? ''))).join('');
+    const body = termText(t, loc, terms.links);
     if (t.title[loc].length > MAX_TITLE) warnings.push(`term "${t.id}" ${loc} title is ${t.title[loc].length} characters (over ${MAX_TITLE}): it will wrap to many lines on phones`);
     if (body.length > MAX_BODY) warnings.push(`term "${t.id}" ${loc} text is ${body.length} characters (over ${MAX_BODY}): the printed declaration may run past one page`);
   }

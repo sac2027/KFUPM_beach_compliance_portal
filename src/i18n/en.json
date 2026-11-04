@@ -1,5 +1,5 @@
 {
-  "app.title": "Pre-Arrival Compliance Form",
+  "app.title": "University and University Beach Regulations & Procedures",
   "app.org": "Deanship of Student Affairs",
   "a11y.skip": "Skip to main content",
   "brand.logoAlt": "KFUPM Student Affairs",
@@ -85,7 +85,7 @@
   "terms.leaveCancel": "Stay here",
   "login.again": "Sign in again to continue. The terms you confirmed are kept.",
   "print.ref": "Document ref",
-  "print.stage": "Stage",
   "print.email": "Email",
-  "lang.other": "العربية"
+  "lang.other": "العربية",
+  "print.scope": "Applies to"
 }

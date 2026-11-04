@@ -7,71 +7,64 @@ import { TERM_IDS, parseTerms, termText } from '../../src/lib/termsSchema';
 
 const terms = loadTerms();
 
+/** The English terms exactly as written in the brief of 2026-11-03: one paragraph per term. */
+const BRIEF = {
+  'dress-code': "Adherence to the morals, values, and customs observed in the Kingdom of Saudi Arabia, avoiding anything inconsistent with Saudi traditions. Maintaining a decent appearance within the University campus and adhering to modest attire. Avoiding clothing that violates public decency, such as pajamas, shorts, overly short, transparent, or tight clothing, or attire bearing inappropriate images or phrases. Female students are required to wear an abaya, or equivalent modest attire, with full head covering. Appropriate beachwear that aligns with our community values and traditions is required.",
+  cleanliness: 'Maintaining public property and keeping all beach facilities clean. To maintain general cleanliness and avoid consuming food or drinks in prohibited areas. Spitting or littering outside designated areas is prohibited.',
+  'respect-privacy': "Comply with Islamic ethics and respect the privacy of others. To treat all University members, guests, and service providers with due respect, preserving their dignity and refraining from any form of insult, abuse, or inappropriate behavior. Playing loud music or causing disturbance with excessive noise is prohibited. To respect the privacy of all University members, including refraining from photography, collecting personal information without prior authorization, or publishing such material by any means. It is forbidden to cross from the Singles area to the Families' area.",
+  'beach-regulations': "Advance reservation is required to enter the beach, and attendance is based on the reservation time. The person who makes the reservation (the host) must be present with his visitors entering the beach, and he is the first to be held liable for any subsequent damages and breaches of the beach's rules and regulations.",
+  'swimming-safety': "Ensure lifeguards are present and follow their instructions. Do not exceed the designated swimming area. Swim parallel to the shore. Swimming after sunset is prohibited. Diving is not allowed at any time. Rough play, climbing on others' shoulders, diving, or pushing others into the water is not allowed.",
+} as const;
+
+const TITLES = ['Dress Code and Public Decency', 'Cleanliness and University Property', 'Respecting Others and Privacy', 'University Beach Regulations', 'Swimming Safety Guidelines'];
+
 describe('compliance-terms.json', () => {
   it('has exactly the five terms in the mandated order', () => {
-    expect(terms.terms.map((t) => t.id)).toEqual([
-      'saudi-laws',
-      'cultural-norms',
-      'university-policies',
-      'representation',
-      'reporting',
-    ]);
+    expect(terms.terms.map((t) => t.id)).toEqual(['dress-code', 'cleanliness', 'respect-privacy', 'beach-regulations', 'swimming-safety']);
     expect([...TERM_IDS]).toEqual(terms.terms.map((t) => t.id));
   });
 
-  it('has non-empty English for every user-visible string', () => {
+  it('has the exact title, document ref and the five titles', () => {
+    expect(terms.document.title.en).toBe('University and University Beach Regulations & Procedures');
+    expect(terms.document.ref).toBe('KFUPM-UBR');
+    expect(terms.document.scope.en).toBe('University Beach');
+    expect(terms.terms.map((t) => t.title.en)).toEqual(TITLES);
+  });
+
+  it.each(Object.entries(BRIEF))('keeps the English wording of %s verbatim from the brief', (id, paragraph) => {
+    const term = terms.terms.find((t) => t.id === id)!;
+    expect(termText(term, 'en', terms.links)).toBe(paragraph);
+  });
+
+  it('has non-empty English and Arabic for every user-visible string, with the same points in both', () => {
     for (const t of terms.terms) {
       for (const loc of ['en', 'ar'] as const) {
         expect(t.title[loc].trim(), `${t.id} title ${loc}`).not.toBe('');
-        expect(termText(t, loc, terms.links).trim().length, `${t.id} body ${loc}`).toBeGreaterThan(40);
+        expect(termText(t, loc, terms.links).trim().length, `${t.id} body ${loc}`).toBeGreaterThan(30);
       }
+      expect(t.points?.en.length, t.id).toBe(t.points?.ar.length);
     }
     for (const loc of ['en', 'ar'] as const) {
       expect(terms.document.title[loc]).toBeTruthy();
       expect(terms.document.intro[loc]).toBeTruthy();
       expect(terms.document.closing[loc]).toBeTruthy();
+      expect(terms.document.scope[loc]).toBeTruthy();
     }
   });
 
-  it('resolves every linkId and uses https URLs only', () => {
+  it('writes the Arabic in Arabic script and the English without any', () => {
     for (const t of terms.terms) {
-      for (const loc of ['en', 'ar'] as const) {
-        for (const seg of t.body[loc]) {
-          if ('linkId' in seg) expect(terms.links[seg.linkId], seg.linkId).toBeDefined();
-        }
-      }
-    }
-    for (const [id, link] of Object.entries(terms.links)) {
-      expect(link.url, id).toMatch(/^https:\/\//);
-      expect(link.label.en, id).toBeTruthy();
+      expect(termText(t, 'ar', terms.links)).toMatch(/[؀-ۿ]/);
+      expect(termText(t, 'en', terms.links)).not.toMatch(/[؀-ۿ]/);
     }
   });
 
-  it('keeps term 3 at the docx base wording: appearance spelled correctly, no tracked "ensure that" suggestion', () => {
-    const en = termText(terms.terms[2]!, 'en', terms.links);
-    expect(en).toContain('behavior, appearance, and responsible use');
-    expect(en).not.toContain('apperance');
-    expect(en).toContain('I will ensure my actions align');
-    expect(en).not.toContain('ensure that');
+  it('splits terms 1, 2, 3 and 5 into points (4, 2, 4 and 5) and leaves term 4 as one paragraph', () => {
+    expect(terms.terms.map((t) => t.points?.en.length ?? 0)).toEqual([4, 2, 4, 0, 5]);
   });
 
-  // Guards against accidental wording drift while the legacy text is the source of truth.
-  // When KFUPM legal approves new wording, update the strings below in the same commit as the JSON.
-  it('matches the legacy page verbatim for the intro and terms 1-2 (verified against Full_Page_Embed.pdf)', () => {
-    expect(terms.document.intro.en).toBe(
-      'As an international student at King Fahd University of Petroleum & Minerals, I understand that my stay in the Kingdom of Saudi Arabia requires full compliance with the country’s laws, cultural norms, and University policies. By signing this form, I acknowledge my responsibilities and agree to the following terms:',
-    );
-    expect(termText(terms.terms[0]!, 'en', terms.links)).toBe(
-      'I commit to adhering to all applicable laws and regulations of the Kingdom of Saudi Arabia, including the Public Decency Regulations, which govern public behavior, dress code, and interactions. I have reviewed the Ministry of Interior Public Decency Regulations (Official Public Decency Regulations PDF • Overview) and other relevant legal resources. I acknowledge that violations of these laws may result in legal consequences that could affect my status in the country.',
-    );
-    expect(termText(terms.terms[1]!, 'en', terms.links)).toBe(
-      'I will respect the cultural values, customs, and traditions of Saudi Arabia, including appropriate conduct, attire, and communication. I have reviewed cultural guidelines provided by Visit Saudi (Saudi Culture and Customs Guide) to familiarize myself with local expectations. I understand that respecting these norms is essential for fostering a positive experience for myself and the local community.',
-    );
-  });
-
-  it('records document ref and stage', () => {
-    expect(terms.document.ref).toBe('KFUPM-INTL-PACF');
-    expect(terms.document.stage.en).toBe('Pre-Arrival State');
+  it('has no links (and so no external URL) in the shipped wording', () => {
+    expect(Object.keys(terms.links)).toEqual([]);
   });
 
   it('rejects a term missing its title and names the path', () => {
@@ -80,15 +73,27 @@ describe('compliance-terms.json', () => {
     expect(() => parseTerms(bad)).toThrow(/terms\.1\.title\.en/);
   });
 
+  it('rejects a term whose Arabic is missing', () => {
+    const bad = structuredClone(raw) as unknown as { terms: Array<{ title: Record<string, unknown> }> };
+    delete bad.terms[0]!.title.ar;
+    expect(() => parseTerms(bad)).toThrow(/terms\.0\.title\.ar/);
+  });
+
+  it('rejects points that differ in number between the languages', () => {
+    const bad = structuredClone(raw) as unknown as { terms: Array<{ points: { ar: unknown[] } }> };
+    bad.terms[0]!.points.ar.pop();
+    expect(() => parseTerms(bad)).toThrow(/terms\.0\.points must have the same number/);
+  });
+
   it('rejects a body that references an unknown link', () => {
-    const bad = structuredClone(raw) as typeof raw;
-    (bad.terms[0]!.body.en as unknown[]).push({ linkId: 'does-not-exist' });
+    const bad = structuredClone(raw) as unknown as { terms: Array<{ body: { en: unknown[] } }> };
+    bad.terms[0]!.body.en.push({ linkId: 'does-not-exist' });
     expect(() => parseTerms(bad)).toThrow(/does-not-exist/);
   });
 
   it('rejects an http (non-TLS) URL', () => {
-    const bad = structuredClone(raw) as typeof raw;
-    Object.values(bad.links)[0]!.url = 'http://example.com';
+    const bad = structuredClone(raw) as unknown as { links: Record<string, unknown> };
+    bad.links.x = { url: 'http://example.com', label: { en: 'x', ar: 'س' }, status: 'verified' };
     expect(() => parseTerms(bad)).toThrow(/https/);
   });
 });
@@ -105,7 +110,7 @@ describe('content decoupling', () => {
     for (const f of walk('src')) {
       const src = readFileSync(f, 'utf8');
       expect(src, f).not.toMatch(/https?:\/\//);
-      expect(src, f).not.toMatch(/Public Decency|Visit Saudi|disciplinary action/i);
+      expect(src, f).not.toMatch(/Public Decency|abaya|lifeguards|Singles area|beachwear/i);
     }
   });
 });

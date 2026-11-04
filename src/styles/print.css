@@ -10,13 +10,13 @@
 .print-sheet {
   box-sizing: border-box;
   color: #000;
-  font-size: 10pt;
-  line-height: 1.4;
+  font-size: 9.5pt;
+  line-height: 1.34;
   background: #fff;
 }
 
 .print-sheet p {
-  margin: 0 0 1.6mm;
+  margin: 0 0 1.2mm;
 }
 
 .print-sheet__head {
@@ -48,8 +48,8 @@
 }
 
 .print-sheet__title {
-  margin: 0 0 1.5mm;
-  font-size: 15pt;
+  margin: 0 0 1.2mm;
+  font-size: 14pt;
   line-height: 1.2;
 }
 
@@ -76,19 +76,28 @@
 }
 
 .print-sheet__terms {
-  margin: 2.5mm 0;
+  margin: 1.5mm 0;
   padding: 0;
   list-style: none;
 }
 
 .print-sheet__terms li {
   break-inside: avoid;
-  margin-block-end: 2.2mm;
+  margin-block-end: 1.6mm;
 }
 
 .print-sheet__terms h3 {
-  margin: 0 0 0.6mm;
-  font-size: 11pt;
+  margin: 0 0 0.5mm;
+  font-size: 10.5pt;
+}
+
+.print-sheet__points {
+  margin: 0 0 1mm;
+  padding-inline-start: 5mm;
+}
+
+.print-sheet__points li {
+  margin-block-end: 0.3mm;
 }
 
 .print-sheet__sign {
@@ -110,7 +119,7 @@
 
 .print-sheet__signature {
   inline-size: auto;
-  max-block-size: 20mm;
+  max-block-size: 16mm;
   max-inline-size: 100%;
   justify-self: start;
   object-fit: contain;

@@ -32,7 +32,7 @@ describe('flowReducer', () => {
     const terms = at({ step: 'terms', session });
     expect(flowReducer(terms, { type: 'termsAccepted', ids: all.slice(0, 4) })).toBe(terms);
     expect(flowReducer(terms, { type: 'termsAccepted', ids: [...all].reverse() })).toBe(terms);
-    expect(flowReducer(terms, { type: 'termsAccepted', ids: [...all.slice(0, 4), 'saudi-laws'] })).toBe(terms);
+    expect(flowReducer(terms, { type: 'termsAccepted', ids: [...all.slice(0, 4), 'dress-code'] })).toBe(terms);
     const ok = flowReducer(terms, { type: 'termsAccepted', ids: all });
     expect(ok.step).toBe('sign');
     expect(ok.acceptedTermIds).toEqual(all);
@@ -48,12 +48,12 @@ describe('flowReducer', () => {
   it('does not go back to login, and cannot go back from done', () => {
     const terms = at({ step: 'terms', session });
     expect(flowReducer(terms, { type: 'back' })).toBe(terms);
-    const done = at({ step: 'done', session, acceptedTermIds: all, receipt: { id: 'r-1', referenceNumber: 'PACF-2026-AAAAAA', receivedAt: 'x' }, signature: { method: 'draw', dataUrl: 'd' } });
+    const done = at({ step: 'done', session, acceptedTermIds: all, receipt: { id: 'r-1', referenceNumber: 'UBR-2026-AAAAAA', receivedAt: 'x' }, signature: { method: 'draw', dataUrl: 'd' } });
     expect(flowReducer(done, { type: 'back' })).toBe(done);
   });
 
   it('completes only from sign with a session and all terms', () => {
-    const receipt = { id: 'r-1', referenceNumber: 'PACF-2026-AAAAAA', receivedAt: '2026-11-01T10:06:00.000Z' };
+    const receipt = { id: 'r-1', referenceNumber: 'UBR-2026-AAAAAA', receivedAt: '2026-11-01T10:06:00.000Z' };
     const signature = { method: 'draw' as const, dataUrl: 'data:image/png;base64,AAAA' };
     const early = at({ step: 'terms', session, acceptedTermIds: all });
     expect(flowReducer(early, { type: 'submitted', receipt, signature })).toBe(early);
@@ -86,8 +86,8 @@ describe('flowReducer', () => {
 
   it('keeps tick progress in order while on the terms, and tells sign-in why the student is back', () => {
     const terms = at({ step: 'terms', session });
-    const two = flowReducer(terms, { type: 'termsProgress', ids: ['reporting', 'saudi-laws'] });
-    expect(two.acceptedTermIds).toEqual(['saudi-laws', 'reporting']); // mandated order, not click order
+    const two = flowReducer(terms, { type: 'termsProgress', ids: ['swimming-safety', 'dress-code'] });
+    expect(two.acceptedTermIds).toEqual(['dress-code', 'swimming-safety']); // mandated order, not click order
     expect(flowReducer(initialFlowState, { type: 'termsProgress', ids: all })).toBe(initialFlowState);
     const back = flowReducer(two, { type: 'goto', step: 'login' });
     expect(back.loginNotice).toBe('changed');

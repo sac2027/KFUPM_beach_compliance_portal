@@ -145,7 +145,10 @@ describe('printable signed declaration', () => {
     expect(text).toContain(TERMS.document.closing[locale]);
     TERMS.terms.forEach((t, i) => {
       expect(text).toContain(`${i + 1}. ${t.title[locale]}`);
-      expect(text).toContain(termText(t, locale, TERMS.links).replace(/\s+/g, ' '));
+      // The lead sentence and each point are separate elements, so each is checked on its own.
+      const pieces = termText(t, locale, TERMS.links).split(/(?<=[.:])\s+/);
+      for (const piece of pieces) expect(text, piece).toContain(piece.replace(/\s+/g, ' '));
+      expect(within(sheet()).getAllByRole('listitem').length).toBeGreaterThan(0);
     });
   });
 

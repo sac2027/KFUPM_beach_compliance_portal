@@ -1,212 +1,298 @@
 {
   "meta": {
-    "source": "English title, intro and terms 1-2 are verbatim from the legacy Google Site (Full_Page_Embed.pdf, captured 2026-10-29). Terms 3-5 and the closing are from International_Students_Declaration_Form_Dec_19_EDIT_suggestions.docx with its tracked suggestions NOT applied (the word 'that' in term 3 is left out); the only edit is correcting the docx spelling 'apperance' to 'appearance' in term 3.",
+    "source": "English terms are verbatim from the brief of 2026-11-03 (each term's lead sentence is `body`, the following sentences are `points`; the split is layout only). Title: 'University and University Beach Regulations & Procedures'. The English intro and closing and all Arabic text were drafted by Claude for KFUPM review.",
     "reviewStatus": {
       "en": "needs-review",
       "ar": "needs-review"
     }
   },
   "document": {
-    "ref": "KFUPM-INTL-PACF",
-    "stage": {
-      "en": "Pre-Arrival State",
-      "ar": "مرحلة ما قبل الوصول"
+    "ref": "KFUPM-UBR",
+    "scope": {
+      "en": "University Beach",
+      "ar": "شاطئ الجامعة"
     },
     "title": {
-      "en": "Pre-Arrival Compliance Form for International Students",
-      "ar": "نموذج الالتزام قبل الوصول للطلاب الدوليين"
+      "en": "University and University Beach Regulations & Procedures",
+      "ar": "لوائح وإجراءات الجامعة وشاطئ الجامعة"
     },
     "intro": {
-      "en": "As an international student at King Fahd University of Petroleum & Minerals, I understand that my stay in the Kingdom of Saudi Arabia requires full compliance with the country’s laws, cultural norms, and University policies. By signing this form, I acknowledge my responsibilities and agree to the following terms:",
-      "ar": "بصفتي طالبًا دوليًا في جامعة الملك فهد للبترول والمعادن، أدرك أن إقامتي في المملكة العربية السعودية تتطلب الالتزام التام بأنظمة المملكة وقيمها الثقافية وسياسات الجامعة. وبتوقيعي على هذا النموذج، أقرّ بمسؤولياتي وأوافق على الشروط الآتية:"
+      "en": "As a student of King Fahd University of Petroleum & Minerals, I understand that using the University and its beach requires me to follow the University's regulations and procedures and the values and customs of the Kingdom of Saudi Arabia. By signing this form, I acknowledge my responsibilities and agree to the following terms:",
+      "ar": "بصفتي طالبًا في جامعة الملك فهد للبترول والمعادن، أدرك أن استخدام الجامعة وشاطئها يتطلب مني الالتزام بلوائح الجامعة وإجراءاتها وبقيم المملكة العربية السعودية وعاداتها. وبتوقيعي على هذا النموذج، أقرّ بمسؤولياتي وأوافق على الشروط الآتية:"
     },
     "closing": {
-      "en": "By signing below, I affirm that I have read, understood, and agree to comply with the above responsibilities during my time as a student in the Kingdom of Saudi Arabia.",
-      "ar": "بتوقيعي أدناه، أؤكد أنني قرأتُ المسؤوليات المذكورة أعلاه وفهمتُها وأوافق على الالتزام بها طوال مدة دراستي في المملكة العربية السعودية."
+      "en": "By signing below, I affirm that I have read, understood, and agree to comply with the above regulations and procedures whenever I use the University and the University Beach.",
+      "ar": "بتوقيعي أدناه، أؤكد أنني قرأتُ اللوائح والإجراءات المذكورة أعلاه وفهمتُها وأوافق على الالتزام بها كلما استخدمتُ الجامعة وشاطئ الجامعة."
     }
   },
-  "links": {
-    "pdr-pdf": {
-      "url": "https://laws.boe.gov.sa/Files/Download/?attId=737b85fd-a0f0-4b9a-83e8-adbb01042dc7",
-      "label": {
-        "en": "Official Public Decency Regulations PDF",
-        "ar": "النص الرسمي للائحة الذوق العام (PDF)"
-      },
-      "status": "unverified",
-      "note": "URL from the legacy Google Site. The docx cites https://www.moi.gov.sa/wps/wcm/connect/f2a499cd-551b-452e-b511-47a7149fb1d9/Public%2BDecency%2BRegulations.pdf and flags it as not working."
-    },
-    "pdr-overview": {
-      "url": "https://saudipedia.com/en/public-decency-in-saudi-arabia",
-      "label": {
-        "en": "Overview",
-        "ar": "نظرة عامة"
-      },
-      "status": "unverified",
-      "note": "URL from the legacy Google Site."
-    },
-    "visit-saudi-culture": {
-      "url": "https://www.visitsaudi.com/en/stories/saudi-culture-and-customs",
-      "label": {
-        "en": "Saudi Culture and Customs Guide",
-        "ar": "دليل الثقافة والعادات السعودية"
-      },
-      "status": "unverified",
-      "note": "URL from the legacy Google Site and the docx."
-    }
-  },
+  "links": {},
   "terms": [
     {
-      "id": "saudi-laws",
+      "id": "dress-code",
       "title": {
-        "en": "Compliance with Saudi Laws and Regulations",
-        "ar": "الالتزام بالأنظمة واللوائح السعودية"
+        "en": "Dress Code and Public Decency",
+        "ar": "الزي والذوق العام"
       },
       "body": {
         "en": [
           {
-            "text": "I commit to adhering to all applicable laws and regulations of the Kingdom of Saudi Arabia, including the "
-          },
-          {
-            "strong": "Public Decency Regulations"
-          },
-          {
-            "text": ", which govern public behavior, dress code, and interactions. I have reviewed the "
-          },
-          {
-            "strong": "Ministry of Interior Public Decency Regulations"
-          },
-          {
-            "text": " ("
-          },
-          {
-            "linkId": "pdr-pdf"
-          },
-          {
-            "text": " • "
-          },
-          {
-            "linkId": "pdr-overview"
-          },
-          {
-            "text": ") and other relevant legal resources. I acknowledge that violations of these laws may result in legal consequences that could affect my status in the country."
+            "text": "Adherence to the morals, values, and customs observed in the Kingdom of Saudi Arabia, avoiding anything inconsistent with Saudi traditions."
           }
         ],
         "ar": [
           {
-            "text": "ألتزم بجميع الأنظمة واللوائح المعمول بها في المملكة العربية السعودية، ومنها "
-          },
+            "text": "الالتزام بالأخلاق والقيم والعادات المتبعة في المملكة العربية السعودية، وتجنّب كل ما يتعارض مع التقاليد السعودية."
+          }
+        ]
+      },
+      "points": {
+        "en": [
+          [
+            {
+              "text": "Maintaining a decent appearance within the University campus and adhering to modest attire."
+            }
+          ],
+          [
+            {
+              "text": "Avoiding clothing that violates public decency, such as pajamas, shorts, overly short, transparent, or tight clothing, or attire bearing inappropriate images or phrases."
+            }
+          ],
+          [
+            {
+              "text": "Female students are required to wear an abaya, or equivalent modest attire, with full head covering."
+            }
+          ],
+          [
+            {
+              "text": "Appropriate beachwear that aligns with our community values and traditions is required."
+            }
+          ]
+        ],
+        "ar": [
+          [
+            {
+              "text": "المحافظة على المظهر اللائق داخل الحرم الجامعي والالتزام بالزي المحتشم."
+            }
+          ],
+          [
+            {
+              "text": "تجنّب الملابس المخلّة بالذوق العام، مثل البيجامات والشورتات والملابس القصيرة جدًا أو الشفافة أو الضيقة، أو الملابس التي تحمل صورًا أو عبارات غير لائقة."
+            }
+          ],
+          [
+            {
+              "text": "على الطالبات ارتداء العباءة أو ما يماثلها من اللباس المحتشم مع تغطية الرأس بالكامل."
+            }
+          ],
+          [
+            {
+              "text": "يُشترط ارتداء لباس البحر المناسب بما ينسجم مع قيمنا وتقاليدنا المجتمعية."
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "id": "cleanliness",
+      "title": {
+        "en": "Cleanliness and University Property",
+        "ar": "النظافة والممتلكات الجامعية"
+      },
+      "body": {
+        "en": [
           {
-            "strong": "لائحة الذوق العام"
-          },
+            "text": "Maintaining public property and keeping all beach facilities clean."
+          }
+        ],
+        "ar": [
           {
-            "text": " التي تنظّم السلوك في الأماكن العامة والزي والتعاملات. وقد اطّلعتُ على "
-          },
+            "text": "المحافظة على الممتلكات العامة والحفاظ على نظافة جميع مرافق الشاطئ."
+          }
+        ]
+      },
+      "points": {
+        "en": [
+          [
+            {
+              "text": "To maintain general cleanliness and avoid consuming food or drinks in prohibited areas."
+            }
+          ],
+          [
+            {
+              "text": "Spitting or littering outside designated areas is prohibited."
+            }
+          ]
+        ],
+        "ar": [
+          [
+            {
+              "text": "الحفاظ على النظافة العامة وتجنّب تناول الطعام أو الشراب في الأماكن الممنوعة."
+            }
+          ],
+          [
+            {
+              "text": "يُمنع البصق أو رمي النفايات خارج الأماكن المخصصة."
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "id": "respect-privacy",
+      "title": {
+        "en": "Respecting Others and Privacy",
+        "ar": "احترام الآخرين والخصوصية"
+      },
+      "body": {
+        "en": [
           {
-            "strong": "لائحة الذوق العام الصادرة عن وزارة الداخلية"
-          },
+            "text": "Comply with Islamic ethics and respect the privacy of others."
+          }
+        ],
+        "ar": [
           {
-            "text": " ("
-          },
+            "text": "الالتزام بالآداب الإسلامية واحترام خصوصية الآخرين."
+          }
+        ]
+      },
+      "points": {
+        "en": [
+          [
+            {
+              "text": "To treat all University members, guests, and service providers with due respect, preserving their dignity and refraining from any form of insult, abuse, or inappropriate behavior."
+            }
+          ],
+          [
+            {
+              "text": "Playing loud music or causing disturbance with excessive noise is prohibited."
+            }
+          ],
+          [
+            {
+              "text": "To respect the privacy of all University members, including refraining from photography, collecting personal information without prior authorization, or publishing such material by any means."
+            }
+          ],
+          [
+            {
+              "text": "It is forbidden to cross from the Singles area to the Families' area."
+            }
+          ]
+        ],
+        "ar": [
+          [
+            {
+              "text": "معاملة جميع منسوبي الجامعة وضيوفها ومقدمي الخدمات بالاحترام الواجب، وصون كرامتهم، والامتناع عن أي شكل من أشكال الإساءة أو الشتم أو السلوك غير اللائق."
+            }
+          ],
+          [
+            {
+              "text": "يُمنع تشغيل الموسيقى الصاخبة أو التسبب في الإزعاج بالضجيج المفرط."
+            }
+          ],
+          [
+            {
+              "text": "احترام خصوصية جميع منسوبي الجامعة، بما في ذلك الامتناع عن التصوير أو جمع المعلومات الشخصية دون إذن مسبق أو نشر هذه المواد بأي وسيلة."
+            }
+          ],
+          [
+            {
+              "text": "يُمنع الانتقال من منطقة العزاب إلى منطقة العائلات."
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "id": "beach-regulations",
+      "title": {
+        "en": "University Beach Regulations",
+        "ar": "أنظمة شاطئ الجامعة"
+      },
+      "body": {
+        "en": [
           {
-            "linkId": "pdr-pdf"
-          },
+            "text": "Advance reservation is required to enter the beach, and attendance is based on the reservation time. The person who makes the reservation (the host) must be present with his visitors entering the beach, and he is the first to be held liable for any subsequent damages and breaches of the beach's rules and regulations."
+          }
+        ],
+        "ar": [
           {
-            "text": " • "
-          },
-          {
-            "linkId": "pdr-overview"
-          },
-          {
-            "text": ") وعلى غيرها من المصادر النظامية ذات الصلة. وأقرّ بأن مخالفة هذه الأنظمة قد تترتب عليها عواقب نظامية قد تؤثر في وضعي داخل المملكة."
+            "text": "يلزم الحجز المسبق لدخول الشاطئ، ويكون الحضور وفق وقت الحجز. ويجب أن يكون صاحب الحجز (المضيف) متواجدًا مع زائريه عند دخول الشاطئ، وهو أول من يُسأل عن أي أضرار أو مخالفات لأنظمة الشاطئ ولوائحه تقع لاحقًا."
           }
         ]
       }
     },
     {
-      "id": "cultural-norms",
+      "id": "swimming-safety",
       "title": {
-        "en": "Respect for Saudi Cultural Norms",
-        "ar": "احترام الأعراف الثقافية السعودية"
+        "en": "Swimming Safety Guidelines",
+        "ar": "إرشادات السلامة في السباحة"
       },
       "body": {
         "en": [
           {
-            "text": "I will respect the cultural values, customs, and traditions of Saudi Arabia, including appropriate conduct, attire, and communication. I have reviewed cultural guidelines provided by Visit Saudi ("
-          },
-          {
-            "linkId": "visit-saudi-culture"
-          },
-          {
-            "text": ") to familiarize myself with local expectations. I understand that respecting these norms is essential for fostering a positive experience for myself and the local community."
+            "text": "Ensure lifeguards are present and follow their instructions."
           }
         ],
         "ar": [
           {
-            "text": "سأحترم القيم الثقافية والعادات والتقاليد في المملكة العربية السعودية، بما في ذلك حسن السلوك واللباس المناسب وآداب التواصل. وقد اطّلعتُ على الإرشادات الثقافية التي تقدّمها منصة Visit Saudi ("
-          },
-          {
-            "linkId": "visit-saudi-culture"
-          },
-          {
-            "text": ") للتعرّف على ما هو متوقع في المجتمع المحلي. وأدرك أن احترام هذه الأعراف أمر أساسي لتكوين تجربة إيجابية لي وللمجتمع المحلي."
+            "text": "التأكد من وجود المنقذين واتباع تعليماتهم."
           }
         ]
-      }
-    },
-    {
-      "id": "university-policies",
-      "title": {
-        "en": "Adherence to University Policies",
-        "ar": "الالتزام بسياسات الجامعة"
       },
-      "body": {
+      "points": {
         "en": [
-          {
-            "text": "I will comply with all the University’s policies in the Code of Conduct, particularly those related to academic integrity, behavior, appearance, and responsible use of social media. I will ensure my actions align with University standards and do not bring disrepute to the institution."
-          }
+          [
+            {
+              "text": "Do not exceed the designated swimming area."
+            }
+          ],
+          [
+            {
+              "text": "Swim parallel to the shore."
+            }
+          ],
+          [
+            {
+              "text": "Swimming after sunset is prohibited."
+            }
+          ],
+          [
+            {
+              "text": "Diving is not allowed at any time."
+            }
+          ],
+          [
+            {
+              "text": "Rough play, climbing on others' shoulders, diving, or pushing others into the water is not allowed."
+            }
+          ]
         ],
         "ar": [
-          {
-            "text": "سألتزم بجميع سياسات الجامعة الواردة في مدونة قواعد السلوك، ولا سيما ما يتعلق منها بالنزاهة الأكاديمية والسلوك والمظهر والاستخدام المسؤول لوسائل التواصل الاجتماعي. وسأحرص على أن تتوافق تصرفاتي مع معايير الجامعة وألا تسيء إلى سمعتها."
-          }
-        ]
-      }
-    },
-    {
-      "id": "representation",
-      "title": {
-        "en": "Representation of the University",
-        "ar": "تمثيل الجامعة"
-      },
-      "body": {
-        "en": [
-          {
-            "text": "As a student affiliated with the University, I understand that my conduct reflects on the institution. I will act in a manner that upholds the University’s reputation both on and off campus."
-          }
-        ],
-        "ar": [
-          {
-            "text": "بصفتي طالبًا منتسبًا إلى الجامعة، أدرك أن سلوكي ينعكس على صورة المؤسسة. وسأتصرف بما يحفظ سمعة الجامعة داخل الحرم الجامعي وخارجه."
-          }
-        ]
-      }
-    },
-    {
-      "id": "reporting",
-      "title": {
-        "en": "Reporting and Understanding Consequences",
-        "ar": "الإبلاغ وفهم العواقب"
-      },
-      "body": {
-        "en": [
-          {
-            "text": "I will report any incidents or situations that may involve legal or disciplinary concerns to the appropriate University authorities. I understand that failure to comply with Saudi laws, cultural norms, or University policies may result in disciplinary action, including suspension or termination of my enrollment, and may lead to legal consequences under Saudi law."
-          }
-        ],
-        "ar": [
-          {
-            "text": "سأُبلغ الجهات المختصة في الجامعة عن أي حوادث أو مواقف قد تنطوي على مسائل نظامية أو تأديبية. وأدرك أن عدم الالتزام بأنظمة المملكة أو أعرافها الثقافية أو سياسات الجامعة قد يؤدي إلى إجراءات تأديبية، تشمل إيقاف قيدي أو إنهاءه، وقد يترتب عليه مساءلة نظامية بموجب أنظمة المملكة العربية السعودية."
-          }
+          [
+            {
+              "text": "عدم تجاوز منطقة السباحة المحددة."
+            }
+          ],
+          [
+            {
+              "text": "السباحة بالتوازي مع الشاطئ."
+            }
+          ],
+          [
+            {
+              "text": "تُمنع السباحة بعد غروب الشمس."
+            }
+          ],
+          [
+            {
+              "text": "يُمنع الغطس في جميع الأوقات."
+            }
+          ],
+          [
+            {
+              "text": "يُمنع اللعب العنيف أو الصعود على أكتاف الآخرين أو الغطس أو دفع الآخرين في الماء."
+            }
+          ]
         ]
       }
     }
