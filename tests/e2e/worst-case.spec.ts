@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
 import { clipped, confirmAllTerms, drawSignature, fillLogin, L, overflow, settleReceipt } from './helpers';
+import { ar } from './data';
 import { STUDENTS } from './students';
 
 {
@@ -89,4 +90,43 @@ test('worst case: a link inside a term opens in a new tab and does not confirm t
   await card.scrollIntoViewIfNeeded();
   await card.getByRole('link').first().click();
   await expect(page.getByRole('checkbox').first()).not.toBeChecked(); // following a link is not agreeing
+});
+
+test.describe('worst case in Arabic (RTL)', () => {
+  const fits = async (page: import('@playwright/test').Page, where: string) => {
+    expect(await overflow(page), `${where}: overflow`).toEqual({ overflow: 0, escapes: [] });
+    expect(await clipped(page), `${where}: clipped`).toEqual([]);
+  };
+
+  test('every step fits with the stress terms, also with text enlarged to 200%, and list markers stay inside the card', async ({ page }) => {
+    await page.goto('/?data=worst&lang=ar');
+    await page.evaluate(() => document.fonts.ready);
+    await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
+    await fits(page, 'login');
+    await page.getByLabel(ar('login.email')).fill(STUDENTS.longEmail.email);
+    await page.getByLabel(ar('login.passport')).fill(STUDENTS.longEmail.passport);
+    await page.locator('button[type="submit"]').click();
+    await expect(page.locator('#terms-heading')).toBeFocused({ timeout: 10_000 });
+    await fits(page, 'terms');
+
+    // Bullets sit on the inline-start (right) side and inside the card, never outside it.
+    const card = (await page.locator('.term').first().boundingBox())!;
+    const marker = (await page.locator('.term__points li').first().boundingBox())!;
+    expect(marker.x + marker.width).toBeLessThanOrEqual(card.x + card.width);
+    expect(marker.x).toBeGreaterThanOrEqual(card.x);
+
+    await page.evaluate(() => (document.documentElement.style.fontSize = '200%'));
+    await fits(page, 'terms at 200%');
+    await page.evaluate(() => (document.documentElement.style.fontSize = ''));
+
+    for (let i = 0; i < 5; i++) await page.locator('.term').nth(i).locator('.term__title label').click();
+    await page.locator('.terms__actions .btn').first().click();
+    await expect(page.locator('#sign-heading')).toBeFocused();
+    await fits(page, 'sign');
+    await drawSignature(page);
+    await page.locator('.sign__actions .btn').first().click();
+    await expect(page.getByRole('heading', { level: 2, name: ar('receipt.heading') })).toBeFocused({ timeout: 8000 });
+    await settleReceipt(page);
+    await fits(page, 'receipt');
+  });
 });
