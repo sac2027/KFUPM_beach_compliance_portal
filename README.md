@@ -1,8 +1,8 @@
-# KFUPM Pre-Arrival Compliance Portal
+# KFUPM University Beach Compliance Portal
 
-The English form international students complete before arriving at KFUPM: they sign in with
-the name, email and passport number KFUPM holds for them (and choose their nationality), confirm five terms, sign, and receive their signed declaration by email as a PDF.
-It replaces the legacy Google Sites form and runs on Cloudflare Pages with D1 and R2.
+The bilingual (English and Arabic) form students complete before using the University Beach: they sign in with their
+name, email, phone and passport number, confirm five terms of the University and University Beach Regulations &
+Procedures, sign, and receive the signed declaration by email as a PDF. Nothing is stored on a server.
 
 - **Staff editing the wording, IT, deploying:** read [`docs/HANDOFF.md`](docs/HANDOFF.md); the Cloudflare setup and
   account hand-over walkthrough is [`docs/HANDOVER.md`](docs/HANDOVER.md).
