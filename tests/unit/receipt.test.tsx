@@ -14,18 +14,16 @@ const session: Session = {
   student: { email: 'mai@example.com', passportLast4: '4567' },
   issuedAt: '2026-11-01T10:00:00.000Z',
 };
-const receipt = { id: '11111111-1111-4111-8111-111111111111', referenceNumber: 'PACF-2026-K7M2QX', receivedAt: '2026-11-01T10:06:30.000Z' };
+const receipt = { id: '11111111-1111-4111-8111-111111111111', referenceNumber: 'UBR-2026-K7M2QX', receivedAt: '2026-11-01T10:06:30.000Z' };
 const signature = { method: 'draw' as const, dataUrl: 'data:image/png;base64,SIGNED' };
 
 const pdfBlob = new Blob(['%PDF-1.7 test'], { type: 'application/pdf' });
-function setup(opts: { upload?: () => Promise<DocumentStatus>; document?: DocumentStatus } = {}) {
+function setup(opts: { send?: () => Promise<DocumentStatus>; document?: DocumentStatus } = {}) {
   const onFinish = vi.fn();
   const onDocumentStatus = vi.fn();
   const db: DbService = {
     submitCompliance: vi.fn(),
-    uploadDocument: vi.fn(opts.upload ?? (async () => ({ state: 'sent' as const, emailTo: 'm•••@example.com' }))),
-    resendEmail: vi.fn(async () => ({ state: 'sent' as const, emailTo: 'm•••@example.com' })),
-    downloadDocument: vi.fn(async () => pdfBlob),
+    sendDocument: vi.fn(opts.send ?? (async () => ({ state: 'sent' as const, emailTo: 'x' }))),
   };
   const renderPdf = vi.fn(async () => pdfBlob);
   render(
@@ -53,43 +51,46 @@ describe('ReceiptScreen (on screen)', () => {
     setup();
     expect(screen.getByRole('heading', { level: 2, name: 'Declaration submitted' })).toBeInTheDocument();
     const screenPart = document.querySelector('.receipt') as HTMLElement;
-    expect(within(screenPart).getByText('PACF-2026-K7M2QX')).toBeInTheDocument();
+    expect(within(screenPart).getByText('UBR-2026-K7M2QX')).toBeInTheDocument();
     expect(within(screenPart).getByText(/1 November 2026/)).toBeInTheDocument();
   });
 
   it('renders the declaration to a PDF once and hands it to the server, then reports where it went', async () => {
     const { onDocumentStatus, db, renderPdf } = setup();
-    await waitFor(() => expect(onDocumentStatus).toHaveBeenCalledWith({ state: 'sent', emailTo: 'm•••@example.com' }));
+    await waitFor(() => expect(onDocumentStatus).toHaveBeenCalledWith({ state: 'sent', emailTo: 'mai@example.com' }));
     expect(renderPdf).toHaveBeenCalledTimes(1);
-    expect(db.uploadDocument).toHaveBeenCalledWith(session, receipt.id, pdfBlob);
+    expect(db.sendDocument).toHaveBeenCalledWith({ email: 'mai@example.com', locale: 'en', referenceNumber: receipt.referenceNumber, submittedAt: receipt.receivedAt }, pdfBlob);
   });
 
   it('shows the email status line for each state, with retry only on failure', () => {
-    const { user } = setup({ document: { state: 'failed', emailTo: 'm•••@example.com' } });
-    expect(screen.getByRole('alert')).toHaveTextContent('could not email your copy to m•••@example.com');
+    const { user } = setup({ document: { state: 'failed', emailTo: 'mai@example.com' } });
+    expect(screen.getByRole('alert')).toHaveTextContent('could not email your copy to mai@example.com');
     expect(screen.getByRole('button', { name: 'Send the email again' })).toBeInTheDocument();
     void user;
   });
 
-  it('retries by resending once the document is stored, or by uploading again if it never got there', async () => {
-    const upload = vi.fn().mockRejectedValueOnce(new Error('offline')).mockResolvedValueOnce({ state: 'sent', emailTo: 'm•••@example.com' });
-    const { onDocumentStatus, db, user } = setup({ upload, document: { state: 'failed', emailTo: 'm•••@example.com' } });
-    await waitFor(() => expect(onDocumentStatus).toHaveBeenCalledWith(expect.objectContaining({ state: 'failed' })));
+  it('retries by sending the same PDF again, without rendering it twice', async () => {
+    const send = vi.fn().mockRejectedValueOnce(new Error('offline')).mockResolvedValueOnce({ state: 'sent', emailTo: 'x' });
+    const { onDocumentStatus, db, renderPdf, user } = setup({ send, document: { state: 'failed', emailTo: 'mai@example.com' } });
+    await waitFor(() => expect(onDocumentStatus).toHaveBeenCalledWith({ state: 'failed', emailTo: 'mai@example.com' }));
     await user.click(screen.getByRole('button', { name: 'Send the email again' }));
-    await waitFor(() => expect(upload).toHaveBeenCalledTimes(2)); // the upload itself had failed: upload again
-    expect(db.resendEmail).not.toHaveBeenCalled();
+    await waitFor(() => expect(send).toHaveBeenCalledTimes(2));
+    expect(renderPdf).toHaveBeenCalledTimes(1);
+    expect(db.sendDocument).toHaveBeenNthCalledWith(2, expect.anything(), pdfBlob);
+    await waitFor(() => expect(onDocumentStatus).toHaveBeenLastCalledWith({ state: 'sent', emailTo: 'mai@example.com' }));
   });
 
-  it('downloads the same PDF that was uploaded', async () => {
+  it('downloads the same PDF that was emailed, without any request, under the reference name', async () => {
     const createObjectURL = vi.fn(() => 'blob:x');
     const revokeObjectURL = vi.fn();
     Object.assign(URL, { createObjectURL, revokeObjectURL });
     const click = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {});
-    const { user, onDocumentStatus } = setup();
+    const { user, onDocumentStatus, db } = setup();
     await waitFor(() => expect(onDocumentStatus).toHaveBeenCalled());
     await user.click(screen.getByRole('button', { name: 'Download PDF' }));
     expect(createObjectURL).toHaveBeenCalledWith(pdfBlob);
     expect(click).toHaveBeenCalledTimes(1);
+    expect(db.sendDocument).toHaveBeenCalledTimes(1); // the download never calls the service
   });
 
   it('prints', async () => {
@@ -154,7 +155,7 @@ describe('printable signed declaration', () => {
     expect(text).toContain('mai@example.com');
     expect(text).toContain('••••4567');
     expect(text).not.toContain('N1234567'); // the full passport number is never printed
-    expect(text).toContain('PACF-2026-K7M2QX');
+    expect(text).toContain('UBR-2026-K7M2QX');
     expect(within(sheet()).getByRole('img', { name: /signature/i })).toHaveAttribute('src', signature.dataUrl);
   });
 });

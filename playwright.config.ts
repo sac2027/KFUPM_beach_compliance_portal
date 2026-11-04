@@ -17,7 +17,6 @@ const sizes = [
 
 export default defineConfig({
   testDir: './tests/e2e',
-  globalSetup: './tests/e2e/global-setup.ts',
   fullyParallel: true,
   reporter: [['list']],
   use: { launchOptions, trace: 'retain-on-failure' },

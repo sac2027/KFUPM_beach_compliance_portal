@@ -20,8 +20,8 @@ async function scan(page: Page, where: string) {
     await page.evaluate(() => document.fonts.ready);
     await scan(page, 'login');
 
-    await page.getByRole('button', { name: s.signin }).click(); // empty submit: four inline errors
-    await expect(page.locator('.field__error')).toHaveCount(4);
+    await page.getByRole('button', { name: s.signin }).click(); // empty submit: two inline errors
+    await expect(page.locator('.field__error')).toHaveCount(2);
     await scan(page, 'login with errors');
 
     await fillLogin(page, GOOD);
@@ -72,19 +72,14 @@ test('keyboard only: the whole flow can be completed, in a sensible order, with 
     stops.push(f.what);
   };
 
-  // Login: skip link, then the four fields (name, email, nationality, passport) and the button, in reading order.
-  for (let i = 0; i < 6; i++) await tab();
-  expect(stops.map((s) => s.split('.')[0])).toEqual(['A', 'INPUT', 'INPUT', 'SELECT', 'INPUT', 'BUTTON']);
+  // Login: skip link, then the two fields (email, passport) and the button, in reading order.
+  for (let i = 0; i < 4; i++) await tab();
+  expect(stops.map((s) => s.split('.')[0])).toEqual(['A', 'INPUT', 'INPUT', 'BUTTON']);
   const me = STUDENTS.mai;
   await page.keyboard.press('Shift+Tab'); // Passport
   await page.keyboard.type(me.passport);
-  await page.keyboard.press('Shift+Tab'); // Nationality: typing the country's name picks it
-  await page.keyboard.type('Vietnam');
-  await expect(page.getByLabel('Nationality')).toHaveValue('VN');
   await page.keyboard.press('Shift+Tab'); // Email
   await page.keyboard.type(me.email);
-  await page.keyboard.press('Shift+Tab'); // Full name
-  await page.keyboard.type(me.name);
   await page.keyboard.press('Enter'); // submit from inside a field
   await expect(page.locator('#terms-heading')).toBeFocused();
   expect((await focusIsVisible(page)).ok).toBe(true); // the heading we land on shows where we are
@@ -132,7 +127,7 @@ test('the skip link moves the next Tab into the main content', async ({ page }) 
   await expect(page.getByRole('link', { name: 'Skip to main content' })).toBeFocused();
   await page.keyboard.press('Enter');
   await page.keyboard.press('Tab');
-  await expect(page.getByLabel('Full name')).toBeFocused(); // straight to the first field
+  await expect(page.getByLabel('Email address')).toBeFocused(); // straight to the first field
 });
 
 test.describe('other guideline checks', () => {
@@ -146,7 +141,7 @@ test.describe('other guideline checks', () => {
         void d.dismiss();
       });
       await page.goto('/');
-      await fillLogin(page, stopAt === 'login' ? { name: '', email: '', nationality: '', passport: '' } : GOOD);
+      await fillLogin(page, stopAt === 'login' ? { email: '', passport: '' } : GOOD);
       if (stopAt === 'terms') await page.locator('.term').first().waitFor();
       await page.locator('body').click({ position: { x: 5, y: 5 } }); // a user gesture, which browsers require before they will ask
       await page.close({ runBeforeUnload: true });
@@ -169,7 +164,7 @@ test.describe('other guideline checks', () => {
     await page.goto('/');
     await fillLogin(page, GOOD);
     await expect(page.locator('.declarant dd').first()).toHaveAttribute('translate', 'no');
-    await expect(page.locator('.declarant dd').first()).toHaveAttribute('dir', 'auto');
+    await expect(page.locator('.declarant dd').first()).toHaveAttribute('dir', 'ltr');
   });
 
   test('the viewport allows pinch-zoom and has no cover-without-insets', async ({ page }) => {

@@ -24,7 +24,7 @@ const noOverflow = (page: Page) =>
 
 test('shows the declarant, the sign-in date, five unchecked terms and no select-all', async ({ page }) => {
   await toTerms(page);
-  await expect(page.locator('.declarant')).toContainText('Nguyen Thi Mai'); // the roster's name, not the typed one
+  await expect(page.locator('.declarant')).toContainText(STUDENTS.mai.email);
   await expect(page.locator('.declarant')).toContainText(/\d{1,2} \w+ 2026/);
   await expect(page.locator('.term')).toHaveCount(5);
   await expect(page.getByRole('checkbox', { checked: true })).toHaveCount(0);
@@ -114,8 +114,8 @@ test('the progress meter stays in view on tall screens, and gets out of the way 
 });
 
 {
-  test('worst-case name and long terms fit the viewport', async ({ page }) => {
-    await toTerms(page, STUDENTS.longName); // a 190-character roster name
+  test('worst-case email and long terms fit the viewport', async ({ page }) => {
+    await toTerms(page, STUDENTS.longEmail); // the longest realistic address
     expect(await noOverflow(page)).toEqual({ overflow: 0, escapes: [] });
     for (let i = 0; i < 5; i++) await page.locator('.term').nth(i).locator('.term__title label').click();
     expect(await noOverflow(page)).toEqual({ overflow: 0, escapes: [] });

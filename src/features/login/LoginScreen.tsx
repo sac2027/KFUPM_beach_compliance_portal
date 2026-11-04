@@ -113,7 +113,8 @@ export function LoginScreen({ auth = authService, onLoggedIn, notice }: { auth?:
             {t(failure)}
           </p>
         )}
-        <Button type="submit" busy={pending}>
+        {/* Keep focus in the field on press: otherwise the field's blur adds its error message, the button moves, and the click is lost. */}
+        <Button type="submit" busy={pending} onMouseDown={(e) => e.preventDefault()}>
           <Icon name="sign-in" />
           <span>{pending ? t('login.submitting') : t('login.submit')}</span>
         </Button>

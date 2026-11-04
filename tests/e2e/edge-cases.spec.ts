@@ -1,5 +1,4 @@
 /** Production build: environment and input edge cases from the break-ui catalogue. */
-import { execFileSync } from 'node:child_process';
 import { expect, test } from '@playwright/test';
 import { clipped, confirmAllTerms, drawSignature, fillLogin, L, makePng, overflow, settleReceipt } from './helpers';
 import { STUDENTS } from './students';
@@ -10,40 +9,25 @@ const open = async (page: import('@playwright/test').Page) => {
 };
 const GOOD = STUDENTS.mai;
 
-test.describe('names that real students have', () => {
-  test('the declaration shows the name as KFUPM holds it, however the student typed it', async ({ page }) => {
+test.describe('emails that real students have', () => {
+  test('the terms show the address as typed, trimmed and lower-cased', async ({ page }) => {
     await open(page);
-    await fillLogin(page, { ...STUDENTS.mai, name: '  mai   NGUYEN ' }); // roster: Nguyen Thi Mai
+    await fillLogin(page, { ...STUDENTS.mai, email: '  Mai.Nguyen@Example.COM ' });
     await expect(page.locator('#terms-heading')).toBeFocused();
-    expect(await page.locator('.declarant dd').first().textContent()).toBe('Nguyen Thi Mai');
+    expect(await page.locator('.declarant dd').first().textContent()).toBe('mai.nguyen@example.com');
   });
 
-  test('a name in a different order still verifies (roster "Nguyen Thi Mai", typed "Mai Nguyễn")', async ({ page }) => {
+  test('a plus-tagged and a sub-domained address are accepted', async ({ page }) => {
     await open(page);
-    await fillLogin(page, STUDENTS.mai);
+    await fillLogin(page, { ...GOOD, email: 'first.last+beach@mail.students.example.co.uk' });
     await expect(page.locator('#terms-heading')).toBeFocused();
   });
 
-  test('a transliterated name with middle dots passes the form and gets the generic answer from the server', async ({ page }) => {
+  test('an address with a space is refused with a clear message', async ({ page }) => {
     await open(page);
-    await fillLogin(page, { ...GOOD, name: '阿卜杜拉·本·穆罕默德' });
-    await expect(page.locator('#full-name-error')).toHaveCount(0); // the form accepted it
-    await expect(page.getByRole('alert')).toContainText('do not match our records'); // the roster did not
-  });
-
-  test('an emoji name is refused with a clear message instead of being mangled', async ({ page }) => {
-    await open(page);
-    await fillLogin(page, { ...GOOD, name: '🦊 Fox' });
-    await expect(page.locator('#full-name-error')).toContainText('2–100 letters');
+    await fillLogin(page, { ...GOOD, email: 'mai nguyen@example.com' });
+    await expect(page.locator('#email-error')).toContainText('valid email');
     await expect(page.locator('#login-heading')).toBeVisible();
-  });
-
-  test('a withdrawn student gets the same generic answer as a stranger', async ({ page }) => {
-    // This passport only ever fails, so give it a fresh failure budget (the throttle is tested in verify-api.spec.ts).
-    execFileSync('npx', ['wrangler', 'd1', 'execute', 'pacf-records', '--local', '--command', `DELETE FROM verify_attempts WHERE key = 'p:${STUDENTS.withdrawn.passport}'`], { stdio: 'pipe', env: { ...process.env, WRANGLER_SEND_METRICS: 'false' } });
-    await open(page);
-    await fillLogin(page, STUDENTS.withdrawn);
-    await expect(page.getByRole('alert')).toContainText('do not match our records');
   });
 });
 
@@ -117,7 +101,7 @@ test.describe('environments', () => {
     const box = (i: number) => page.locator('.term__box').nth(i).evaluate((e) => getComputedStyle(e).backgroundColor);
     const before = await box(0);
     await page.locator('.term').nth(0).locator('.term__title label').click();
-    expect(await box(0)).not.toBe(before); // a checked box looks different without any author colours
+    await expect.poll(() => box(0)).not.toBe(before); // a checked box looks different without any author colours (after its colour transition)
     const inactive = await page.getByRole('button', { name: 'Continue to signature' }).evaluate((e) => getComputedStyle(e).color);
     const meterOn = await page.locator('.meter__seg').first().evaluate((e) => getComputedStyle(e).backgroundColor);
     const meterOff = await page.locator('.meter__seg').nth(4).evaluate((e) => getComputedStyle(e).backgroundColor);

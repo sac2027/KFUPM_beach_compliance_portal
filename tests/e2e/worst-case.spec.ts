@@ -28,15 +28,13 @@ import { STUDENTS } from './students';
     await fits('login');
 
     // Longest valid typed input first (20-char passport, 100 unbroken letters, 254-char email): the form must hold it.
-    await page.getByLabel(s.name).fill('م'.repeat(100));
     await page.getByLabel(s.email).fill(`${'a'.repeat(64)}@${'b'.repeat(63)}.${'c'.repeat(63)}.${'d'.repeat(57)}.com`);
-    await page.getByLabel(s.nationality).selectOption('GB');
     await page.getByLabel(s.passport).fill('AB1234567890123456CD');
     await fits('login (long input)');
-    // Then sign in as the student with the 190-character roster name.
-    await fillLogin(page, STUDENTS.longName);
+    // Then sign in with the longest realistic address.
+    await fillLogin(page, STUDENTS.longEmail);
     await expect(page.locator('#terms-heading')).toBeFocused();
-    await expect(page.locator('.declarant dd').first()).toContainText('Abdulrahman bin Mohammed bin Abdullah');
+    await expect(page.locator('.declarant dd').first()).toContainText(STUDENTS.longEmail.email);
     await fits('terms');
 
     // Markup in staff-written text is shown as text and never runs.
@@ -56,7 +54,7 @@ import { STUDENTS } from './students';
     await settleReceipt(page);
     await fits('receipt');
     const ref = page.locator('.receipt__ref');
-    await expect(ref).toHaveText(/^PACF-\d{4}-[A-HJ-NP-Z2-9]{6}$/);
+    await expect(ref).toHaveText(/^UBR-\d{4}-[A-HJ-NP-Z2-9]{6}$/);
     expect(await ref.evaluate((e) => e.scrollWidth <= e.clientWidth + 1)).toBe(true);
   });
 }
@@ -64,7 +62,7 @@ import { STUDENTS } from './students';
 test('worst case: the printed declaration keeps the closing statement and the signature on one page', async ({ page }, info) => {
   test.skip(info.project.name !== 'worst-1280', 'PDF output does not depend on the viewport');
   await page.goto('/?data=worst');
-  await fillLogin(page, STUDENTS.longName);
+  await fillLogin(page, STUDENTS.longEmail);
   await confirmAllTerms(page);
   await drawSignature(page);
   await page.getByRole('button', { name: L.submit }).click();
@@ -77,7 +75,7 @@ test('worst case: the printed declaration keeps the closing statement and the si
   expect(pages.length).toBeGreaterThan(1); // long staff text really does run to several pages
   expect(pages.length).toBeLessThanOrEqual(6);
   const closingPage = pages.map((p, i) => (p.includes('By signing below') ? i : -1)).filter((i) => i >= 0).at(-1);
-  const signedPage = pages.findIndex((p) => p.includes('Signed by'));
+  const signedPage = pages.findIndex((p) => p.includes('Signed on'));
   expect(closingPage).toBeDefined();
   expect(signedPage).toBe(closingPage); // a signature never sits alone on a page away from what it signs
 });

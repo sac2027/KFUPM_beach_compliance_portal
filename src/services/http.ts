@@ -8,10 +8,9 @@ const KNOWN: Record<string, ServiceErrorCode> = {
 };
 
 /** JSON call to the same-origin API. Network failures and 5xx become `network`; known API codes map to ServiceError codes. */
-export async function api<T>(path: string, init: RequestInit & { token?: string } = {}): Promise<T> {
+export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
   const headers = new Headers(init.headers);
-  if (init.body && !(init.body instanceof Blob) && !(init.body instanceof ArrayBuffer)) headers.set('content-type', 'application/json');
-  if (init.token) headers.set('authorization', `Bearer ${init.token}`);
+  if (init.body && typeof init.body === 'string') headers.set('content-type', 'application/json');
   let res: Response;
   try {
     res = await fetch(path, { ...init, headers, credentials: 'same-origin' });

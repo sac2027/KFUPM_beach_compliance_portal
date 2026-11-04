@@ -3,9 +3,9 @@ import { Button } from '../../components/Button';
 import { Icon } from '../../components/Icon';
 import { useI18n } from '../../i18n/I18nProvider';
 import { formatDateTime } from '../../lib/format';
+import { attachmentName } from '../../lib/reference';
 import type { TermId } from '../../lib/termsSchema';
 import { dbService } from '../../services/dbService';
-import { ServiceError } from '../../services/types';
 import type { DbService, DocumentStatus, Session, Signature, SubmissionReceipt } from '../../services/types';
 import { EmailStatus } from './EmailStatus';
 import { PrintSheet } from './PrintSheet';
@@ -42,39 +42,41 @@ export function ReceiptScreen({
   const confirmRef = useRef<HTMLButtonElement>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
   const asked = useRef(false);
-  const uploaded = useRef(false);
   const started = useRef(false);
   const pdfRef = useRef<Blob | null>(null);
+  const email = session.student.email;
 
-  /** Render the declaration to a PDF and hand it to the server, which stores and emails it. */
-  const uploadDocument = async () => {
+  /** The declaration as a PDF, rendered once and kept: the emailed file, a resend and the download are the same bytes. */
+  const getPdf = async (): Promise<Blob> => {
+    if (pdfRef.current) return pdfRef.current;
     const sheet = sheetRef.current?.querySelector<HTMLElement>('.print-sheet');
-    if (!sheet) return;
+    if (!sheet) throw new Error('declaration not on the page');
+    pdfRef.current = await renderPdf(sheet);
+    return pdfRef.current;
+  };
+
+  /** Render the declaration to a PDF and hand it to the server, which emails it. */
+  const sendDocument = async () => {
     try {
-      const pdf = pdfRef.current ?? (await renderPdf(sheet));
-      pdfRef.current = pdf;
-      const status = await db.uploadDocument(session, receipt.id, pdf);
-      uploaded.current = true;
-      onDocumentStatus(status);
-    } catch (err) {
-      onDocumentStatus({ state: 'failed', emailTo: session.student.email, ...(err instanceof ServiceError ? {} : {}) });
+      const pdf = await getPdf();
+      const status = await db.sendDocument({ email, locale, referenceNumber: receipt.referenceNumber, submittedAt: receipt.receivedAt }, pdf);
+      onDocumentStatus({ ...status, emailTo: email });
+    } catch {
+      onDocumentStatus({ state: 'failed', emailTo: email });
     }
   };
 
   useEffect(() => {
-    if (started.current) return; // StrictMode runs effects twice; the document is uploaded once
+    if (started.current) return; // StrictMode runs effects twice; the document is sent once
     started.current = true;
-    void uploadDocument();
+    void sendDocument();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const retry = async () => {
     setRetrying(true);
     try {
-      if (uploaded.current) onDocumentStatus(await db.resendEmail(session, receipt.id));
-      else await uploadDocument();
-    } catch {
-      onDocumentStatus({ state: 'failed', emailTo: session.student.email });
+      await sendDocument();
     } finally {
       setRetrying(false);
     }
@@ -83,13 +85,15 @@ export function ReceiptScreen({
   const download = async () => {
     setDownloading(true);
     try {
-      const blob = pdfRef.current ?? (await db.downloadDocument(session, receipt.id));
+      const blob = await getPdf();
       const url = URL.createObjectURL(blob);
       const a = globalThis.document.createElement('a');
       a.href = url;
-      a.download = `KFUPM-PACF-${receipt.referenceNumber}.pdf`;
+      a.download = attachmentName(receipt.referenceNumber);
       a.click();
       setTimeout(() => URL.revokeObjectURL(url), 10_000);
+    } catch {
+      /* the declaration can still be printed */
     } finally {
       setDownloading(false);
     }
@@ -120,7 +124,7 @@ export function ReceiptScreen({
           <dt>{t('receipt.received')}</dt>
           <dd>{formatDateTime(receipt.receivedAt, locale)}</dd>
         </dl>
-        <EmailStatus status={{ ...document, emailTo: document.emailTo ?? session.student.email }} onRetry={() => void retry()} retrying={retrying} />
+        <EmailStatus status={{ ...document, emailTo: email }} onRetry={() => void retry()} retrying={retrying} />
         <div className="receipt__actions">
           <Button type="button" busy={downloading} onClick={() => void download()}>
             <Icon name="download" />

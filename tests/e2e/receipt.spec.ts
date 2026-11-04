@@ -29,7 +29,7 @@ async function toDone(page: Page, creds = STUDENTS.mai) {
   await page.evaluate(() => document.fonts.ready);
 }
 
-const REF = /^PACF-\d{4}-[A-HJ-NP-Z2-9]{6}$/;
+const REF = /^UBR-\d{4}-[A-HJ-NP-Z2-9]{6}$/;
 
 test('shows the receipt with a reference number and moves to Done', async ({ page }) => {
   await toDone(page);
@@ -59,9 +59,9 @@ test('leaves no personal data in the URL or browser storage, and Finish wipes th
   await page.getByRole('button', { name: 'Yes, clear my details' }).click();
   await expect(page.getByRole('heading', { level: 2, name: 'Sign in' })).toBeVisible();
   await expect(page.getByLabel('Passport number')).toHaveValue('');
-  await expect(page.getByLabel('Full name')).toHaveValue('');
+  await expect(page.getByLabel('Email address')).toHaveValue('');
   const body = await page.evaluate(() => document.body.innerHTML);
-  for (const secret of [STUDENTS.mai.passport, STUDENTS.mai.email, 'Mai Nguyễn', 'Nguyen Thi Mai', 'data:image/png']) expect(body).not.toContain(secret);
+  for (const secret of [STUDENTS.mai.passport, STUDENTS.mai.email, 'data:image/png']) expect(body).not.toContain(secret);
   await expect(page.locator('.stepper [aria-current="step"]').first()).toContainText('Sign in');
 });
 
@@ -80,7 +80,7 @@ test('print media shows only the formal declaration, with letterhead, seal and M
 });
 
 test('the receipt fits at this width', async ({ page }) => {
-  await toDone(page, STUDENTS.longName);
+  await toDone(page, STUDENTS.longEmail);
   const r = await page.evaluate(() => {
     const w = document.documentElement.clientWidth;
     const escapes = [...document.querySelectorAll('body *')]
@@ -101,7 +101,7 @@ test('the receipt fits at this width', async ({ page }) => {
     await toDone(page, creds);
     const ref = (await page.locator('.receipt__ref').textContent())!;
     await page.emulateMedia({ media: 'print' });
-    const dir = mkdtempSync(join(tmpdir(), 'pacf-'));
+    const dir = mkdtempSync(join(tmpdir(), 'ubr-'));
     const file = join(dir, `declaration-en.pdf`);
     writeFileSync(file, await page.pdf({ format: 'A4', printBackground: true, preferCSSPageSize: true }));
     const text = execFileSync('pdftotext', ['-layout', file, '-'], { encoding: 'utf8' });
@@ -111,12 +111,11 @@ test('the receipt fits at this width', async ({ page }) => {
     expect(text).toContain('KFUPM-INTL-PACF');
     expect(text).toContain(creds.passport.slice(-4));
     expect(text).not.toContain(creds.passport);
-    expect(text).toContain('Vietnam'); // the nationality the student chose
     for (const chrome of ['Continue to signature', 'Print', 'Pre-Arrival Compliance Portal', 'Deanship of Student Affairs • ']) expect(text).not.toContain(chrome);
     expect(text).toContain('Pre-Arrival Compliance Form for International Students');
     expect(text).toContain('Compliance with Saudi Laws and Regulations');
     expect(text).toContain('Reporting and Understanding Consequences');
-    expect(text).toContain('Nguyen Thi Mai');
+    expect(text).toContain(creds.email);
 
     // The signature is in the printed page, not only in the data: look for handwriting above the signature line.
     execFileSync('pdftoppm', ['-r', '80', '-png', '-singlefile', file, join(dir, 'page')]);

@@ -1,39 +1,30 @@
 /**
- * Submissions: POST /api/submissions records the declaration for the student the session belongs to;
- * PUT …/document stores the browser-rendered PDF and emails it; the other two read that same stored file.
- * (functions/api/submissions/*). The server re-validates everything and decides whose record it is.
+ * Declarations: nothing is stored. `submitCompliance` checks the declaration and issues its reference number in the
+ * browser; `sendDocument` posts the rendered PDF to POST /api/declarations, which emails it to the address typed at sign-in
+ * (functions/api/declarations.ts).
  */
 import { shouldFailOnce } from '../dev/worstCase';
+import { generateReference, attachmentName } from '../lib/reference';
+import { assertValidSubmission } from '../lib/submission';
 import { api } from './http';
 import { ServiceError } from './types';
 import type { DbService, DocumentStatus, SubmissionPayload, SubmissionReceipt } from './types';
 
-const status = (r: { emailStatus: DocumentStatus['state']; emailTo: string }): DocumentStatus => ({ state: r.emailStatus, emailTo: r.emailTo });
-
 export const dbService: DbService = {
   async submitCompliance(payload: SubmissionPayload): Promise<SubmissionReceipt> {
     if (import.meta.env.DEV && shouldFailOnce('submit')) throw new ServiceError('network', 'dev: simulated outage');
-    const r = await api<{ id: string; referenceNumber: string; submittedAt: string }>('/api/submissions', {
-      method: 'POST',
-      body: JSON.stringify({ acceptedTermIds: payload.acceptedTermIds, signature: payload.signature }),
-    });
-    return { id: r.id, referenceNumber: r.referenceNumber, receivedAt: r.submittedAt };
+    assertValidSubmission(payload);
+    return { id: crypto.randomUUID(), referenceNumber: generateReference(), receivedAt: new Date().toISOString() };
   },
-  async uploadDocument(_session, submissionId, pdf) {
+  async sendDocument(request, pdf): Promise<DocumentStatus> {
     if (import.meta.env.DEV && shouldFailOnce('document')) throw new ServiceError('network', 'dev: simulated outage');
-    return status(await api(`/api/submissions/${encodeURIComponent(submissionId)}/document`, { method: 'PUT', body: pdf, headers: { 'content-type': 'application/pdf' } }));
-  },
-  async resendEmail(_session, submissionId) {
-    return status(await api(`/api/submissions/${encodeURIComponent(submissionId)}/resend-email`, { method: 'POST' }));
-  },
-  async downloadDocument(_session, submissionId) {
-    let res: Response;
-    try {
-      res = await fetch(`/api/submissions/${encodeURIComponent(submissionId)}/document.pdf`, );
-    } catch {
-      throw new ServiceError('network', 'offline');
-    }
-    if (!res.ok) throw new ServiceError('network', res.statusText);
-    return res.blob();
+    const form = new FormData();
+    form.set('email', request.email);
+    form.set('locale', request.locale);
+    form.set('referenceNumber', request.referenceNumber);
+    form.set('submittedAt', request.submittedAt);
+    form.set('pdf', new File([pdf], attachmentName(request.referenceNumber), { type: 'application/pdf' }));
+    const r = await api<{ emailStatus: DocumentStatus['state']; emailTo: string }>('/api/declarations', { method: 'POST', body: form });
+    return { state: r.emailStatus, emailTo: r.emailTo };
   },
 };

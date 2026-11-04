@@ -1,20 +1,12 @@
-/** Credentials that exist in the local test roster (data/roster.sample.csv + data/roster.e2e.csv). */
+/** Sign-in details used by the browser tests. Nothing is looked up: any well-formed pair signs in. */
 export interface Creds {
-  name: string;
   email: string;
-  /** ISO code chosen in the Nationality dropdown. It is recorded, not checked. */
-  nationality: string;
   passport: string;
 }
 
 export const STUDENTS = {
-  /** The user's own test entries (data/roster.sample.csv). */
-  eyad: { name: 'Eyad Salem', email: 's202368990@kfupm.edu.sa', nationality: 'SA', passport: 'TEST0001' },
-  anas: { name: 'Anas Ammari', email: 'anas.ammari@kfupm.edu.sa', nationality: 'TN', passport: 'TEST0004' },
-  /** Test-only rows (data/roster.e2e.csv). */
-  mai: { name: 'Mai Nguyễn', email: 'eyadsalem139@gmail.com', nationality: 'VN', passport: 'E2E00001' }, // roster: "Nguyen Thi Mai"
-  mohammed: { name: 'Mohammed Alghamdi', email: 'eyadsalem139@gmail.com', nationality: 'SA', passport: 'E2E00002' },
-  longName: { name: 'Abdulrahman Alghamdi', email: 'eyadsalem139@gmail.com', nationality: 'SA', passport: 'E2E00003' },
-  persian: { name: 'Nameh Ahmadi', email: 'eyadsalem139@gmail.com', nationality: 'IR', passport: 'E2E00004' },
-  withdrawn: { name: 'Withdrawn Student', email: 'eyadsalem139@gmail.com', nationality: 'SA', passport: 'E2E00005' },
+  mai: { email: 'mai@example.com', passport: 'E2E00001' },
+  mohammed: { email: 'mohammed@example.com', passport: 'N1234567' },
+  /** The longest realistic address: 64-character local part, long domain. */
+  longEmail: { email: 'bartholomew.fitzgerald.montgomery-wellington@northwind-industries-holdings.example.com', passport: 'A1B2C3D4E5F6G7H8I9J0' },
 } satisfies Record<string, Creds>;

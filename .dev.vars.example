@@ -1,3 +1,4 @@
-# Copy to .dev.vars (git-ignored). Local development and tests only.
-SESSION_SECRET=local-dev-secret-change-me-0123456789abcdef
+# Copy to .dev.vars (git-ignored). Local development and tests only: sends no email.
 EMAIL_MODE=log
+# The browser tests send far more than 10 declarations from one address.
+DECLARATIONS_PER_WINDOW=1000

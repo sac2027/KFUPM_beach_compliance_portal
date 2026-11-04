@@ -2,9 +2,7 @@ import { expect } from '@playwright/test';
 import type { Page } from '@playwright/test';
 
 export const L = {
-  name: 'Full name',
   email: 'Email address',
-  nationality: 'Nationality',
   passport: 'Passport number',
   signin: 'Sign in',
   cont: 'Continue to signature',
@@ -40,17 +38,14 @@ export const clipped = (page: Page) =>
       .map((el) => `${el.tagName}.${(el as HTMLElement).className}`),
   );
 
-export async function fillLogin(page: Page, p: { name: string; email: string; nationality: string; passport: string }) {
-  const s = L;
-  await page.getByLabel(s.name).fill(p.name);
-  await page.getByLabel(s.email).fill(p.email);
-  if (p.nationality) await page.getByLabel(s.nationality).selectOption(p.nationality);
-  await page.getByLabel(s.passport).fill(p.passport);
-  await page.getByRole('button', { name: s.signin }).click();
+export async function fillLogin(page: Page, p: { email: string; passport: string }) {
+  await page.getByLabel(L.email).fill(p.email);
+  await page.getByLabel(L.passport).fill(p.passport);
+  await page.getByRole('button', { name: L.signin }).click();
 }
 
-/** Signs in as a roster student and waits for the terms step. */
-export async function signIn(page: Page, creds: { name: string; email: string; nationality: string; passport: string }) {
+/** Signs in and waits for the terms step. */
+export async function signIn(page: Page, creds: { email: string; passport: string }) {
   await fillLogin(page, creds);
   await expect(page.locator('#terms-heading')).toBeFocused({ timeout: 10_000 });
 }

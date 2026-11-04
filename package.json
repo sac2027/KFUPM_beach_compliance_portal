@@ -1,5 +1,5 @@
 {
-  "name": "kfupm-pre-arrival-compliance-portal",
+  "name": "kfupm-beach-compliance-portal",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -15,17 +15,11 @@
     "validate:terms": "node --experimental-strip-types scripts/validate-terms.ts",
     "release:check": "npm run verify && npm run validate:terms -- --strict && npm run build",
     "dev:api": "wrangler pages dev --port 8788 --ip 127.0.0.1 --inspector-port 0",
-    "db:migrate:local": "wrangler d1 migrations apply pacf-roster --local && wrangler d1 migrations apply pacf-records --local",
-    "db:migrate:remote": "wrangler d1 migrations apply pacf-roster --remote && wrangler d1 migrations apply pacf-records --remote",
-    "serve:test": "npm run build && npm run db:migrate:local && npm run db:seed:local && npm run dev:api",
-    "roster:import": "node --experimental-strip-types scripts/roster-import.ts",
-    "db:seed:local": "node --experimental-strip-types scripts/roster-import.ts data/roster.sample.csv && node --experimental-strip-types scripts/roster-import.ts data/roster.e2e.csv",
-    "data:export": "node --experimental-strip-types scripts/data-export.ts"
+    "serve:test": "npm run build && npm run dev:api"
   },
   "dependencies": {
     "@radix-ui/react-tabs": "^1.2.1",
     "html-to-image": "^1.11.13",
-    "jose": "^6.2.14",
     "lucide-react": "^1.66.0",
     "pdf-lib": "^1.17.1",
     "react": "^19.3.1",

@@ -34,7 +34,7 @@ test('Back from the terms asks first; declining stays, confirming returns to a c
   await page.locator('.term').nth(1).locator('.term__title label').click();
 
   await page.goBack();
-  await expect(page.getByRole('alert')).toContainText('ends your verified sign-in');
+  await expect(page.getByRole('alert')).toContainText('returns you to sign-in');
   await expect(page.locator('#terms-heading')).toBeVisible(); // still on the terms
   await page.getByRole('button', { name: 'Stay here' }).click();
   await expect(page.getByRole('alert')).toHaveCount(0);

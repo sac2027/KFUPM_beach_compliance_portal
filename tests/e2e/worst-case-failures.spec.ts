@@ -22,7 +22,7 @@ const inkPixels = (page: Page) =>
     await page.goto('/?fail=login');
     await fillLogin(page, GOOD);
     await expect(page.getByRole('alert')).toContainText(NETWORK);
-    await expect(page.getByLabel(s.name)).toHaveValue(GOOD.name);
+    await expect(page.getByLabel(s.email)).toHaveValue(GOOD.email);
     await expect(page.getByLabel(s.passport)).toHaveValue(GOOD.passport);
     await expect(page.locator('#login-heading')).toBeVisible(); // still on the login step
 
@@ -46,6 +46,6 @@ const inkPixels = (page: Page) =>
 
     await page.getByRole('button', { name: s.submit }).click(); // retry
     await expect(page.getByRole('heading', { level: 2, name: s.heading })).toBeFocused({ timeout: 8000 });
-    await expect(page.locator('.receipt__ref')).toHaveText(/^PACF-\d{4}-[A-HJ-NP-Z2-9]{6}$/);
+    await expect(page.locator('.receipt__ref')).toHaveText(/^UBR-\d{4}-[A-HJ-NP-Z2-9]{6}$/);
   });
 }

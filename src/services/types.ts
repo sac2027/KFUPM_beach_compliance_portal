@@ -2,9 +2,9 @@
  * Contracts between the UI and the API (functions/api). The browser clients live in authService.ts and
  * dbService.ts; the mocks (*.mock.ts) exist for component tests.
  */
-import type { TermId } from '../lib/termsSchema';
+import type { Locale, TermId } from '../lib/termsSchema';
 
-export type { TermId };
+export type { Locale, TermId };
 
 /** What the student types at sign-in. Only the format is checked; nothing is looked up. */
 export interface Credentials {
@@ -40,8 +40,8 @@ export interface Signature {
 
 export interface SubmissionPayload {
   session: Session;
-  documentRef: 'KFUPM-INTL-PACF';
-  /** Must be exactly the five mandated ids, in order. The real backend MUST enforce this too. */
+  documentRef: 'KFUPM-UBR';
+  /** Must be exactly the five mandated ids, in order. */
   acceptedTermIds: TermId[];
   /** PNG or JPEG data URL. */
   signature: Signature;
@@ -50,30 +50,34 @@ export interface SubmissionPayload {
 }
 
 export interface SubmissionReceipt {
-  /** Record id (UUID), used for the document upload and download. */
+  /** Local id for this declaration (nothing is stored on a server). */
   id: string;
-  /** e.g. PACF-2026-K7M2QX */
+  /** e.g. UBR-2026-K7M2QX */
   referenceNumber: string;
   receivedAt: string;
 }
 
 export type EmailState = 'pending' | 'sent' | 'logged' | 'failed';
 
-/** Where the student's copy went. `emailTo` is masked (e•••@example.com). */
+/** Where the student's copy went. */
 export interface DocumentStatus {
   state: EmailState;
   emailTo?: string;
 }
 
+/** What the server needs to email the declaration. The address is the one typed at sign-in. */
+export interface DocumentRequest {
+  email: string;
+  locale: Locale;
+  referenceNumber: string;
+  submittedAt: string;
+}
+
 export interface DbService {
-  /** Step 1: record the declaration. The server assigns the reference number. */
+  /** Step 1: check the declaration and issue its reference number (client-side; nothing is stored). */
   submitCompliance(payload: SubmissionPayload): Promise<SubmissionReceipt>;
-  /** Step 2: store the rendered PDF; the server emails it. */
-  uploadDocument(session: Session, submissionId: string, pdf: Blob): Promise<DocumentStatus>;
-  /** Try the email again from the stored PDF. */
-  resendEmail(session: Session, submissionId: string): Promise<DocumentStatus>;
-  /** Fetch the stored PDF (the same file that was emailed). */
-  downloadDocument(session: Session, submissionId: string): Promise<Blob>;
+  /** Step 2: send the browser-rendered PDF to the server, which emails it to the student. */
+  sendDocument(request: DocumentRequest, pdf: Blob): Promise<DocumentStatus>;
 }
 
 export type ServiceErrorCode = 'invalid_credentials' | 'too_many_attempts' | 'invalid_submission' | 'network';

@@ -1,20 +1,12 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "kfupm-pre-arrival-compliance-portal",
+  "name": "kfupm-beach-compliance-portal",
   "compatibility_date": "2026-10-01",
   "compatibility_flags": ["nodejs_compat"],
   "pages_build_output_dir": "./dist",
 
-  // Two databases: the roster (who may sign) and the records (who signed). database_id values are
-  // placeholders until the databases exist in the Cloudflare account (docs/HANDOVER.md step 2).
-  "d1_databases": [
-    { "binding": "ROSTER", "database_name": "pacf-roster", "database_id": "38873978-578a-4839-868e-84229a2dd7f5", "migrations_dir": "migrations/roster" },
-    { "binding": "RECORDS", "database_name": "pacf-records", "database_id": "4bcfed2c-6a37-42d4-b6c0-fe183a3b50d5", "migrations_dir": "migrations/records" }
-  ],
-  "r2_buckets": [{ "binding": "DOCUMENTS", "bucket_name": "pacf-records-bucket" }],
-
-  // Non-secret settings. Secrets (SESSION_SECRET, RESEND_API_KEY) live in .dev.vars locally and in the
-  // Pages project's encrypted variables in production.
+  // No databases or buckets: nothing is stored. Non-secret settings only; the one secret (RESEND_API_KEY) lives in
+  // .dev.vars locally and in the Pages project's encrypted variables in production (docs/HANDOVER.md).
   "vars": {
     "EMAIL_MODE": "resend",
     "EMAIL_FROM": "KFUPM Student Affairs <onboarding@resend.dev>",
