@@ -72,7 +72,7 @@ function Shell() {
         {t("a11y.skip")}
       </a>
       <Masthead />
-      <div className="page-matrix" aria-hidden="true" />
+      <div className="shore" aria-hidden="true" />
       <main id="main" className="page" tabIndex={-1}>
         <article className="doc">
           <Stepper current={flow.step} />

@@ -1,5 +1,7 @@
 /* ---------- Masthead: one quiet brand bar ---------- */
 .masthead {
+  position: relative;
+  z-index: 1;
   background: var(--turquoise);
   color: var(--beige);
 }
@@ -56,35 +58,7 @@
   outline-color: var(--beige);
 }
 
-/* ---------- The ground: beige, with the FAST Matrix once, as a cropped composition behind the sheet ----------
-   The generator export is used as-is (colour pairing beige/sand is an approved one). It is anchored to the
-   bottom-inline-end corner and cropped by the viewport. In RTL it moves to the other side; it is never mirrored. */
-.page-matrix {
-  position: fixed;
-  inset-block-end: 0;
-  inset-inline-end: 0;
-  inline-size: min(58vw, 54rem);
-  block-size: min(64vh, 40rem);
-  background-image: url('/brand/matrix/matrix-beige-sand.svg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: left bottom; /* the export's long-bar region */
-  pointer-events: none;
-  z-index: 0;
-}
-
-@media (max-width: 48rem) {
-  .page-matrix {
-    inline-size: 70vw;
-    block-size: 30vh;
-  }
-}
-
-@media print {
-  .page-matrix {
-    display: none;
-  }
-}
+/* The ground is in shore.css: sea, shallows and sand. */
 
 /* ---------- Page and the declaration sheet ---------- */
 /* Gutters and sheet padding on small screens are in px: they frame the text and must not grow with it. */
@@ -110,8 +84,8 @@
 }
 
 .doc__title {
-  max-inline-size: 22ch;
-  font-size: 1.375rem;
+  max-inline-size: 100%;
+  font-size: 1.25rem;
   line-height: 1.2;
   overflow-wrap: anywhere;
 }

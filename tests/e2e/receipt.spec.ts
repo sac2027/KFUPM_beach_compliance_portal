@@ -65,7 +65,7 @@ test('leaves no personal data in the URL or browser storage, and Finish wipes th
   await expect(page.locator('.stepper [aria-current="step"]').first()).toContainText('Sign in');
 });
 
-test('print media shows only the formal declaration, with letterhead, seal and Matrix loaded', async ({ page }) => {
+test('print media shows only the formal declaration, with letterhead, seal and the shoreline band', async ({ page }) => {
   await toDone(page);
   await page.emulateMedia({ media: 'print' });
   for (const hidden of ['.masthead', '.stepper', '.receipt', '.page__footer']) await expect(page.locator(hidden).first()).toBeHidden();
@@ -74,7 +74,7 @@ test('print media shows only the formal declaration, with letterhead, seal and M
   for (const img of await sheet.locator('img').all()) {
     expect(await img.evaluate((e: HTMLImageElement) => e.complete && e.naturalWidth > 0)).toBe(true);
   }
-  expect(await sheet.locator('.print-sheet__band').evaluate((e) => getComputedStyle(e).backgroundImage)).toContain('matrix-beige-sand.svg');
+  expect(await sheet.locator('.print-sheet__band').evaluate((e) => getComputedStyle(e).backgroundColor)).toBe('rgb(17, 95, 102)');
   await expect(sheet).not.toContainText(STUDENTS.mai.passport);
   await expect(sheet).toContainText('0001'); // last four of E2E00001
 });

@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { render, screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { Masthead } from '../../src/components/Masthead';
@@ -53,17 +53,30 @@ describe('stylesheets', () => {
     }
   });
 
-  it('never mirrors or flips the Matrix (brand misuse): no negative scale or rotateY anywhere', () => {
+  it('never mirrors or flips anything: no negative scale or rotateY anywhere', () => {
     for (const [name, text] of css) {
       expect(text, name).not.toMatch(/scaleX\(\s*-|scale\(\s*-|rotateY|rotate3d/);
     }
   });
 
-  it('uses the generator export unaltered as the page ground, never mirrored', () => {
-    const shell = css.find(([n]) => n === 'shell.css')![1];
-    expect(shell).toContain("url('/brand/matrix/matrix-beige-sand.svg')");
-    expect(shell).toMatch(/background-size:\s*cover/);
-    expect(shell).not.toContain('masthead__matrix'); // the Matrix left the heading
+  it('has no Matrix left anywhere: no asset, no stylesheet or component mention', () => {
+    expect(existsSync('public/brand/matrix')).toBe(false);
+    for (const [name, text] of css) expect(text, name).not.toMatch(/matrix(?!\()/i);
+    const app = readFileSync('src/App.tsx', 'utf8');
+    expect(app).not.toMatch(/matrix/i);
+    expect(app).toContain('className="shore"');
+  });
+
+  it('draws the shoreline ground from brand colour tokens only, with logical properties and no resting motion', () => {
+    const shore = css.find(([n]) => n === 'shore.css')![1].replace(/\/\*[\s\S]*?\*\//g, '');
+    expect(shore).toMatch(/background:\s*var\(--sea\)/);
+    expect(shore).toMatch(/background:\s*var\(--shallows\)/);
+    expect(shore).not.toMatch(/#[0-9a-f]{3,8}\b|rgb\(|url\(|animation|transition|transform/i);
+    const tokens = css.find(([n]) => n === 'tokens.css')![1];
+    expect(tokens).toMatch(/--sea:\s*var\(--turquoise\)/);
+    expect(tokens).toMatch(/--shallows:\s*var\(--blue\)/);
+    expect(tokens).toMatch(/--sand-ground:\s*var\(--beige\)/);
+    expect(tokens).toMatch(/--page:\s*var\(--sand-ground\)/);
   });
 
   it('has no gradients and no resting shadows (house style)', () => {

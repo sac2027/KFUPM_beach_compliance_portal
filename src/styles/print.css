@@ -35,14 +35,12 @@
   block-size: auto;
 }
 
-/* The generator export, once, as the page's edge. */
+/* The document's mark: the shoreline as two flat bands, sea over shallows (the web ground's colours). */
 .print-sheet__band {
   block-size: 6mm;
   margin-block: 1mm 3.5mm;
-  background-color: var(--beige);
-  background-image: url('/brand/matrix/matrix-beige-sand.svg');
-  background-size: cover;
-  background-position: right bottom;
+  background-color: var(--turquoise);
+  border-block-end: 1.2mm solid var(--blue);
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
@@ -157,7 +155,7 @@
 
   .skip-link,
   .masthead,
-  .page-matrix,
+  .shore,
   .page__footer,
   .stepper,
   .doc__head,

@@ -32,3 +32,12 @@ Student data in URLs, storage or logs. A decorative background that competes wit
 
 ## Left to the builder
 Exact spacing, sea band height, Arabic phrasing of UI strings, email copy.
+
+## Task 7 critique round (shoreline ground)
+
+Checked with the design-taste lint (0 findings) and inspector in app mode at 1440, 768 and 390 px, plus screenshots of sign-in and terms at 1280 and 360 px in English and Arabic.
+
+- **Worked:** the sea band runs into the masthead, so the lockup sits on the sea; the white sheet crosses the shallows line; both reading directions look the same because the ground spans the full width and nothing is mirrored.
+- **Fixed:** the title wrapped to three lines (a narrow measure from the old design). It now takes the full sheet width and fits two lines from 390 px up.
+- **Defended:** the inspector warns that 22% of the first screen is strongly coloured. That is the sea band, the one deliberate memorable element, in the brand's own turquoise. A 320 px phone still sets the title in three lines.
+- **Pairings:** blue on turquoise and turquoise on beige, both on the brand's approved list (as recorded in the original portal plan).

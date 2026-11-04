@@ -21,13 +21,20 @@
   --error-text: #B42318;
 
   /* Roles */
-  --page: var(--beige);
+  --page: var(--sand-ground);
   --surface: var(--white);
   --text: var(--ink);
   --heading: var(--turquoise);
   --link: var(--green-700);
   --border-input: var(--sand);   /* 3.14:1 on white */
   --focus: var(--turquoise);     /* 7.36:1 on white; gold on turquoise (4.14:1) inside the masthead */
+
+  /* The shoreline ground (shore.css): sea, shallows, sand. */
+  --sea: var(--turquoise);
+  --shallows: var(--blue);
+  --sand-ground: var(--beige);
+  --sea-h: clamp(10rem, 28vh, 16rem);
+  --shallows-h: 0.5rem;
 
   /* Shape: square corners everywhere (formal document); decided once. */
 
@@ -40,4 +47,11 @@
      Fonts are registered in Task 3; Segoe UI → system-ui is the brand's fallback chain. */
   --font-display: 'KFUPM', 'IBM Plex Sans Arabic', 'Segoe UI', system-ui, sans-serif;
   --font-body: 'IBM Plex Sans Arabic', 'Segoe UI', system-ui, sans-serif;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --sea-h: clamp(14rem, 34vh, 22rem);
+    --shallows-h: 0.75rem;
+  }
 }

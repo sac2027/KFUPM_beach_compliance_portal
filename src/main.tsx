@@ -5,6 +5,7 @@ import './styles/fonts.css';
 import './styles/tokens.css';
 import './styles/base.css';
 import './styles/shell.css';
+import './styles/shore.css';
 import './styles/forms.css';
 import './styles/terms.css';
 import './styles/signature.css';

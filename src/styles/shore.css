@@ -1,0 +1,35 @@
+/*
+ * The ground: a shoreline in three flat brand colours. A turquoise sea band runs behind the masthead and the top of the
+ * page, a thin light-blue line marks the shallows, and the beige sand carries the rest. The white sheet is set over the
+ * waterline, so the document sits half in the sea and half on the sand. Nothing here carries meaning or moves, it is the
+ * same in both reading directions (nothing is mirrored, it spans the full width), and it is hidden when printing.
+ * Pairings used: Blue on Turquoise and Turquoise on Beige, both on the brand's approved list.
+ */
+body {
+  position: relative;
+}
+
+.shore {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  block-size: var(--sea-h);
+  background: var(--sea);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.shore::after {
+  content: '';
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline: 0;
+  block-size: var(--shallows-h);
+  background: var(--shallows);
+}
+
+@media print {
+  .shore {
+    display: none;
+  }
+}

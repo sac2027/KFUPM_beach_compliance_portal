@@ -41,7 +41,7 @@ test('the whole flow runs under the production CSP with no violations and no con
   await expect(page.getByRole('heading', { level: 2, name: s.heading })).toBeFocused({ timeout: 8000 });
   await settleReceipt(page);
 
-  // Fonts, the lockup, the Matrix and the seal all load from 'self'.
+  // Fonts, the lockup and the seal all load from 'self'.
   expect(await page.evaluate(async () => (await document.fonts.ready, [...document.fonts].filter((f) => f.status === 'loaded').length))).toBeGreaterThanOrEqual(2);
   await page.emulateMedia({ media: 'print' });
   expect(await page.locator('.print-sheet img').evaluateAll((imgs) => imgs.every((i) => (i as HTMLImageElement).naturalWidth > 0))).toBe(true);
